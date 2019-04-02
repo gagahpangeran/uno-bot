@@ -22,7 +22,7 @@ public class UnoBotApplication {
         String msg = event.getMessage().getText();
 
         // Placeholder
-        if (msg.charAt(0).equals("!")) {
+        if (msg.charAt(0) == '!') {
             return new TextMessage(msg.substring(1));
         }
     }
