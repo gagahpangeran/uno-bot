@@ -1,0 +1,25 @@
+plugins {
+    id 'org.springframework.boot' version '2.1.3.RELEASE'
+    id 'java'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.bot'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    implementation 'com.linecorp.bot:line-bot-spring-boot:2.4.0'
+    implementation 'com.linecorp.bot:line-bot-servlet:2.4.0'
+    implementation 'com.linecorp.bot:line-bot-model:2.4.0'
+    implementation 'com.linecorp.bot:line-bot-api-client:2.4.0'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
