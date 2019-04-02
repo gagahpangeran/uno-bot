@@ -17,18 +17,22 @@ public class UnoBotApplication {
     }
 
     @EventMapping
-    public TextMessage handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
+    public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
         System.out.println("event: " + event);
         String msg = event.getMessage().getText();
 
         // Placeholder
         if (msg.charAt(0) == '!') {
-            return new TextMessage(msg.substring(1));
+            replyMessage(msg.substring(1));
         }
     }
 
     @EventMapping
     public void handleDefaultMessageEvent(Event event) {
         System.out.println("event: " + event);
+    }
+
+    public TextMessage replyMessage(String msg) {
+        return new TextMessage(msg);
     }
 }
