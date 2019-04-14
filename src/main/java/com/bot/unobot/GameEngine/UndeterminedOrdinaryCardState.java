@@ -81,4 +81,19 @@ public class UndeterminedOrdinaryCardState implements State {
         return "Giliran kamu udah beres!"+" \n"+
                 "Tunggu giliran selanjutnya ya :) !";
     };
+
+    @Override
+    public void setNextColor(String color) {
+
+    }
+
+    @Override
+    public void update() {
+
+    }
+
+    @Override
+    public void update(Card cad) {
+
+    }
 }

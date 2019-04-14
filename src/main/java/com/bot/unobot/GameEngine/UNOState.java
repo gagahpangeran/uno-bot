@@ -1,6 +1,7 @@
 package com.bot.unobot.GameEngine;
 
 import com.bot.unobot.Player.Player;
+import com.bot.unobot.TestCards.Card;
 
 public class UNOState implements State {
 
@@ -102,5 +103,23 @@ public class UNOState implements State {
 
 
 
+
     }
+
+    @Override
+    public void update(Card cad) {
+
+    }
+
+    @Override
+    public void update() {
+
+    }
+
+    @Override
+    public void setNextColor(String color) {
+        
+    }
+
+    b
 }

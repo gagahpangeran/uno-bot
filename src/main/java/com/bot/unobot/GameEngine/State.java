@@ -1,5 +1,8 @@
 
 package com.bot.unobot.GameEngine;
+
+import com.bot.unobot.TestCards.Card;
+
 public interface State {
 
 
@@ -19,6 +22,10 @@ public interface State {
       void accept_users_card(String card_name, String card_color);
 
      String finished_string();
+
+     void update();
+     void update(Card cad);
+     void setNextColor(String color);
 
 
 

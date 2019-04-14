@@ -1,6 +1,7 @@
 package com.bot.unobot.GameEngine;
 
 import com.bot.unobot.Player.Player;
+import com.bot.unobot.TestCards.Card;
 
 public class SkipCardState implements State {
 
@@ -34,7 +35,7 @@ public class SkipCardState implements State {
          * Disini saya akan mengeksekusi effect dari karu ini
          *
          * Effect state ini:
-         * a. mengganti current_turn menjadi current_turn-1
+         * a. mengganti current_turn menjadi current_turn+=1
          * b. Men- set next state menjadi UndeterminedOrdinaryCardState
          *
          *
@@ -43,8 +44,7 @@ public class SkipCardState implements State {
         if (this.gameMaster.current_turn<0){
             this.gameMaster.current_turn += this.gameMaster.player_size;
         }
-        String current_color = this.gameMaster.stack_of_want_to_be_reused_cards.peek().getColor();
-        this.gameMaster.current_state = new UndeterminedOrdinaryCardState(current_color,this.gameMaster);
+
     }
 
     @Override
@@ -61,4 +61,21 @@ public class SkipCardState implements State {
         return "Giliran kamu udah beres!"+" \n"+
                 "Tunggu giliran selanjutnya ya :) !";
     };
+
+    @Override
+    public void update(Card cad) {
+        String current_color = this.gameMaster.stack_of_want_to_be_reused_cards.peek().getColor();
+        this.gameMaster.current_state = new UndeterminedOrdinaryCardState(current_color,this.gameMaster);
+
+    }
+
+    @Override
+    public void update() {
+
+    }
+
+    @Override
+    public void setNextColor(String color) {
+
+    }
 }

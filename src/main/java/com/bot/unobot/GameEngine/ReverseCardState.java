@@ -1,6 +1,7 @@
 package com.bot.unobot.GameEngine;
 
 import com.bot.unobot.Player.Player;
+import com.bot.unobot.TestCards.Card;
 import com.bot.unobot.TestCards.PlusCard;
 
 public class ReverseCardState implements State {
@@ -44,8 +45,8 @@ public class ReverseCardState implements State {
         if (this.gameMaster.current_turn<0){
             this.gameMaster.current_turn += this.gameMaster.player_size;
         }
-        String current_color = this.gameMaster.stack_of_want_to_be_reused_cards.peek().getColor();
-        this.gameMaster.current_state = new UndeterminedOrdinaryCardState(current_color);
+//        String current_color = this.gameMaster.stack_of_want_to_be_reused_cards.peek().getColor();
+//        this.gameMaster.current_state = new UndeterminedOrdinaryCardState(current_color,this.gameMaster);
     }
 
     @Override
@@ -56,6 +57,22 @@ public class ReverseCardState implements State {
     @Override
     public void accept_users_card(String card_name, String card_color) {
 
+    }
+
+    @Override
+    public void setNextColor(String color) {
+
+    }
+
+    @Override
+    public void update(Card cad) {
+
+    }
+
+    @Override
+    public void update() {
+        String current_color = this.gameMaster.stack_of_want_to_be_reused_cards.peek().getColor();
+        this.gameMaster.current_state = new UndeterminedOrdinaryCardState(current_color,this.gameMaster);
     }
 
     public String finished_string(){

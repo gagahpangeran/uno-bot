@@ -1,13 +1,15 @@
 package com.bot.unobot.GameEngine;
 
 import com.bot.unobot.Player.Player;
-import com.bot.unobot.TestCards.Card;
+import com.bot.unobot.TestCards.*;
 
 public class OrdinaryCardState implements State {
 
     GameMaster gameMaster;
     String display;
     Player current_player;
+    Card card_placed_by_player;
+    String color_set_by_player= "";
 
     public OrdinaryCardState (){
 
@@ -17,6 +19,8 @@ public class OrdinaryCardState implements State {
         this.gameMaster=gameMaster;
         this.display = "";
         this.current_player = null;
+        this.card_placed_by_player = null;
+        this.color_set_by_player= "";
     }
 
 
@@ -70,6 +74,7 @@ public class OrdinaryCardState implements State {
             }
         }
         this.gameMaster.stack_of_want_to_be_reused_cards.push(removal_target);
+        this.card_placed_by_player = removal_target;
         this.current_player.getCards_collection().remove(removal_target);
         this.display = "Nice Move !!!!\n" +
                 "\n" +
@@ -83,4 +88,44 @@ public class OrdinaryCardState implements State {
         return "Giliran kamu udah beres!"+" \n"+
                 "Tunggu giliran selanjutnya ya :) !";
     };
+
+    @Override
+    public void update() {
+        if(this.card_placed_by_player instanceof OrdinaryCard){
+            this.gameMaster.current_state = new OrdinaryCardState(this.gameMaster);
+
+//
+        }
+        else if(this.card_placed_by_player instanceof PlusCard){
+            this.gameMaster.current_state =  new PlusCardState(this.gameMaster);
+            if(this.card_placed_by_player.getColor().equals("Black")){
+                this.gameMaster.current_state.setNextColor(this.color_set_by_player);
+            }else{
+                this.gameMaster.current_state.setNextColor(this.gameMaster.stack_of_want_to_be_reused_cards.peek().getColor());
+            }
+
+        }
+        else if (this.card_placed_by_player instanceof ReverseCard){
+            this.gameMaster.current_state = new ReverseCardState(this.gameMaster);
+        }
+        else if (this.card_placed_by_player instanceof SkipCard){
+            this.gameMaster.current_state =  new SkipCardState(this.gameMaster);
+        }
+        this.gameMaster.current_turn+=1;
+
+    }
+
+    @Override
+    public void setNextColor(String color) {
+        this.color_set_by_player = color;
+    }
+
+    @Override
+    public void update(Card cad) {
+
+
+
+    }
+
+
 }

@@ -116,10 +116,15 @@ public class GameMaster {
 
    }
 
-   public void UNO_Checker(){
-       // return True kalau ada yang tinggal 1 kartunya
-       // return False otherwise
+   public boolean UNO_Checker(){
+       for (Player player : this.list_of_players){
+           if (player.getCards_collection().size()==1){
+               return true;
+           }
+       }
+       return false;
    }
+
 
 
 }
