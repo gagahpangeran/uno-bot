@@ -1,7 +1,6 @@
 HELP.md
-.gradle
-/build/
-!gradle/wrapper/gradle-wrapper.jar
+/target/
+!.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###
 .apt_generated
@@ -17,7 +16,6 @@ HELP.md
 *.iws
 *.iml
 *.ipr
-/out/
 
 ### NetBeans ###
 /nbproject/private/
@@ -25,9 +23,7 @@ HELP.md
 /dist/
 /nbdist/
 /.nb-gradle/
+/build/
 
 ### VS Code ###
 .vscode/
-
-### Config ###
-src/main/resources/application.yml

@@ -2,12 +2,20 @@ package com.bot.unobot.GameEngine;
 
 import com.bot.unobot.Player.Player;
 
+/**
+ * Uno State Class
+ */
 public class UNOState implements State {
 
+    //Variables
     GameMaster gameMaster;
     String display;
     Player current_player;
 
+    /**
+     * Uno State Constructor
+     * @param gameMaster
+     */
     public UNOState(GameMaster gameMaster){}
 
     public UNOState(GameMaster gameMaster,Player player){
@@ -35,27 +43,36 @@ public class UNOState implements State {
     *
     * */
 
+    /**
+     * Get Current Player
+     * It returns the current player's ID playing the game.
+     * @return current player's ID
+     */
     public String get_current_player(){
         return this.current_player.getId();
     }
 
-    @Override
-    public String finished_string() {
-        return "Giliran kamu udah beres!"+" \n"+
-                "Tunggu giliran selanjutnya ya :) !";
-    }
-
+    /**
+     * Accept User Card
+     *
+     * @param card_name
+     * @param card_color
+     */
     @Override
     public void accept_users_card(String card_name, String card_color) {
 
     }
 
+    /**
+     * Take Another Card
+     * It adds a new card from the card collection to the player's card collection.
+     * Then it ends the player's turn directly after taking the card.
+     */
     @Override
     public void take_another_card() {
         this.current_player.getCards_collection().add(this.gameMaster.stack_of_cards.pop());
 
     }
-
 
     /*
     * handler bisa menggunakan method ini denganc cara memasukan string berupa id user yang bilang UNO
@@ -93,14 +110,17 @@ public class UNOState implements State {
                     "\n" +
                     "Semangat Player!!! " +
                     "\n"+
-                    finished_string();
-
+                    end_turn();
         }
-
-
-
-
-
-
+    }
+    /**
+     * End Turn
+     * It returns a message saying that the player's turn has finished.
+     * @return
+     */
+    @Override
+    public String end_turn(){
+        return "Giliran Anda sudah selesai!"+" \n"+
+                "Tunggu giliran selanjutnya ya :) !";
     }
 }

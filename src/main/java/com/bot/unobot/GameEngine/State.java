@@ -1,9 +1,10 @@
-
 package com.bot.unobot.GameEngine;
+
+/**
+ * State Interface
+ * An Interface containing methods of playing the game.
+ */
 public interface State {
-
-
-
 
     /**
      * Assumption : User's Id will be in the form of String
@@ -16,9 +17,9 @@ public interface State {
 
      void take_another_card();
 
-      void accept_users_card(String card_name, String card_color);
+     void accept_users_card(String card_name, String card_color);
 
-     String finished_string();
+     String end_turn();
 
 
 
