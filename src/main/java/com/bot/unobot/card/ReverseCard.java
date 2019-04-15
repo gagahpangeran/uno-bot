@@ -1,11 +1,10 @@
-package com.bot.unobot.TestCards;
+package com.bot.unobot.card;
 
-public class SkipCard implements Card {
-
+public class ReverseCard implements Card {
     String name;
     String color;
 
-    public SkipCard(String name, String color){
+    public ReverseCard(String name, String color){
         this.name=name;
         this.color=color;
     }

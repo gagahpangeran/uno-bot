@@ -1,11 +1,12 @@
-package com.bot.unobot.TestCards;
+package com.bot.unobot.card;
 
-public class OrdinaryCard implements Card {
+public class WildCard implements Card {
+
     String name;
     String color;
 
-    public OrdinaryCard(String name, String color){
-        this.name=name;
+    public WildCard( String color){
+        this.name="Wildcard";
         this.color=color;
     }
 
