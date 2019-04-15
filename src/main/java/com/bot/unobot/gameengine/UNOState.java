@@ -48,7 +48,7 @@ public class UNOState implements State {
      * It returns the current player's ID playing the game.
      * @return current player's ID
      */
-    public String get_current_player(){
+    public String getCurrentPlayer(){
         return this.current_player.getId();
     }
 
@@ -59,7 +59,7 @@ public class UNOState implements State {
      * @param card_color
      */
     @Override
-    public void accept_users_card(String card_name, String card_color) {
+    public void acceptUsersCard(String card_name, String card_color) {
 
     }
 
@@ -69,8 +69,8 @@ public class UNOState implements State {
      * Then it ends the player's turn directly after taking the card.
      */
     @Override
-    public void take_another_card() {
-        this.current_player.getCards_collection().add(this.gameMaster.stack_of_cards.pop());
+    public void takeAnotherCard() {
+        this.current_player.getCardsCollection().add(this.gameMaster.stack_of_cards.pop());
 
     }
 
@@ -79,7 +79,7 @@ public class UNOState implements State {
     *
     * */
     @Override
-    public void card_checking(String user_input) {
+    public void cardChecking(String user_input) {
         String UNO_Id = user_input;
         Player Winner = null;
 
@@ -90,7 +90,7 @@ public class UNOState implements State {
         }
 
         if (!Winner.equals(null)){
-            this.gameMaster.remove_player(Winner);
+            this.gameMaster.removePlayer(Winner);
             this.display = "Selamat!!! Ternyata Kartu Kamu udah habis\n" +
                     "\n" +
                     "Itu artinya kamu menjadi pemenang!\n" +
@@ -98,7 +98,7 @@ public class UNOState implements State {
                     "Kamu mendapatkan Juara ";
         }else{
             for(int i=0; i<2;i++){
-                take_another_card();
+                takeAnotherCard();
             }
             this.display = "Aduh....... Kamu telat Bilang UNO! \n" +
                     "\n" +
@@ -110,7 +110,7 @@ public class UNOState implements State {
                     "\n" +
                     "Semangat Player!!! " +
                     "\n"+
-                    end_turn();
+                    endTurn();
         }
     }
     /**
@@ -119,7 +119,7 @@ public class UNOState implements State {
      * @return
      */
     @Override
-    public String end_turn(){
+    public String endTurn(){
         return "Giliran Anda sudah selesai!"+" \n"+
                 "Tunggu giliran selanjutnya ya :) !";
     }

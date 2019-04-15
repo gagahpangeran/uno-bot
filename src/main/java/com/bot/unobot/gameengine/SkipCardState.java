@@ -29,7 +29,7 @@ public class SkipCardState implements State {
      * @return current player's ID
      */
     @Override
-    public String get_current_player(){
+    public String getCurrentPlayer(){
         this.current_player = gameMaster.list_of_players.get(gameMaster.current_turn);
         this.display ="Aduhhh....\n" +
                 "\n" +
@@ -40,7 +40,7 @@ public class SkipCardState implements State {
                 "Semangat Player!!!\n" +
                 "\n" +
                 "\n"+
-                end_turn();
+                endTurn();
         return this.current_player.getId();
     }
 
@@ -53,7 +53,7 @@ public class SkipCardState implements State {
      * @param user_input
      */
     @Override
-    public void card_checking(String user_input){
+    public void cardChecking(String user_input){
         /*
          * Disini saya akan mengeksekusi effect dari karu ini
          *
@@ -77,7 +77,7 @@ public class SkipCardState implements State {
      * Then it ends the player's turn directly after taking the card.
      */
     @Override
-    public void take_another_card() {
+    public void takeAnotherCard() {
     //No new cards added
     }
 
@@ -88,7 +88,7 @@ public class SkipCardState implements State {
      * @param card_color
      */
     @Override
-    public void accept_users_card(String card_name, String card_color) {
+    public void acceptUsersCard(String card_name, String card_color) {
 
     }
 
@@ -98,7 +98,7 @@ public class SkipCardState implements State {
      * @return
      */
     @Override
-    public String end_turn(){
+    public String endTurn(){
         return "Giliran Anda udah selesai!"+" \n"+
                 "Tunggu giliran selanjutnya ya :) !";
     }

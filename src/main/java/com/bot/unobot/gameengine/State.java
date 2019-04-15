@@ -11,15 +11,15 @@ public interface State {
      * Return the id of the user who will have the opportunity to play his cards
      *
      */
-     String get_current_player();
+     String getCurrentPlayer();
 
-     void card_checking(String user_input);
+     void cardChecking(String user_input);
 
-     void take_another_card();
+     void takeAnotherCard();
 
-     void accept_users_card(String card_name, String card_color);
+     void acceptUsersCard(String card_name, String card_color);
 
-     String end_turn();
+     String endTurn();
 
 
 

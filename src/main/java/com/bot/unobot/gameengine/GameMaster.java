@@ -56,7 +56,7 @@ public class GameMaster {
      * Initialize the game by shuffling the stacks of cards and the players turn. It also prints some messages
      * to display during the start of the game.
      */
-   public void init_game(){
+   public void initGame(){
        Collections.shuffle(stack_of_cards);
        Collections.shuffle(list_of_players);
        this.string_on_display = "Selamat bergabung di Game UNO dengan kearifan lokal by UNO Bot\n" +
@@ -119,7 +119,7 @@ public class GameMaster {
      * Adding new player into the game and also adding the new player into arraylist of players.
      * @param name
      */
-   public void add_player(String name){
+   public void addPlayer(String name){
        Player player = new Player( name);
        this.list_of_players.add(player);
    }
@@ -129,7 +129,7 @@ public class GameMaster {
      * Removing a certain player from the game and from arraylist of players.
      * @param player
      */
-   public void remove_player(Player player){
+   public void removePlayer(Player player){
        this.list_of_players.remove(player_size);
        this.player_size = this.list_of_players.size();
    }
@@ -138,7 +138,7 @@ public class GameMaster {
      * UNO Checker
      * Checking the number of cards a certain player has.
      */
-   public void UNO_Checker(){
+   public void UNOChecker(){
        // return True kalau ada yang tinggal 1 kartunya
        // return False otherwise
    }

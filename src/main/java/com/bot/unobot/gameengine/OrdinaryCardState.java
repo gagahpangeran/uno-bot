@@ -33,13 +33,13 @@ public class OrdinaryCardState implements State {
      * @return
      */
     @Override
-    public String get_current_player(){
+    public String getCurrentPlayer(){
         this.current_player = gameMaster.list_of_players.get(gameMaster.current_turn); // mungkin ini nanti masih diedit lagi, apakah di - incrementnya di sini atau di engine
         this.display =
                 "Sekarang giliran Anda untuk bermain.\n" +
                 "\n" +
                 "Kartu Anda adalah sebagai berikut: \n"+
-                        this.current_player.shows_players_cards();
+                        this.current_player.showsPlayersCards();
         return this.current_player.getId();
 
     }
@@ -54,17 +54,17 @@ public class OrdinaryCardState implements State {
      * @param user_input
      */
     @Override
-    public void card_checking(String user_input){
+    public void cardChecking(String user_input){
         String[] temp = user_input.split(" ");
         String card_name =  temp[0];
         String card_color = temp[1];
         Card last_card = gameMaster.stack_of_want_to_be_reused_cards.peek();
 
         if (card_color.equals(last_card.getColor())&&card_name.equals(last_card.getName())){
-            accept_users_card(card_name, card_color);
+            acceptUsersCard(card_name, card_color);
         }
         else  if (card_color.equals("Black")){
-            accept_users_card(card_name, "Black");
+            acceptUsersCard(card_name, "Black");
         }
         else{
             this.display ="Maaf, Kartu yang Anda keluarkan tidak cocok\n" +
@@ -79,9 +79,9 @@ public class OrdinaryCardState implements State {
      * Then it ends the player's turn directly after taking the card.
      */
     @Override
-    public void take_another_card(){
-        this.current_player.getCards_collection().add(this.gameMaster.stack_of_cards.pop());
-        this.display = end_turn();
+    public void takeAnotherCard(){
+        this.current_player.getCardsCollection().add(this.gameMaster.stack_of_cards.pop());
+        this.display = endTurn();
     }
 
     /**
@@ -90,20 +90,20 @@ public class OrdinaryCardState implements State {
      * @param card_name
      * @param card_color
      */
-    public void accept_users_card(String card_name, String card_color){
+    public void acceptUsersCard(String card_name, String card_color){
         Card removal_target = null;
-        for (Card cards : this.current_player.getCards_collection()){
+        for (Card cards : this.current_player.getCardsCollection()){
             if (cards.getColor().equals(card_color) && cards.getName().equals(card_name)){
                 removal_target = cards;
             }
         }
         this.gameMaster.stack_of_want_to_be_reused_cards.push(removal_target);
-        this.current_player.getCards_collection().remove(removal_target);
+        this.current_player.getCardsCollection().remove(removal_target);
         this.display = "Nice Move !!!!\n" +
                 "\n" +
                 "\n" +
                 "\n" +
-                end_turn();
+                endTurn();
 
     }
 
@@ -113,7 +113,7 @@ public class OrdinaryCardState implements State {
      * @return
      */
     @Override
-    public String end_turn(){
+    public String endTurn(){
         return "Giliran kamu sudah selesai!"+" \n"+
                 "Tunggu giliran selanjutnya ya :) !";
     };

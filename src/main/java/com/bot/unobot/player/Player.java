@@ -35,7 +35,7 @@ public class Player {
      * Return player's card in the form of a string
      * @return player's card
      */
-    public String shows_players_cards(){
+    public String showsPlayersCards(){
         String card_list ="";
         for(int i =1;i<=this.cards_collection.size();i++){
             card_list+=Integer.toString(i)+". "+this.cards_collection.get(i-1)+" \n";
@@ -48,7 +48,7 @@ public class Player {
      * Return player's card collection
      * @return card collection ArrayList
      */
-    public ArrayList<Card> getCards_collection(){
+    public ArrayList<Card> getCardsCollection(){
         return cards_collection;
     }
 }

@@ -29,7 +29,7 @@ public class PlusCardState implements State {
      * It returns the current player's ID playing the game.
      * @return current player's ID
      */
-    public String get_current_player(){
+    public String getCurrentPlayer(){
         this.current_player = gameMaster.list_of_players.get(gameMaster.current_turn);
         this.display ="Aduh.......\n" +
                 "\n" +
@@ -41,7 +41,7 @@ public class PlusCardState implements State {
                 "\n" +
                 "Semangat Player!!! " +
                 "\n"+
-                end_turn();
+                endTurn();
         return this.current_player.getId();
 
     }
@@ -56,11 +56,11 @@ public class PlusCardState implements State {
      * It can be used as an implementation from the effect of wildcards (reverse, adds, and skips).
      * @param user_input
      */
-    public void card_checking(String user_input){
+    public void cardChecking(String user_input){
         if (gameMaster.stack_of_want_to_be_reused_cards.peek() instanceof PlusCard){
             PlusCard last_card = (PlusCard)gameMaster.stack_of_want_to_be_reused_cards.peek();
             for (int i =0;i<last_card.getPlus();i++){
-                take_another_card();
+                takeAnotherCard();
             }
         }
     }
@@ -71,9 +71,9 @@ public class PlusCardState implements State {
      * Then it ends the player's turn directly after taking the card.
      */
     @Override
-    public void take_another_card(){
-        this.current_player.getCards_collection().add(this.gameMaster.stack_of_cards.pop());
-        this.display = end_turn();
+    public void takeAnotherCard(){
+        this.current_player.getCardsCollection().add(this.gameMaster.stack_of_cards.pop());
+        this.display = endTurn();
     }
 
     /**Accept User Card
@@ -82,7 +82,7 @@ public class PlusCardState implements State {
      * @param card_color
      */
     @Override
-    public void accept_users_card(String card_name, String card_color){
+    public void acceptUsersCard(String card_name, String card_color){
     }
 
     /**
@@ -91,7 +91,7 @@ public class PlusCardState implements State {
      * @return
      */
     @Override
-    public String end_turn(){
+    public String endTurn(){
         return "Giliran kamu udah beres!"+" \n"+
                 "Tunggu giliran selanjutnya ya :) !";
     }
