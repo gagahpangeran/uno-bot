@@ -103,8 +103,8 @@ public class GameMaster {
 
    }
 
-   public void add_player( Player player){
-       this.list_of_players.add(player);
+   public void add_player(String player){
+       this.list_of_players.add(new Player(player));
    }
 
    public void remove_player(Player player){

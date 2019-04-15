@@ -51,10 +51,8 @@ public class GameMasterTest {
     @Test
 
     public void add_player_test(){
-        Player player =  new Player("Jono")   ;
-        gameMaster.add_player(player);
-        Assert.assertEquals(gameMaster.getList_of_players().contains(player), true);
-
+        gameMaster.add_player("Jono");
+        Assert.assertEquals(gameMaster.getList_of_players().size(), 1);
     }
 
 }
