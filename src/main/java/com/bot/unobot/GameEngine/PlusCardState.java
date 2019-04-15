@@ -6,11 +6,11 @@ import com.sun.org.apache.xpath.internal.operations.Plus;
 
 public class PlusCardState implements State {
 
-    GameMaster gameMaster;
-    String display;
-    Player current_player;
-    Card card_placed_by_player;
-    String color_set_by_player;
+    public GameMaster gameMaster;
+    public String display;
+    public Player current_player;
+    public Card card_placed_by_player;
+    public String color_set_by_player= "";
     //String next_color_that_player_want;
 
     public PlusCardState(GameMaster gameMaster){

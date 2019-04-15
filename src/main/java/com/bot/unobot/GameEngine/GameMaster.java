@@ -103,13 +103,12 @@ public class GameMaster {
 
    }
 
-   public void add_player( String name){
-       Player player = new Player( name);
+   public void add_player( Player player){
        this.list_of_players.add(player);
    }
 
    public void remove_player(Player player){
-       this.list_of_players.remove(player_size);
+       this.list_of_players.remove(player);
        this.player_size=this.list_of_players.size();
 
 
@@ -125,6 +124,11 @@ public class GameMaster {
        return false;
    }
 
+   public String getString_on_display(){
+       return this.string_on_display;
+   }
 
-
+    public ArrayList<Player> getList_of_players() {
+        return list_of_players;
+    }
 }

@@ -5,11 +5,11 @@ import com.bot.unobot.TestCards.*;
 
 public class OrdinaryCardState implements State {
 
-    GameMaster gameMaster;
-    String display;
-    Player current_player;
-    Card card_placed_by_player;
-    String color_set_by_player= "";
+    public GameMaster gameMaster;
+    public String display;
+    public Player current_player;
+    public Card card_placed_by_player;
+    public String color_set_by_player= "";
 
     public OrdinaryCardState (){
 
@@ -94,7 +94,7 @@ public class OrdinaryCardState implements State {
         if(this.card_placed_by_player instanceof OrdinaryCard){
             this.gameMaster.current_state = new OrdinaryCardState(this.gameMaster);
 
-//
+
         }
         else if(this.card_placed_by_player instanceof PlusCard){
             this.gameMaster.current_state =  new PlusCardState(this.gameMaster);

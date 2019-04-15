@@ -118,8 +118,8 @@ public class UNOState implements State {
 
     @Override
     public void setNextColor(String color) {
-        
+
     }
 
-    b
+
 }

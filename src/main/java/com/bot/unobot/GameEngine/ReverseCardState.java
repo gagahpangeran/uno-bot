@@ -6,9 +6,10 @@ import com.bot.unobot.TestCards.PlusCard;
 
 public class ReverseCardState implements State {
 
-    GameMaster gameMaster;
-    String display;
-    Player current_player;
+    public GameMaster gameMaster;
+    public String display;
+    public Player current_player;
+
 
     public ReverseCardState(GameMaster gameMaster){
         this.gameMaster=gameMaster;
