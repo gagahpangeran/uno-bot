@@ -13,42 +13,42 @@ import java.util.Stack;
  */
 public class GameMaster {
     //Variable
-    State ordinary_card_state;
-    State plus_card_state;
-    State reverse_card_state;
-    State skip_card_state;
-    State undetermined_card_state;
-    State UNO_state;
-    State current_state;
+    State ordinaryCardState;
+    State plusCardState;
+    State reverseCardState;
+    State skipCardState;
+    State undeterminedCardState;
+    State UNOState;
+    State currentState;
 
-    ArrayList<Player> list_of_players;
-    Stack<Card> stack_of_cards;
-    Stack<Card> stack_of_want_to_be_reused_cards;
+    ArrayList<Player> players;
+    Stack<Card> cardStack;
+    Stack<Card> toBeReusedCardStack;
 
-    int current_turn;
-    int player_size;
-    int current_champion_position ; //to know the player's rank
-    String string_on_display;
+    int currentTurn;
+    int playerSize;
+    int currentChampionPosition; //to know the player's rank
+    String stringOnDisplay;
 
     /**
      * Game Master Constructor
      */
    public GameMaster(){
-       this.ordinary_card_state =  new OrdinaryCardState(this);
-       this.plus_card_state =  new PlusCardState(this);
-       this.reverse_card_state = new ReverseCardState(this);
-       this.skip_card_state = new SkipCardState(this);
-       this.undetermined_card_state =  new UndeterminedOrdinaryCardState();
+       this.ordinaryCardState =  new OrdinaryCardState(this);
+       this.plusCardState =  new PlusCardState(this);
+       this.reverseCardState = new ReverseCardState(this);
+       this.skipCardState = new SkipCardState(this);
+       this.undeterminedCardState =  new UndeterminedOrdinaryCardState();
 
-       this.current_state = null;
-       this.UNO_state = new UNOState(this);
-       this.list_of_players =  new ArrayList<>();
-       this.stack_of_cards =  new Stack<>();
-       this.stack_of_want_to_be_reused_cards = new Stack<>();
-       this.current_turn = 0;
-       this.player_size = 0;
-       this.current_champion_position = 1;
-       this.string_on_display = "";
+       this.currentState = null;
+       this.UNOState = new UNOState(this);
+       this.players =  new ArrayList<>();
+       this.cardStack =  new Stack<>();
+       this.toBeReusedCardStack = new Stack<>();
+       this.currentTurn = 0;
+       this.playerSize = 0;
+       this.currentChampionPosition = 1;
+       this.stringOnDisplay = "";
    }
 
     /**
@@ -57,9 +57,9 @@ public class GameMaster {
      * to display during the start of the game.
      */
    public void initGame(){
-       Collections.shuffle(stack_of_cards);
-       Collections.shuffle(list_of_players);
-       this.string_on_display = "Selamat bergabung di Game UNO dengan kearifan lokal by UNO Bot\n" +
+       Collections.shuffle(cardStack);
+       Collections.shuffle(players);
+       this.stringOnDisplay = "Selamat bergabung di Game UNO dengan kearifan lokal by UNO Bot\n" +
                "\n" +
                "Kenapa ada kearifan lokalnya? Karena Game UNO ini diutak-atik sedikit peraturannya untuk menyesuaikan kebiasaan orang Indonesia \"Yang Menang Yang Keluar Dulu\" :v\n" +
                "\n" +
@@ -121,7 +121,7 @@ public class GameMaster {
      */
    public void addPlayer(String name){
        Player player = new Player( name);
-       this.list_of_players.add(player);
+       this.players.add(player);
    }
 
     /**
@@ -130,8 +130,8 @@ public class GameMaster {
      * @param player
      */
    public void removePlayer(Player player){
-       this.list_of_players.remove(player_size);
-       this.player_size = this.list_of_players.size();
+       this.players.remove(playerSize);
+       this.playerSize = this.players.size();
    }
 
     /**

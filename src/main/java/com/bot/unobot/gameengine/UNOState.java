@@ -10,7 +10,7 @@ public class UNOState implements State {
     //Variables
     GameMaster gameMaster;
     String display;
-    Player current_player;
+    Player currentPlayer;
 
     /**
      * Uno State Constructor
@@ -21,7 +21,7 @@ public class UNOState implements State {
     public UNOState(GameMaster gameMaster,Player player){
         this.gameMaster=gameMaster;
         this.display = "";
-        this.current_player = player;
+        this.currentPlayer = player;
     }
 
     /*
@@ -49,17 +49,17 @@ public class UNOState implements State {
      * @return current player's ID
      */
     public String getCurrentPlayer(){
-        return this.current_player.getId();
+        return this.currentPlayer.getId();
     }
 
     /**
      * Accept User Card
      *
-     * @param card_name
-     * @param card_color
+     * @param cardName
+     * @param cardColor
      */
     @Override
-    public void acceptUsersCard(String card_name, String card_color) {
+    public void acceptUsersCard(String cardName, String cardColor) {
 
     }
 
@@ -70,7 +70,7 @@ public class UNOState implements State {
      */
     @Override
     public void takeAnotherCard() {
-        this.current_player.getCardsCollection().add(this.gameMaster.stack_of_cards.pop());
+        this.currentPlayer.getCardsCollection().add(this.gameMaster.cardStack.pop());
 
     }
 
@@ -79,12 +79,12 @@ public class UNOState implements State {
     *
     * */
     @Override
-    public void cardChecking(String user_input) {
-        String UNO_Id = user_input;
+    public void cardChecking(String userInput) {
+        String UNOId = userInput;
         Player Winner = null;
 
-        for (Player player : this.gameMaster.list_of_players){
-            if (player.getId().equals(UNO_Id)){
+        for (Player player : this.gameMaster.players){
+            if (player.getId().equals(UNOId)){
                 Winner = player;
             }
         }

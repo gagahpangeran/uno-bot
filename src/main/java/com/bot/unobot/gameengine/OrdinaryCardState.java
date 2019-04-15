@@ -12,7 +12,7 @@ public class OrdinaryCardState implements State {
     //Variables
     GameMaster gameMaster;
     String display;
-    Player current_player;
+    Player currentPlayer;
 
     /**
      * Ordinary Card State Constructor
@@ -24,7 +24,7 @@ public class OrdinaryCardState implements State {
     public OrdinaryCardState(GameMaster gameMaster){
         this.gameMaster=gameMaster;
         this.display = "";
-        this.current_player = null;
+        this.currentPlayer = null;
     }
 
     /**
@@ -34,13 +34,13 @@ public class OrdinaryCardState implements State {
      */
     @Override
     public String getCurrentPlayer(){
-        this.current_player = gameMaster.list_of_players.get(gameMaster.current_turn); // mungkin ini nanti masih diedit lagi, apakah di - incrementnya di sini atau di engine
+        this.currentPlayer = gameMaster.players.get(gameMaster.currentTurn); // mungkin ini nanti masih diedit lagi, apakah di - incrementnya di sini atau di engine
         this.display =
                 "Sekarang giliran Anda untuk bermain.\n" +
                 "\n" +
                 "Kartu Anda adalah sebagai berikut: \n"+
-                        this.current_player.showsPlayersCards();
-        return this.current_player.getId();
+                        this.currentPlayer.showsPlayersCards();
+        return this.currentPlayer.getId();
 
     }
 
@@ -51,20 +51,20 @@ public class OrdinaryCardState implements State {
      * It checks the card the player select with the previous card in the stack.
      * If the card has the same color or number, it will be accepted. If not, an
      * error message will be returned.
-     * @param user_input
+     * @param userInput
      */
     @Override
-    public void cardChecking(String user_input){
-        String[] temp = user_input.split(" ");
-        String card_name =  temp[0];
-        String card_color = temp[1];
-        Card last_card = gameMaster.stack_of_want_to_be_reused_cards.peek();
+    public void cardChecking(String userInput){
+        String[] temp = userInput.split(" ");
+        String cardName =  temp[0];
+        String cardColor = temp[1];
+        Card lastCard = gameMaster.toBeReusedCardStack.peek();
 
-        if (card_color.equals(last_card.getColor())&&card_name.equals(last_card.getName())){
-            acceptUsersCard(card_name, card_color);
+        if (cardColor.equals(lastCard.getColor())&&cardName.equals(lastCard.getName())){
+            acceptUsersCard(cardName, cardColor);
         }
-        else  if (card_color.equals("Black")){
-            acceptUsersCard(card_name, "Black");
+        else  if (cardColor.equals("Black")){
+            acceptUsersCard(cardName, "Black");
         }
         else{
             this.display ="Maaf, Kartu yang Anda keluarkan tidak cocok\n" +
@@ -80,25 +80,25 @@ public class OrdinaryCardState implements State {
      */
     @Override
     public void takeAnotherCard(){
-        this.current_player.getCardsCollection().add(this.gameMaster.stack_of_cards.pop());
+        this.currentPlayer.getCardsCollection().add(this.gameMaster.cardStack.pop());
         this.display = endTurn();
     }
 
     /**
      * Accept User Card
      *
-     * @param card_name
-     * @param card_color
+     * @param cardName
+     * @param cardColor
      */
-    public void acceptUsersCard(String card_name, String card_color){
-        Card removal_target = null;
-        for (Card cards : this.current_player.getCardsCollection()){
-            if (cards.getColor().equals(card_color) && cards.getName().equals(card_name)){
-                removal_target = cards;
+    public void acceptUsersCard(String cardName, String cardColor){
+        Card removalTarget = null;
+        for (Card cards : this.currentPlayer.getCardsCollection()){
+            if (cards.getColor().equals(cardColor) && cards.getName().equals(cardName)){
+                removalTarget = cards;
             }
         }
-        this.gameMaster.stack_of_want_to_be_reused_cards.push(removal_target);
-        this.current_player.getCardsCollection().remove(removal_target);
+        this.gameMaster.toBeReusedCardStack.push(removalTarget);
+        this.currentPlayer.getCardsCollection().remove(removalTarget);
         this.display = "Nice Move !!!!\n" +
                 "\n" +
                 "\n" +

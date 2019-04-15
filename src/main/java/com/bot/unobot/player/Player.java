@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class Player {
     //Variables
     String id;
-    ArrayList<Card> cards_collection;
+    ArrayList<Card> cards;
 
     /**
      * Player Constructor
@@ -18,7 +18,7 @@ public class Player {
      */
     public Player(String id){
         this.id =id;
-        this.cards_collection = new ArrayList<>();
+        this.cards = new ArrayList<>();
     }
 
     /**
@@ -36,11 +36,11 @@ public class Player {
      * @return player's card
      */
     public String showsPlayersCards(){
-        String card_list ="";
-        for(int i =1;i<=this.cards_collection.size();i++){
-            card_list+=Integer.toString(i)+". "+this.cards_collection.get(i-1)+" \n";
+        String cardList ="";
+        for(int i = 1; i<=this.cards.size(); i++){
+            cardList+=Integer.toString(i)+". "+this.cards.get(i-1)+" \n";
         }
-        return card_list;
+        return cardList;
     }
 
     /**
@@ -49,6 +49,6 @@ public class Player {
      * @return card collection ArrayList
      */
     public ArrayList<Card> getCardsCollection(){
-        return cards_collection;
+        return cards;
     }
 }

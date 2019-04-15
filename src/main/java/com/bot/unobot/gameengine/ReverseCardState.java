@@ -11,7 +11,7 @@ public class ReverseCardState implements State {
     //Variables
     GameMaster gameMaster;
     String display;
-    Player current_player;
+    Player currentPlayer;
 
     /**
      * Reverse Card State Constructor
@@ -20,7 +20,7 @@ public class ReverseCardState implements State {
     public ReverseCardState(GameMaster gameMaster){
         this.gameMaster=gameMaster;
         this.display = "";
-        this.current_player = null;
+        this.currentPlayer = null;
     }
 
     /**
@@ -30,7 +30,7 @@ public class ReverseCardState implements State {
      */
     @Override
     public String getCurrentPlayer(){
-        this.current_player = gameMaster.list_of_players.get(gameMaster.current_turn);
+        this.currentPlayer = gameMaster.players.get(gameMaster.currentTurn);
         this.display ="Aduhhh....\n" +
                 "\n" +
                 "Temen Anda ternyata mengeluarkan kartu reverse\n" +
@@ -41,7 +41,7 @@ public class ReverseCardState implements State {
                 "\n" +
                 "\n"+
                 endTurn();
-        return this.current_player.getId();
+        return this.currentPlayer.getId();
     }
 
     /**
@@ -50,25 +50,25 @@ public class ReverseCardState implements State {
      * It checks the card the player select with the previous card in the stack.
      * If the card has the same color or number, it will be accepted. If not, an
      * error message will be returned.
-     * @param user_input
+     * @param userInput
      */
     @Override
-    public void cardChecking(String user_input){
+    public void cardChecking(String userInput){
         /*
         * Disini saya akan mengeksekusi effect dari karu ini
         *
         * Effect state ini:
-        * a. mengganti current_turn menjadi current_turn-1
+        * a. mengganti currentTurn menjadi currentTurn-1
         * b. Men- set next state menjadi UndeterminedOrdinaryCardState
         *
         *
         * */
-        this.gameMaster.current_turn -=2;
-        if (this.gameMaster.current_turn<0){
-            this.gameMaster.current_turn += this.gameMaster.player_size;
+        this.gameMaster.currentTurn -=2;
+        if (this.gameMaster.currentTurn <0){
+            this.gameMaster.currentTurn += this.gameMaster.playerSize;
         }
-        String current_color = this.gameMaster.stack_of_want_to_be_reused_cards.peek().getColor();
-        this.gameMaster.current_state = new UndeterminedOrdinaryCardState(current_color);
+        String currentColor = this.gameMaster.toBeReusedCardStack.peek().getColor();
+        this.gameMaster.currentState = new UndeterminedOrdinaryCardState(currentColor);
     }
 
     /**
@@ -83,11 +83,11 @@ public class ReverseCardState implements State {
     /**
      * Accept User Card
      *
-     * @param card_name
-     * @param card_color
+     * @param cardName
+     * @param cardColor
      */
     @Override
-    public void acceptUsersCard(String card_name, String card_color) {
+    public void acceptUsersCard(String cardName, String cardColor) {
 
     }
 

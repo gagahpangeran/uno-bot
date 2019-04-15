@@ -13,11 +13,11 @@ public interface State {
      */
      String getCurrentPlayer();
 
-     void cardChecking(String user_input);
+     void cardChecking(String userInput);
 
      void takeAnotherCard();
 
-     void acceptUsersCard(String card_name, String card_color);
+     void acceptUsersCard(String cardName, String cardColor);
 
      String endTurn();
 

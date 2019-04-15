@@ -12,7 +12,7 @@ public class PlusCardState implements State {
     //Variables
     GameMaster gameMaster;
     String display;
-    Player current_player;
+    Player currentPlayer;
 
     /**
      * Plus Card State Constructor
@@ -21,7 +21,7 @@ public class PlusCardState implements State {
     public PlusCardState(GameMaster gameMaster){
         this.gameMaster=gameMaster;
         this.display = "";
-        this.current_player = null;
+        this.currentPlayer = null;
     }
 
     /**
@@ -30,7 +30,7 @@ public class PlusCardState implements State {
      * @return current player's ID
      */
     public String getCurrentPlayer(){
-        this.current_player = gameMaster.list_of_players.get(gameMaster.current_turn);
+        this.currentPlayer = gameMaster.players.get(gameMaster.currentTurn);
         this.display ="Aduh.......\n" +
                 "\n" +
                 "Kamu kena kartu plus ... :'(\n" +
@@ -42,7 +42,7 @@ public class PlusCardState implements State {
                 "Semangat Player!!! " +
                 "\n"+
                 endTurn();
-        return this.current_player.getId();
+        return this.currentPlayer.getId();
 
     }
 /*
@@ -54,12 +54,12 @@ public class PlusCardState implements State {
     /**
      * Card Checking
      * It can be used as an implementation from the effect of wildcards (reverse, adds, and skips).
-     * @param user_input
+     * @param userInput
      */
-    public void cardChecking(String user_input){
-        if (gameMaster.stack_of_want_to_be_reused_cards.peek() instanceof PlusCard){
-            PlusCard last_card = (PlusCard)gameMaster.stack_of_want_to_be_reused_cards.peek();
-            for (int i =0;i<last_card.getPlus();i++){
+    public void cardChecking(String userInput){
+        if (gameMaster.toBeReusedCardStack.peek() instanceof PlusCard){
+            PlusCard lastCard = (PlusCard)gameMaster.toBeReusedCardStack.peek();
+            for (int i =0;i<lastCard.getPlus();i++){
                 takeAnotherCard();
             }
         }
@@ -72,17 +72,17 @@ public class PlusCardState implements State {
      */
     @Override
     public void takeAnotherCard(){
-        this.current_player.getCardsCollection().add(this.gameMaster.stack_of_cards.pop());
+        this.currentPlayer.getCardsCollection().add(this.gameMaster.cardStack.pop());
         this.display = endTurn();
     }
 
     /**Accept User Card
      * It accepts all kinds of +2 and +4 cards.
-     * @param card_name
-     * @param card_color
+     * @param cardName
+     * @param cardColor
      */
     @Override
-    public void acceptUsersCard(String card_name, String card_color){
+    public void acceptUsersCard(String cardName, String cardColor){
     }
 
     /**
