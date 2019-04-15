@@ -1,12 +1,15 @@
-package com.bot.unobot.TestCards;
+package com.bot.unobot.card;
 
-public class ReverseCard implements Card {
+public class PlusCard implements Card {
+
     String name;
     String color;
+    int plus;
 
-    public ReverseCard(String name, String color){
+    public PlusCard(String name, String color, int plus){
         this.name=name;
         this.color=color;
+        this.plus = plus;
     }
 
     @Override
@@ -17,5 +20,9 @@ public class ReverseCard implements Card {
     @Override
     public String getColor() {
         return color;
+    }
+
+    public int getPlus() {
+        return plus;
     }
 }

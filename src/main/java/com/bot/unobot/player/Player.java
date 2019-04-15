@@ -1,6 +1,6 @@
-package com.bot.unobot.Player;
+package com.bot.unobot.player;
 
-import com.bot.unobot.TestCards.Card;
+import com.bot.unobot.card.Card;
 
 import java.util.ArrayList;
 

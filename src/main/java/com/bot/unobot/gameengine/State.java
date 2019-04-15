@@ -1,4 +1,4 @@
-package com.bot.unobot.GameEngine;
+package com.bot.unobot.gameengine;
 
 /**
  * State Interface

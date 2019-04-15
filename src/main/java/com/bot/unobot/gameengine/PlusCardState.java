@@ -1,9 +1,7 @@
-package com.bot.unobot.GameEngine;
+package com.bot.unobot.gameengine;
 
-import com.bot.unobot.Player.Player;
-import com.bot.unobot.TestCards.Card;
-import com.bot.unobot.TestCards.PlusCard;
-import com.sun.org.apache.xpath.internal.operations.Plus;
+import com.bot.unobot.player.Player;
+import com.bot.unobot.card.PlusCard;
 
 /**
  * Plus Card State

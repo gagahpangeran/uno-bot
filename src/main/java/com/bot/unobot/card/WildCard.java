@@ -1,12 +1,12 @@
-package com.bot.unobot.TestCards;
+package com.bot.unobot.card;
 
-public class SkipCard implements Card {
+public class WildCard implements Card {
 
     String name;
     String color;
 
-    public SkipCard(String name, String color){
-        this.name=name;
+    public WildCard( String color){
+        this.name="Wildcard";
         this.color=color;
     }
 

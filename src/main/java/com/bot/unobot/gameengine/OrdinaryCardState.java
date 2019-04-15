@@ -1,7 +1,7 @@
-package com.bot.unobot.GameEngine;
+package com.bot.unobot.gameengine;
 
-import com.bot.unobot.Player.Player;
-import com.bot.unobot.TestCards.Card;
+import com.bot.unobot.player.Player;
+import com.bot.unobot.card.Card;
 
 /**
  * Ordinary Card State
