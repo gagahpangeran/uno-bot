@@ -1,21 +1,18 @@
 package com.bot.unobot.handler;
 
-import com.bot.unobot.command.CommandController;
-import com.bot.unobot.command.HelpCommand;
+import com.bot.unobot.GameEngine.GameMaster;
 import com.linecorp.bot.client.LineMessagingClient;
+import com.linecorp.bot.model.PushMessage;
 import com.linecorp.bot.model.ReplyMessage;
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.TextMessage;
-import com.linecorp.bot.model.message.flex.component.Box;
-import com.linecorp.bot.model.message.flex.component.Text;
-import com.linecorp.bot.model.message.flex.container.Bubble;
-import com.linecorp.bot.model.message.flex.unit.FlexLayout;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
 @LineMessageHandler
@@ -24,8 +21,8 @@ public class HandlerController {
     @Autowired
     private LineMessagingClient lineMessagingClient;
 
-    private CommandController command;
     private String token;
+    private HashMap<String, GameMaster> gameMasters = new HashMap<>();
 
     @EventMapping
     public void handleDefaultMessageEvent(Event event) {
@@ -34,22 +31,29 @@ public class HandlerController {
 
     @EventMapping
     public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
-        System.out.println("event: " + event);
         this.token = event.getReplyToken();
+        String userId = event.getSource().getUserId();
+        String groupId = event.getSource().getSenderId();
 
         String msg = event.getMessage().getText();
 
-        if (msg.charAt(0) == '!') {
+        if (msg.charAt(0) == '.') {
             String command = msg.substring(1);
-            this.addCommand(command);
-            this.command.execute();
+            execute(command, userId, groupId);
         }
     }
 
-    public void addCommand(String command) {
+    public void execute(String command, String userId, String groupId) {
         switch(command) {
-            case "help":
-                this.command = new HelpCommand(this);
+            case "create":
+                gameMasters.put(groupId, new GameMaster());
+                this.replyMessage("Game berhasil dibuat");
+                break;
+            case "join":
+                GameMaster game = gameMasters.get(groupId);
+                game.add_player(userId);
+                this.replyMessage("Pemain " + userId + " berhasil bergabung");
+                this.pushMessage(userId, "Kamu bergabung ke permainan UNO di grup " + groupId);
                 break;
         }
     }
@@ -59,10 +63,19 @@ public class HandlerController {
         try {
             lineMessagingClient.replyMessage(new ReplyMessage(this.token, reply)).get();
         } catch (InterruptedException | ExecutionException e) {
-            System.out.println("There's something wrong");
+            System.out.println("There's something wrong with reply message");
         }
+    }
 
-
+    public void pushMessage(String userId, String msg) {
+        TextMessage reply = new TextMessage(msg);
+        try {
+            lineMessagingClient.pushMessage(new PushMessage(userId, reply)).get();
+        } catch (InterruptedException | ExecutionException e) {
+            this.replyMessage("Tolong add aku ya!");
+            System.out.println("There's something wrong with push message");
+            System.out.println(e);
+        }
     }
 
 }
