@@ -30,5 +30,3 @@ Line chatbot for playing UNO
 - Jalankan ngrok di port 8080
 - Ubah alamat webhook sesuai dengan yang ditampilkan ngrok di halaman line developer
 - Silakan di coba-coba
-
-## This is Vincentius Branch
