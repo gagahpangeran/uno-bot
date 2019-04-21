@@ -120,7 +120,7 @@ public class GameMaster {
      * @param name
      */
    public void addPlayer(String name){
-       Player player = new Player( name);
+       Player player = new Player(name);
        this.players.add(player);
    }
 
@@ -130,7 +130,7 @@ public class GameMaster {
      * @param player
      */
    public void removePlayer(Player player){
-       this.players.remove(playerSize);
+       this.players.remove(player);
        this.playerSize = this.players.size();
    }
 
@@ -143,5 +143,18 @@ public class GameMaster {
        // return False otherwise
    }
 
+   public ArrayList<Player> getPlayers() {
+       return players;
+   }
+
+   public String getStringOnDisplay() {
+       return stringOnDisplay;
+   }
+
+   public Player findPlayer(String name) {
+       for (int i = 0; i < players.size(); i++) {
+           if(players(i).equals("name"))
+       }
+   }
 
 }

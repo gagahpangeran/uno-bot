@@ -1,7 +1,7 @@
 package com.bot.unobot;
 
-import com.bot.unobot.GameEngine.GameMaster;
-import com.bot.unobot.Player.Player;
+import com.bot.unobot.gameengine.GameMaster;
+import com.bot.unobot.player.Player;
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Before;
@@ -22,7 +22,7 @@ public class GameMasterTest {
 
     @Test
 
-    public void init_game_test() {
+    public void test_init_game() {
 
         String expected =
                 "Selamat bergabung di Game UNO dengan Kearifan Lokal by UNOBot\n" +
@@ -44,15 +44,24 @@ public class GameMasterTest {
                         "Selamat bermain semuanya!\n" +
                         "\n" +
                         "\n";
-        gameMaster.init_game();
-        Assert.assertThat(gameMaster.getString_on_display(), CoreMatchers.is(expected));
+        gameMaster.initGame();
+        Assert.assertThat(gameMaster.getStringOnDisplay(), CoreMatchers.is(expected));
     }
 
     @Test
 
-    public void add_player_test(){
-        gameMaster.add_player("Jono");
-        Assert.assertEquals(gameMaster.getList_of_players().size(), 1);
+    public void test_add_player(){
+        gameMaster.addPlayer("Jono");
+        Assert.assertEquals(gameMaster.getPlayers().size(), 1);
+    }
+
+    @Test
+    public void test_remove_player() {
+        gameMaster.addPlayer("Jono");
+        Assert.assertEquals(gameMaster.getPlayers().size(), 1);
+
+        gameMaster.removePlayer(Jono);
+        Assert.assertEquals(gameMaster.getPlayers().size(), 0);
     }
 
 }
