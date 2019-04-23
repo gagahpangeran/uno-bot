@@ -17,9 +17,6 @@ public class OrdinaryCardState implements State {
     /**
      * Ordinary Card State Constructor
      */
-    public OrdinaryCardState (){
-
-    }
 
     public OrdinaryCardState(GameMaster gameMaster){
         this.gameMaster=gameMaster;
@@ -116,5 +113,5 @@ public class OrdinaryCardState implements State {
     public String endTurn(){
         return "Giliran kamu sudah selesai!"+" \n"+
                 "Tunggu giliran selanjutnya ya :) !";
-    };
+    }
 }
