@@ -9,6 +9,7 @@ import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.TextMessage;
+import com.linecorp.bot.model.profile.UserProfileResponse;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +26,6 @@ public class HandlerController {
     private String token;
     private HashMap<String, GameMaster> gameMasters = new HashMap<>();
 
-    @EventMapping
-    public void handleDefaultMessageEvent(Event event) {
-        System.out.println("event: " + event);
-    }
 
     @EventMapping
     public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
@@ -79,4 +76,13 @@ public class HandlerController {
         }
     }
 
+    public String getUserDisplayName(String userId) {
+        String name = "";
+        try {
+            name = lineMessagingClient.getProfile(userId).get().getDisplayName();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return name;
+    }
 }
