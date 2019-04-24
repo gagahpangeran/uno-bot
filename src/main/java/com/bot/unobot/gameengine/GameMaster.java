@@ -82,37 +82,37 @@ public class GameMaster {
                ;
    }
 
-    /**
-     * Update
-     *
-     */
-   public void update(){
-       // nanti di update, current playernya i increment 1 :)
-       /*
-       * Beberapa notulensi:
-       * 1. Pas reverse state, abis situ state selanjutnya adalah UndeterminedOrdinaryCardState
-       * 2. Begitu juga habis plus card
-       *
-       * asumsi awal : kartu ordinary bisa dilawan dengan plus card
-       *
-       * beberapa metode update ke next state yang akan diterapkan:
-       *
-       * yang pake if :
-       * - ordinary
-       *
-       * - (mungkin) UNO
-       * - (mungkin) Winner
-       * - (mungkin) WInnerState
-       * - (mungkin) WildCard
-       *
-       * yang enggak :
-       * - reverse
-       * - skip
-       * - pluscard
-       * disini nanti diupdate scara otomatis di statenya.
-       *
-       * */
-   }
+//    /**
+//     * Update
+//     *
+//     */
+//   public void update(){
+//       // nanti di update, current playernya i increment 1 :)
+//       /*
+//       * Beberapa notulensi:
+//       * 1. Pas reverse state, abis situ state selanjutnya adalah UndeterminedOrdinaryCardState
+//       * 2. Begitu juga habis plus card
+//       *
+//       * asumsi awal : kartu ordinary bisa dilawan dengan plus card
+//       *
+//       * beberapa metode update ke next state yang akan diterapkan:
+//       *
+//       * yang pake if :
+//       * - ordinary
+//       *
+//       * - (mungkin) UNO
+//       * - (mungkin) Winner
+//       * - (mungkin) WInnerState
+//       * - (mungkin) WildCard
+//       *
+//       * yang enggak :
+//       * - reverse
+//       * - skip
+//       * - pluscard
+//       * disini nanti diupdate scara otomatis di statenya.
+//       *
+//       * */
+//   }
 
     /**
      * Add Player
@@ -134,14 +134,14 @@ public class GameMaster {
        this.playerSize = this.players.size();
    }
 
-    /**
-     * UNO Checker
-     * Checking the number of cards a certain player has.
-     */
-   public void UNOChecker(){
-       // return True kalau ada yang tinggal 1 kartunya
-       // return False otherwise
-   }
+//    /**
+//     * UNO Checker
+//     * Checking the number of cards a certain player has.
+//     */
+//   public void UNOChecker(){
+//       // return True kalau ada yang tinggal 1 kartunya
+//       // return False otherwise
+//   }
 
    public ArrayList<Player> getPlayers() {
        return players;
@@ -152,9 +152,12 @@ public class GameMaster {
    }
 
    public Player findPlayer(String name) {
-       for (int i = 0; i < players.size(); i++) {
-           if(players(i).equals("name"))
+       for (Player player: players) {
+           if(player.getId().equals(name)) {
+               return player;
+           }
        }
+       return null;
    }
 
 }

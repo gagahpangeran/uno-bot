@@ -5,7 +5,7 @@ public class WildCard implements Card {
     String name;
     String color;
 
-    public WildCard( String color){
+    public WildCard(String color){
         this.name="Wildcard";
         this.color=color;
     }
