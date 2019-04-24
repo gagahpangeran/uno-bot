@@ -25,8 +25,5 @@ public class PlayerTest {
 
         Assert.assertThat(player.getId(), CoreMatchers.is("1234"));
         Assert.assertThat(player.getCards_collection().size(), CoreMatchers.is(0));
-
-
-
     }
 }

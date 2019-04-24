@@ -23,7 +23,6 @@ public class StateTest {
     public void setUp(){
         gameMaster =  new GameMaster();;
         testState = new OrdinaryCardState(gameMaster);
-
     }
 
     @Test
