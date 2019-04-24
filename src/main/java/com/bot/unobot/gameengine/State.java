@@ -21,6 +21,10 @@ public interface State {
 
      String endTurn();
 
+     void update();
+
+     void setCurrentColor(String currentColor);
+
 
 
 }

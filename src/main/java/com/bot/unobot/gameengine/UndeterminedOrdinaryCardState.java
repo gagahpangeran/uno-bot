@@ -1,7 +1,7 @@
 package com.bot.unobot.gameengine;
 
+import com.bot.unobot.card.*;
 import com.bot.unobot.player.Player;
-import com.bot.unobot.card.Card;
 
 /**
  * Undetermined Ordinary Card State
@@ -9,7 +9,7 @@ import com.bot.unobot.card.Card;
 public class UndeterminedOrdinaryCardState implements State {
 
     //Variables
-    String color;
+    String currentColor;
     String display;
     Player currentPlayer;
     GameMaster gameMaster;
@@ -20,13 +20,13 @@ public class UndeterminedOrdinaryCardState implements State {
     public UndeterminedOrdinaryCardState ( ){}
 
     public UndeterminedOrdinaryCardState ( String color){
-        this.color = color;
+        this.currentColor = color;
         this.display = "";
         this.currentPlayer = null;
     }
 
     public UndeterminedOrdinaryCardState ( String color, GameMaster gameMaster){
-        this.color = color;
+        this.currentColor = color;
         this.gameMaster=gameMaster;
         this.display = "";
         this.currentPlayer = null;
@@ -122,5 +122,27 @@ public class UndeterminedOrdinaryCardState implements State {
     public String endTurn(){
         return "Giliran Anda sudah selesai!"+" \n"+
                 "Tunggu giliran selanjutnya ya :) !";
+    }
+
+    @Override
+    public void setCurrentColor(String currentColor) {
+        this.currentColor = currentColor;
+    }
+
+    @Override
+    public void update() {
+        Card cardOnTopOfStack = this.gameMaster.toBeReusedCardStack.peek();
+        if (cardOnTopOfStack instanceof OrdinaryCard){
+            this.gameMaster.currentState = this.gameMaster.ordinaryCardState;
+        }else if (cardOnTopOfStack instanceof PlusCard){
+            this.gameMaster.currentState =  this.gameMaster.plusCardState;
+        }else if (cardOnTopOfStack instanceof ReverseCard){
+            this.gameMaster.currentState = this.gameMaster.reverseCardState;
+        }else if (cardOnTopOfStack instanceof SkipCard){
+            this.gameMaster.currentState = this.gameMaster.skipCardState;
+        }
+        this.gameMaster.currentTurn+=1;
+
+
     }
 }
