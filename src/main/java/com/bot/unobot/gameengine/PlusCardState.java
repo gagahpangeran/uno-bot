@@ -10,9 +10,19 @@ import com.bot.unobot.card.PlusCard;
 public class PlusCardState implements State {
 
     //Variables
+
+    /*
+    * Sedikit update:
+    *
+    * Saya akan menambahkan attribut berupa currentColor
+    * currentColor merupakan warna yang diset oleh seseorang yang mengeluarkan kartu plus
+    * */
     GameMaster gameMaster;
     String display;
     Player currentPlayer;
+    String currentColor;
+
+
 
     /**
      * Plus Card State Constructor
@@ -22,6 +32,8 @@ public class PlusCardState implements State {
         this.gameMaster=gameMaster;
         this.display = "";
         this.currentPlayer = null;
+        this.currentColor ="";
+
     }
 
     /**
@@ -94,5 +106,18 @@ public class PlusCardState implements State {
     public String endTurn(){
         return "Giliran kamu udah beres!"+" \n"+
                 "Tunggu giliran selanjutnya ya :) !";
+    }
+
+
+
+    @Override
+    public void update() {
+        this.gameMaster.currentState = this.gameMaster.undeterminedCardState;
+        this.gameMaster.currentState.setCurrentColor(currentColor);
+    }
+
+    @Override
+    public void setCurrentColor(String currentColor) {
+        this.currentColor=currentColor;
     }
 }

@@ -9,7 +9,7 @@ import com.bot.unobot.card.Card;
 public class UndeterminedOrdinaryCardState implements State {
 
     //Variables
-    String color;
+    String currentColor;
     String display;
     Player currentPlayer;
     GameMaster gameMaster;
@@ -20,13 +20,13 @@ public class UndeterminedOrdinaryCardState implements State {
     public UndeterminedOrdinaryCardState ( ){}
 
     public UndeterminedOrdinaryCardState ( String color){
-        this.color = color;
+        this.currentColor = color;
         this.display = "";
         this.currentPlayer = null;
     }
 
     public UndeterminedOrdinaryCardState ( String color, GameMaster gameMaster){
-        this.color = color;
+        this.currentColor = color;
         this.gameMaster=gameMaster;
         this.display = "";
         this.currentPlayer = null;
@@ -122,5 +122,10 @@ public class UndeterminedOrdinaryCardState implements State {
     public String endTurn(){
         return "Giliran Anda sudah selesai!"+" \n"+
                 "Tunggu giliran selanjutnya ya :) !";
+    }
+
+    @Override
+    public void setCurrentColor(String currentColor) {
+        this.currentColor = currentColor;
     }
 }

@@ -1,7 +1,7 @@
 package com.bot.unobot.gameengine;
 
+import com.bot.unobot.card.*;
 import com.bot.unobot.player.Player;
-import com.bot.unobot.card.Card;
 
 /**
  * Ordinary Card State
@@ -13,6 +13,7 @@ public class OrdinaryCardState implements State {
     GameMaster gameMaster;
     String display;
     Player currentPlayer;
+    String currentColor;
 
     /**
      * Ordinary Card State Constructor
@@ -25,6 +26,7 @@ public class OrdinaryCardState implements State {
         this.gameMaster=gameMaster;
         this.display = "";
         this.currentPlayer = null;
+        this.currentColor = "";
     }
 
     /**
@@ -116,5 +118,45 @@ public class OrdinaryCardState implements State {
     public String endTurn(){
         return "Giliran kamu sudah selesai!"+" \n"+
                 "Tunggu giliran selanjutnya ya :) !";
-    };
+    }
+
+    @Override
+    /*
+    * How does update() work?
+    *
+    * algonya adalah dia akan melihat top of stack dari tobereusedcard
+    * dari situ dia akan beraksi, if branching berdasarkan kondisi top of stack
+    *
+    * tapi bagaimana kalau dia uno state?
+    * 1. Update dulu
+    * 2. Abis diupdate cek apakah dia UNO dan ada player yang di phase UNO atau tidak
+    * 3. Ikutin snippet code di bawah ini
+    *
+    *
+    * current_state.update()
+    if (UNO && playerInUNOState){
+    UNOState unostate = new UNOState(this,player,current_state)
+    currentstate = UNOstate
+    }
+    *
+    * */
+    public void update() {
+        Card cardOnTopOfStack = this.gameMaster.toBeReusedCardStack.peek();
+        if (cardOnTopOfStack instanceof OrdinaryCard){
+            this.gameMaster.currentState = this.gameMaster.ordinaryCardState;
+        }else if (cardOnTopOfStack instanceof PlusCard){
+            this.gameMaster.currentState =  this.gameMaster.plusCardState;
+        }else if (cardOnTopOfStack instanceof ReverseCard){
+            this.gameMaster.currentState = this.gameMaster.reverseCardState;
+        }else if (cardOnTopOfStack instanceof SkipCard){
+            this.gameMaster.currentState = this.gameMaster.skipCardState;
+        }
+        this.gameMaster.currentTurn+=1;
+
+    }
+
+    @Override
+    public void setCurrentColor(String currentColor) {
+        this.currentColor = currentColor;
+    }
 }

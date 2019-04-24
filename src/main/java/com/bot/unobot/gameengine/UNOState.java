@@ -5,12 +5,40 @@ import com.bot.unobot.player.Player;
 /**
  * Uno State Class
  */
+
+
+/*
+*
+* Plan buat UNO state
+
+Jadi UNO state adalah state yang sebenernya unik
+
+Kenapa unik?
+
+Karena State ini akan memiliki state lain sebagai class attributenya
+
+Jadi bisa jadi ketika state ini berjalan, ada pemain lain yang tidak "UNO", namun giliran dia jalan
+
+Jadi nanti di update() Game Master kita akan melakukan if branching
+
+current_state.update()
+if (UNO && playerInUNOState){
+    UNOState unostate = new UNOState(this,player,current_state)
+    currentstate = UNOstate
+}
+
+*
+*
+* */
+
+
 public class UNOState implements State {
 
     //Variables
     GameMaster gameMaster;
     String display;
     Player currentPlayer;
+    State concurrentState;
 
     /**
      * Uno State Constructor
@@ -18,10 +46,11 @@ public class UNOState implements State {
      */
     public UNOState(GameMaster gameMaster){}
 
-    public UNOState(GameMaster gameMaster,Player player){
+    public UNOState(GameMaster gameMaster,Player player, State concurrentState){
         this.gameMaster=gameMaster;
         this.display = "";
         this.currentPlayer = player;
+        this.concurrentState = concurrentState;
     }
 
     /*
@@ -51,6 +80,12 @@ public class UNOState implements State {
     public String getCurrentPlayer(){
         return this.currentPlayer.getId();
     }
+
+    /**
+     *
+     * me return player yang lagi giliran tapi dia nggak UNO
+     * */
+    public String getConcurrentStatePlayer(){ return concurrentState.getCurrentPlayer(); }
 
     /**
      * Accept User Card

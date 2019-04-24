@@ -12,6 +12,7 @@ public class SkipCardState implements State {
     GameMaster gameMaster;
     String display;
     Player currentPlayer;
+    String currentColor
 
     /**
      * Skip Card Constructor
@@ -21,6 +22,7 @@ public class SkipCardState implements State {
         this.gameMaster=gameMaster;
         this.display = "";
         this.currentPlayer = null;
+        this.currentColor = "";
     }
 
     /**
@@ -101,5 +103,16 @@ public class SkipCardState implements State {
     public String endTurn(){
         return "Giliran Anda udah selesai!"+" \n"+
                 "Tunggu giliran selanjutnya ya :) !";
+    }
+
+    @Override
+    public void update() {
+
+    }
+
+    @Override
+    public void setCurrentColor(String currentColor) {
+        this.currentColor =currentColor;
+
     }
 }

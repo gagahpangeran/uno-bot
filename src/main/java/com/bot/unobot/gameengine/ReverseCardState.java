@@ -12,6 +12,7 @@ public class ReverseCardState implements State {
     GameMaster gameMaster;
     String display;
     Player currentPlayer;
+    String currentColor;
 
     /**
      * Reverse Card State Constructor
@@ -21,6 +22,7 @@ public class ReverseCardState implements State {
         this.gameMaster=gameMaster;
         this.display = "";
         this.currentPlayer = null;
+        this.currentColor ="";
     }
 
     /**
@@ -67,8 +69,8 @@ public class ReverseCardState implements State {
         if (this.gameMaster.currentTurn <0){
             this.gameMaster.currentTurn += this.gameMaster.playerSize;
         }
-        String currentColor = this.gameMaster.toBeReusedCardStack.peek().getColor();
-        this.gameMaster.currentState = new UndeterminedOrdinaryCardState(currentColor);
+        currentColor = this.gameMaster.toBeReusedCardStack.peek().getColor();
+//        this.gameMaster.currentState = new UndeterminedOrdinaryCardState(currentColor);
     }
 
     /**
@@ -100,5 +102,18 @@ public class ReverseCardState implements State {
     public String endTurn(){
         return "Giliran Anda sudah selesai!"+" \n"+
                 "Tunggu giliran selanjutnya ya :) !";
+    }
+
+    @Override
+    public void setCurrentColor(String currentColor) {
+        this.currentColor = currentColor;
+
+    }
+
+    @Override
+    public void update() {
+        this.gameMaster.currentState = this.gameMaster.undeterminedCardState;
+        this.gameMaster.currentState.setCurrentColor(currentColor);
+
     }
 }
