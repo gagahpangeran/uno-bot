@@ -256,14 +256,26 @@ public class GameMaster {
    }
 
    public String getCurrentPlayer(){
-       return this.currentState.getCurrentPlayer();
+       if (currentState instanceof UNOState){
+        return ((UNOState) currentState).concurrentState.getCurrentPlayer();
+       }
+       return currentState.getCurrentPlayer();
    }
 
    public void acceptUsersCard(String cardName,String cardColor){
-       this.currentState.acceptUsersCard(cardName, cardColor);
+       if (currentState instanceof UNOState){
+            ((UNOState) currentState).concurrentState.acceptUsersCard(cardName, cardColor);
+       }else{
+       currentState.acceptUsersCard(cardName, cardColor);
+       }
    }
    public void takeAnotherCard(){
-       this.currentState.takeAnotherCard();
+       if(currentState instanceof UNOState){
+           ((UNOState) currentState).concurrentState.takeAnotherCard();
+       }else{
+           currentState.takeAnotherCard();
+       }
+
    }
 
    public String getStringOnDisplay(){
