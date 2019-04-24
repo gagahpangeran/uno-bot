@@ -12,7 +12,7 @@ Line chatbot for playing UNO
 
 ## How to develop
 
-### Sebelum Memulai
+### Sebelum Memulai...
 
 - Clone repo ini
 - Buat branch masing-masing
@@ -30,3 +30,4 @@ Line chatbot for playing UNO
 - Jalankan ngrok di port 8080
 - Ubah alamat webhook sesuai dengan yang ditampilkan ngrok di halaman line developer
 - Silakan di coba-coba
+

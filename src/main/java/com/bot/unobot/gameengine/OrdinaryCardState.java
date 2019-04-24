@@ -18,9 +18,6 @@ public class OrdinaryCardState implements State {
     /**
      * Ordinary Card State Constructor
      */
-    public OrdinaryCardState (){
-
-    }
 
     public OrdinaryCardState(GameMaster gameMaster){
         this.gameMaster=gameMaster;

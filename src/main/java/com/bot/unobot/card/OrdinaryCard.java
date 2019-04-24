@@ -15,8 +15,8 @@ public class OrdinaryCard implements Card {
      * @param color
      */
     public OrdinaryCard(String name, String color){
-        this.name=name;
-        this.color=color;
+        this.name = name;
+        this.color = color;
     }
 
     /**

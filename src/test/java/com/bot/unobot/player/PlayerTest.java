@@ -1,7 +1,7 @@
-package com.bot.unobot;
+package com.bot.unobot.player;
 
-import com.bot.unobot.GameEngine.GameMaster;
-import com.bot.unobot.Player.Player;
+import com.bot.unobot.gameengine.GameMaster;
+import com.bot.unobot.player.Player;
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Before;
@@ -18,15 +18,11 @@ public class PlayerTest {
     public Player player;
 
     @Before
-    public void setUp(){ player =  new Player("1234");;}
+    public void setUp(){ player =  new Player("1234");}
 
     @Test
     public void Player_Test(){
-
         Assert.assertThat(player.getId(), CoreMatchers.is("1234"));
-        Assert.assertThat(player.getCards_collection().size(), CoreMatchers.is(0));
-
-
-
+        Assert.assertThat(player.getCardsCollection().size(), CoreMatchers.is(0));
     }
 }
