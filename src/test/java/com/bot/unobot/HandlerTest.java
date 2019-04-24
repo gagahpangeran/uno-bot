@@ -50,6 +50,9 @@ public class HandlerTest {
 
         result = handlerController.execute("join", "userId", "groupId");
         Assert.assertEquals("join", result);
+
+        result = handlerController.execute("leave", "userId", "groupId");
+        Assert.assertEquals("leave", result);
     }
 }
 

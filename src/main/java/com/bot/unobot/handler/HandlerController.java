@@ -1,21 +1,17 @@
 package com.bot.unobot.handler;
 
 import com.bot.unobot.gameengine.GameMaster;
-import com.bot.unobot.player.Player;
 import com.linecorp.bot.client.LineMessagingClient;
 import com.linecorp.bot.model.PushMessage;
 import com.linecorp.bot.model.ReplyMessage;
-import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.TextMessage;
-import com.linecorp.bot.model.profile.UserProfileResponse;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
-import java.util.concurrent.ExecutionException;
 
 @LineMessageHandler
 public class HandlerController {
@@ -55,7 +51,11 @@ public class HandlerController {
                 game.addPlayer(userId);
                 String name = this.getUserDisplayName(userId);
                 this.replyMessage("Pemain " + name + " berhasil bergabung");
-                this.pushMessage(userId, "Kamu bergabung ke permainan UNO di grup " + groupId);
+                this.pushMessage(userId, "Kamu bergabung ke permainan UNO");
+                break;
+            case "leave":
+                this.replyMessage("Leave group!");
+                this.leave(groupId);
                 break;
         }
         return command;
@@ -89,5 +89,14 @@ public class HandlerController {
                 System.out.println(e);
         }
         return name;
+    }
+
+    public String leave(String groupId) {
+        try {
+            lineMessagingClient.leaveGroup(groupId).get();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return groupId;
     }
 }
