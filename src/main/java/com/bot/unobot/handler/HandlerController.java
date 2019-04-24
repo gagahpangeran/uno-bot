@@ -28,7 +28,7 @@ public class HandlerController {
 
 
     @EventMapping
-    public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
+    public String handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
         this.token = event.getReplyToken();
         String userId = event.getSource().getUserId();
         String groupId = event.getSource().getSenderId();
@@ -38,10 +38,13 @@ public class HandlerController {
         if (msg.charAt(0) == '.') {
             String command = msg.substring(1);
             execute(command, userId, groupId);
+            return command;
         }
+
+        return event.getMessage().getText();
     }
 
-    public void execute(String command, String userId, String groupId) {
+    public String execute(String command, String userId, String groupId) {
         switch(command) {
             case "create":
                 gameMasters.put(groupId, new GameMaster());
@@ -50,30 +53,32 @@ public class HandlerController {
             case "join":
                 GameMaster game = gameMasters.get(groupId);
                 game.addPlayer(userId);
-                this.replyMessage("Pemain " + userId + " berhasil bergabung");
+                String name = this.getUserDisplayName(userId);
+                this.replyMessage("Pemain " + name + " berhasil bergabung");
                 this.pushMessage(userId, "Kamu bergabung ke permainan UNO di grup " + groupId);
                 break;
         }
+        return command;
     }
 
-    public void replyMessage(String msg) {
+    public String replyMessage(String msg) {
         TextMessage reply = new TextMessage(msg);
         try {
             lineMessagingClient.replyMessage(new ReplyMessage(this.token, reply)).get();
-        } catch (InterruptedException | ExecutionException e) {
+        } catch (Exception e) {
             System.out.println("There's something wrong with reply message");
         }
+        return msg;
     }
 
-    public void pushMessage(String userId, String msg) {
+    public String pushMessage(String userId, String msg) {
         TextMessage reply = new TextMessage(msg);
         try {
             lineMessagingClient.pushMessage(new PushMessage(userId, reply)).get();
-        } catch (InterruptedException | ExecutionException e) {
-            this.replyMessage("Tolong add aku ya!");
+        } catch (Exception e) {
             System.out.println("There's something wrong with push message");
-            System.out.println(e);
         }
+        return msg;
     }
 
     public String getUserDisplayName(String userId) {
@@ -81,7 +86,7 @@ public class HandlerController {
         try {
             name = lineMessagingClient.getProfile(userId).get().getDisplayName();
         } catch (Exception e) {
-            System.out.println(e);
+                System.out.println(e);
         }
         return name;
     }
