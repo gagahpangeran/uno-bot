@@ -3,6 +3,7 @@ package com.bot.unobot.gameengine;
 import com.bot.unobot.card.*;
 import com.bot.unobot.player.Player;
 
+import java.text.CollationElementIterator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Stack;
@@ -18,7 +19,7 @@ public class GameMaster {
     ReverseCardState reverseCardState;
     SkipCardState skipCardState;
     UndeterminedOrdinaryCardState undeterminedCardState;
-    UNOState UNOState;
+    //UNOState UNOState;
     State currentState;
 
     ArrayList<Player> players;
@@ -42,7 +43,7 @@ public class GameMaster {
        this.undeterminedCardState =  new UndeterminedOrdinaryCardState();
 
        this.currentState = null;
-       this.UNOState = new UNOState(this);
+       //this.UNOState = new UNOState(this);
        this.players =  new ArrayList<>();
        this.cardStack =  new Stack<>();
        this.toBeReusedCardStack = new Stack<>();
@@ -60,8 +61,8 @@ public class GameMaster {
      * to display during the start of the game.
      */
    public void initGame(){
+       fillCardStack();
        Collections.shuffle(cardStack);
-       Collections.shuffle(players);
        this.stringOnDisplay = "Selamat bergabung di Game UNO dengan kearifan lokal by UNO Bot\n" +
                "\n" +
                "Kenapa ada kearifan lokalnya? Karena Game UNO ini diutak-atik sedikit peraturannya untuk menyesuaikan kebiasaan orang Indonesia \"Yang Menang Yang Keluar Dulu\" :v\n" +
@@ -85,37 +86,7 @@ public class GameMaster {
                ;
    }
 
-    /**
-     * Update
-     *
-     */
-   public void update(){
-       // nanti di update, current playernya i increment 1 :)
-       /*
-       * Beberapa notulensi:
-       * 1. Pas reverse state, abis situ state selanjutnya adalah UndeterminedOrdinaryCardState
-       * 2. Begitu juga habis plus card
-       *
-       * asumsi awal : kartu ordinary bisa dilawan dengan plus card
-       *
-       * beberapa metode update ke next state yang akan diterapkan:
-       *
-       * yang pake if :
-       * - ordinary
-       *
-       * - (mungkin) UNO
-       * - (mungkin) Winner
-       * - (mungkin) WInnerState
-       * - (mungkin) WildCard
-       *
-       * yang enggak :
-       * - reverse
-       * - skip
-       * - pluscard
-       * disini nanti diupdate scara otomatis di statenya.
-       *
-       * */
-   }
+
 
 //diubah
     /*
@@ -248,11 +219,13 @@ public class GameMaster {
     /**
      * Add Player
      * Adding new player into the game and also adding the new player into arraylist of players.
-     * @param name
+     * @param id
      */
-   public void addPlayer(String name){
-       Player player = new Player( name);
+   public void addPlayer(String id){
+       Player player = new Player( id);
        this.players.add(player);
+       Collections.shuffle(this.players);
+
    }
 
     /**
@@ -269,10 +242,73 @@ public class GameMaster {
      * UNO Checker
      * Checking the number of cards a certain player has.
      */
-   public void UNOChecker(){
+   public boolean UNOChecker(){
        // return True kalau ada yang tinggal 1 kartunya
        // return False otherwise
+       for (Player player: this.players){
+           if (player.getCardsCollection().size()<=1){
+               playerInUNOState = player;
+               return true;
+
+           }
+       }
+       return false;
    }
+
+   public String getCurrentPlayer(){
+       return this.currentState.getCurrentPlayer();
+   }
+
+   public void acceptUsersCard(String cardName,String cardColor){
+       this.currentState.acceptUsersCard(cardName, cardColor);
+   }
+   public void takeAnotherCard(){
+       this.currentState.takeAnotherCard();
+   }
+
+   public String getStringOnDisplay(){
+       return stringOnDisplay;
+   }
+
+    /**
+     * Update
+     *
+     */
+    public void update(){
+        // nanti di update, current playernya i increment 1 :)
+        /*
+         * Beberapa notulensi:
+         * 1. Pas reverse state, abis situ state selanjutnya adalah UndeterminedOrdinaryCardState
+         * 2. Begitu juga habis plus card
+         *
+         * asumsi awal : kartu ordinary bisa dilawan dengan plus card
+         *
+         * beberapa metode update ke next state yang akan diterapkan:
+         *
+         * yang pake if :
+         * - ordinary
+         *
+         * - (mungkin) UNO
+         * - (mungkin) Winner
+         * - (mungkin) WInnerState
+         * - (mungkin) WildCard
+         *
+         * yang enggak :
+         * - reverse
+         * - skip
+         * - pluscard
+         * disini nanti diupdate scara otomatis di statenya.
+         *
+         * */
+        this.currentState.update();
+        if (UNOChecker() && !playerInUNOState.equals(null)){
+            UNOState UNOState = new UNOState(this);
+            UNOState.setConcurrentState(currentState);
+            currentState = UNOState;
+        }
+    }
+
+
 
 
 }

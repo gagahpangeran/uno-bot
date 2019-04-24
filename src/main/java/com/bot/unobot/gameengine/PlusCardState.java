@@ -114,6 +114,7 @@ public class PlusCardState implements State {
     public void update() {
         this.gameMaster.currentState = this.gameMaster.undeterminedCardState;
         this.gameMaster.currentState.setCurrentColor(currentColor);
+        this.gameMaster.currentTurn+=1;
     }
 
     @Override

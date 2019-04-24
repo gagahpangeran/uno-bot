@@ -1,7 +1,7 @@
 package com.bot.unobot.gameengine;
 
+import com.bot.unobot.card.*;
 import com.bot.unobot.player.Player;
-import com.bot.unobot.card.Card;
 
 /**
  * Undetermined Ordinary Card State
@@ -127,5 +127,22 @@ public class UndeterminedOrdinaryCardState implements State {
     @Override
     public void setCurrentColor(String currentColor) {
         this.currentColor = currentColor;
+    }
+
+    @Override
+    public void update() {
+        Card cardOnTopOfStack = this.gameMaster.toBeReusedCardStack.peek();
+        if (cardOnTopOfStack instanceof OrdinaryCard){
+            this.gameMaster.currentState = this.gameMaster.ordinaryCardState;
+        }else if (cardOnTopOfStack instanceof PlusCard){
+            this.gameMaster.currentState =  this.gameMaster.plusCardState;
+        }else if (cardOnTopOfStack instanceof ReverseCard){
+            this.gameMaster.currentState = this.gameMaster.reverseCardState;
+        }else if (cardOnTopOfStack instanceof SkipCard){
+            this.gameMaster.currentState = this.gameMaster.skipCardState;
+        }
+        this.gameMaster.currentTurn+=1;
+
+
     }
 }
