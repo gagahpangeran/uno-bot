@@ -1,5 +1,12 @@
 stages:
+  - test
   - deploy
+
+Gradle Test:
+  image: java:8
+  stage: test
+  script:
+  - ./gradlew test
 
 Deployment:
   image: ruby:2.4
