@@ -216,6 +216,10 @@ public class GameMaster {
 
    }
 
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
     /**
      * Add Player
      * Adding new player into the game and also adding the new player into arraylist of players.
@@ -226,6 +230,13 @@ public class GameMaster {
        this.players.add(player);
        Collections.shuffle(this.players);
 
+   }
+
+   public Player findPlayer(String id) {
+       for (Player player: players)
+           if (id.equals(player.getId()))
+               return player;
+       return null;
    }
 
     /**
