@@ -1,5 +1,7 @@
 package com.bot.unobot.gameengine;
 
+import com.bot.unobot.card.Color;
+
 /**
  * State Interface
  * An Interface containing methods of playing the game.
@@ -17,13 +19,13 @@ public interface State {
 
      void takeAnotherCard();
 
-     void acceptUsersCard(String cardName, String cardColor);
+     void acceptUsersCard(String cardName, Color cardColor);
 
      String endTurn();
 
      void update();
 
-     void setCurrentColor(String currentColor);
+     void setCurrentColor(Color currentColor);
 
 
 

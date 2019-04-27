@@ -18,8 +18,8 @@ public class WildCardTest {
 
     @Test
     public void OrdinaryCards_Test(){
-        card = new WildCard("yellow");
-        Assert.assertThat(card.getColor(), CoreMatchers.is("yellow"));
+        card = new WildCard(Color.YELLOW);
+        Assert.assertThat(card.getColor(), CoreMatchers.is(Color.YELLOW));
         Assert.assertThat(card.getName(), CoreMatchers.is("Wildcard"));
     }
 }

@@ -7,14 +7,14 @@ package com.bot.unobot.card;
 public class OrdinaryCard implements Card {
     //Variables
     String name;
-    String color;
+    Color color;
 
     /**
      * Ordinary Card Constructor
      * @param name
      * @param color
      */
-    public OrdinaryCard(String name, String color){
+    public OrdinaryCard(String name, Color color){
         this.name = name;
         this.color = color;
     }
@@ -35,7 +35,7 @@ public class OrdinaryCard implements Card {
      * @return card's color String
      */
     @Override
-    public String getColor() {
+    public Color getColor() {
         return color;
     }
 }

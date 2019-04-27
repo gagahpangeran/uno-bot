@@ -22,11 +22,11 @@ public class CardTest {
 
     @Test
     public void cards_Test(){
-        card = new OrdinaryCard("1","yellow");
-        Assert.assertThat(card.getColor(), CoreMatchers.is("yellow"));
+        card = new OrdinaryCard("1",Color.YELLOW);
+        Assert.assertThat(card.getColor(), CoreMatchers.is(Color.YELLOW));
         Assert.assertThat(card.getName(), CoreMatchers.is("1"));
 
-        PlusCard card = new PlusCard("Draw4","black",4);
+        PlusCard card = new PlusCard("Draw4",Color.SPECIAL,4);
         Assert.assertThat(card.getPlus(), CoreMatchers.is(4));
     }
 }

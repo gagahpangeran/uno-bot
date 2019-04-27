@@ -18,8 +18,8 @@ public class PlusCardTest {
 
     @Test
     public void OrdinaryCards_Test(){
-        card = new PlusCard("1","yellow", 4);
-        Assert.assertThat(card.getColor(), CoreMatchers.is("yellow"));
+        card = new PlusCard("1",Color.YELLOW, 4);
+        Assert.assertThat(card.getColor(), CoreMatchers.is(Color.YELLOW));
         Assert.assertThat(card.getName(), CoreMatchers.is("1"));
         Assert.assertThat(card.getPlus(), CoreMatchers.is(4));
     }

@@ -9,7 +9,7 @@ import com.bot.unobot.player.Player;
 public class UndeterminedOrdinaryCardState implements State {
 
     //Variables
-    String currentColor;
+    Color currentColor;
     String display;
     Player currentPlayer;
     GameMaster gameMaster;
@@ -19,13 +19,13 @@ public class UndeterminedOrdinaryCardState implements State {
      */
     public UndeterminedOrdinaryCardState ( ){}
 
-    public UndeterminedOrdinaryCardState ( String color){
+    public UndeterminedOrdinaryCardState ( Color color){
         this.currentColor = color;
         this.display = "";
         this.currentPlayer = null;
     }
 
-    public UndeterminedOrdinaryCardState ( String color, GameMaster gameMaster){
+    public UndeterminedOrdinaryCardState ( Color color, GameMaster gameMaster){
         this.currentColor = color;
         this.gameMaster=gameMaster;
         this.display = "";
@@ -65,8 +65,8 @@ public class UndeterminedOrdinaryCardState implements State {
     public void cardChecking(String userInput) {
         String[] temp = userInput.split(" ");
         String cardName =  temp[0];
-        String cardColor = temp[1];
-        String lastColor = gameMaster.toBeReusedCardStack.peek().getColor();
+        Color cardColor = Color.SPECIAL; // TODO: covert user input string to Color enum
+        Color lastColor = gameMaster.toBeReusedCardStack.peek().getColor();
         if (cardColor.equals(lastColor)){
             acceptUsersCard(cardName, cardColor);
             this.display = "Nice Move !!!!\n" +
@@ -89,7 +89,7 @@ public class UndeterminedOrdinaryCardState implements State {
      * @param cardColor
      */
     @Override
-    public void acceptUsersCard(String cardName, String cardColor) {
+    public void acceptUsersCard(String cardName, Color cardColor) {
         Card removalTarget = null;
         for (Card cards : this.currentPlayer.getCardsCollection()){
             if (cards.getColor().equals(cardColor) && cards.getName().equals(cardName)){
@@ -125,7 +125,7 @@ public class UndeterminedOrdinaryCardState implements State {
     }
 
     @Override
-    public void setCurrentColor(String currentColor) {
+    public void setCurrentColor(Color currentColor) {
         this.currentColor = currentColor;
     }
 

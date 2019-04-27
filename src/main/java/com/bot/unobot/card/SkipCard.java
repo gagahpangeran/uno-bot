@@ -3,9 +3,9 @@ package com.bot.unobot.card;
 public class SkipCard implements Card {
 
     String name;
-    String color;
+    Color color;
 
-    public SkipCard(String name, String color){
+    public SkipCard(String name, Color color){
         this.name=name;
         this.color=color;
     }
@@ -16,7 +16,7 @@ public class SkipCard implements Card {
     }
 
     @Override
-    public String getColor() {
+    public Color getColor() {
         return color;
     }
 }

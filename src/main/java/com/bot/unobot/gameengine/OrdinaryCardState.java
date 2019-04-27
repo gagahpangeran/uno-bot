@@ -13,7 +13,7 @@ public class OrdinaryCardState implements State {
     GameMaster gameMaster;
     String display;
     Player currentPlayer;
-    String currentColor;
+    Color currentColor;
 
     /**
      * Ordinary Card State Constructor
@@ -23,7 +23,7 @@ public class OrdinaryCardState implements State {
         this.gameMaster=gameMaster;
         this.display = "";
         this.currentPlayer = null;
-        this.currentColor = "";
+        this.currentColor = null;
     }
 
     /**
@@ -56,14 +56,14 @@ public class OrdinaryCardState implements State {
     public void cardChecking(String userInput){
         String[] temp = userInput.split(" ");
         String cardName =  temp[0];
-        String cardColor = temp[1];
+        Color cardColor = Color.SPECIAL; // TODO: covert user input string to Color enum
         Card lastCard = gameMaster.toBeReusedCardStack.peek();
 
         if (cardColor.equals(lastCard.getColor())&&cardName.equals(lastCard.getName())){
             acceptUsersCard(cardName, cardColor);
         }
-        else  if (cardColor.equals("Black")){
-            acceptUsersCard(cardName, "Black");
+        else  if (cardColor.equals(Color.SPECIAL)){
+            acceptUsersCard(cardName, Color.SPECIAL);
         }
         else{
             this.display ="Maaf, Kartu yang Anda keluarkan tidak cocok\n" +
@@ -89,7 +89,7 @@ public class OrdinaryCardState implements State {
      * @param cardName
      * @param cardColor
      */
-    public void acceptUsersCard(String cardName, String cardColor){
+    public void acceptUsersCard(String cardName, Color cardColor){
         Card removalTarget = null;
         for (Card cards : this.currentPlayer.getCardsCollection()){
             if (cards.getColor().equals(cardColor) && cards.getName().equals(cardName)){
@@ -153,7 +153,7 @@ public class OrdinaryCardState implements State {
     }
 
     @Override
-    public void setCurrentColor(String currentColor) {
+    public void setCurrentColor(Color currentColor) {
         this.currentColor = currentColor;
     }
 }

@@ -132,88 +132,27 @@ public class GameMaster {
        * */
 
        //the making of 76 ordinary cards
-       String red = "Red";
-       String green  = "Green";
        String reverse = "Reverse";
-       String blue  = "Blue";
        String skip = "Skip";
-       String black = "Black";
-       String yellow  = "Yellow";
-       for (int i =1;i<=4;i++){
-           for (int j=1;j<=24;j++){
-               if (i==1){
-                   if (j >= 20) {
-                       if (j==20){
-                           cardStack.push(new SkipCard(skip,red));
-                       }else if (j==21){
-                           cardStack.push(new ReverseCard(reverse,red));
-                       }else if (j==22){
-                           cardStack.push(new PlusCard("+2",red,2));
-                       }else if (j==23){
-                           cardStack.push(new WildCard(black));
-                       }else{
-                           cardStack.push(new PlusCard("+4",black,4));
-                       }
-                   }else{
-                       cardStack.push(new OrdinaryCard(Integer.toString(j%10),red));
-                   }
+       for (Color color: Color.values()){
+           if (color != Color.SPECIAL) {
+               cardStack.push(new OrdinaryCard(Integer.toString(0), color));
 
-               }else if (i==2){
-                   if (j >= 20) {
-                       if (j==20){
-                           cardStack.push(new SkipCard(skip,green));
-                       }else if (j==21){
-                           cardStack.push(new ReverseCard(reverse,green));
-                       }else if (j==22){
-                           cardStack.push(new PlusCard("+2",green,2));
-                       }else if (j==23){
-                           cardStack.push(new WildCard(black));
-                       }else{
-                           cardStack.push(new PlusCard("+4",black,4));
-                       }
-                   }else{
-                       cardStack.push(new OrdinaryCard(Integer.toString(j%10),green));
-                   }
-               }else if (i==3){
-                   if (j >= 20) {
-                       if (j==20){
-                           cardStack.push(new SkipCard(skip,blue));
-                       }else if (j==21){
-                           cardStack.push(new ReverseCard(reverse,blue));
-                       }else if (j==22){
-                           cardStack.push(new PlusCard("+2",blue,2));
-                       }else if (j==23){
-                           cardStack.push(new WildCard(blue));
-                       }else{
-                           cardStack.push(new PlusCard("+4",black,4));
-                       }
-                   }else{
-                       cardStack.push(new OrdinaryCard(Integer.toString(j%10),blue));
-                   }
-               }else{
-                   if (j >= 20) {
-                       if (j==20){
-                           cardStack.push(new SkipCard(skip,yellow));
-                       }else if (j==21){
-                           cardStack.push(new ReverseCard(reverse,yellow));
-                       }else if (j==22){
-                           cardStack.push(new PlusCard("+2",yellow,2));
-                       }else if (j==23){
-                           cardStack.push(new WildCard(black));
-                       }else{
-                           cardStack.push(new PlusCard("+4",black,4));
-                       }
-                   }else{
-                       cardStack.push(new OrdinaryCard(Integer.toString(j%10),yellow));
-                   }
+               for (int i = 0; i < 2; i++) {
+                   for (int j = 1; j <= 9; j++)
+                       cardStack.push(new OrdinaryCard(Integer.toString(j), color));
+
+                   cardStack.push(new SkipCard(skip, color));
+                   cardStack.push(new ReverseCard(reverse, color));
+                   cardStack.push(new PlusCard("+2", color, 2));
+               }
+           } else {
+               for (int i = 0; i < 4; i++) {
+                   cardStack.push(new WildCard(color));
+                   cardStack.push(new PlusCard("4", color, 4));
                }
            }
-
        }
-
-
-
-
    }
 
     public ArrayList<Player> getPlayers() {
@@ -273,7 +212,7 @@ public class GameMaster {
        return currentState.getCurrentPlayer();
    }
 
-   public void acceptUsersCard(String cardName,String cardColor){
+   public void acceptUsersCard(String cardName,Color cardColor){
        if (currentState instanceof UNOState){
             ((UNOState) currentState).concurrentState.acceptUsersCard(cardName, cardColor);
        }else{
