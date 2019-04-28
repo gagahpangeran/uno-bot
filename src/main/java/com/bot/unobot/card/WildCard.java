@@ -3,9 +3,9 @@ package com.bot.unobot.card;
 public class WildCard implements Card {
 
     String name;
-    String color;
+    Color color;
 
-    public WildCard(String color){
+    public WildCard(Color color){
         this.name="Wildcard";
         this.color=color;
     }
@@ -16,7 +16,7 @@ public class WildCard implements Card {
     }
 
     @Override
-    public String getColor() {
+    public Color getColor() {
         return color;
     }
 }

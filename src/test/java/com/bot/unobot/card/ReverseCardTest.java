@@ -17,8 +17,8 @@ public class ReverseCardTest {
 
     @Test
     public void ReverseCards_Test(){
-        card = new ReverseCard("Reverse", "yellow");
-        Assert.assertThat(card.getColor(), CoreMatchers.is("yellow"));
+        card = new ReverseCard("Reverse", Color.YELLOW);
+        Assert.assertThat(card.getColor(), CoreMatchers.is(Color.YELLOW));
         Assert.assertThat(card.getName(), CoreMatchers.is("Reverse"));
     }
 }

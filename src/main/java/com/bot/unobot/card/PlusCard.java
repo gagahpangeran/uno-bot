@@ -3,10 +3,10 @@ package com.bot.unobot.card;
 public class PlusCard implements Card {
 
     String name;
-    String color;
+    Color color;
     int plus;
 
-    public PlusCard(String name, String color, int plus){
+    public PlusCard(String name, Color color, int plus){
         this.name=name;
         this.color=color;
         this.plus = plus;
@@ -18,7 +18,7 @@ public class PlusCard implements Card {
     }
 
     @Override
-    public String getColor() {
+    public Color getColor() {
         return color;
     }
 

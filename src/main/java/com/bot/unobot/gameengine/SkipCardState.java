@@ -1,5 +1,6 @@
 package com.bot.unobot.gameengine;
 
+import com.bot.unobot.card.Color;
 import com.bot.unobot.player.Player;
 
 /**
@@ -12,7 +13,7 @@ public class SkipCardState implements State {
     GameMaster gameMaster;
     String display;
     Player currentPlayer;
-    String currentColor;
+    Color currentColor;
 
     /**
      * Skip Card Constructor
@@ -22,7 +23,7 @@ public class SkipCardState implements State {
         this.gameMaster=gameMaster;
         this.display = "";
         this.currentPlayer = null;
-        this.currentColor = "";
+        this.currentColor = null;
     }
 
     /**
@@ -90,7 +91,7 @@ public class SkipCardState implements State {
      * @param cardColor
      */
     @Override
-    public void acceptUsersCard(String cardName, String cardColor) {
+    public void acceptUsersCard(String cardName, Color cardColor) {
 
     }
 
@@ -113,7 +114,7 @@ public class SkipCardState implements State {
     }
 
     @Override
-    public void setCurrentColor(String currentColor) {
+    public void setCurrentColor(Color currentColor) {
         this.currentColor =currentColor;
 
     }

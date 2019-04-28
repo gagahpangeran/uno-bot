@@ -5,5 +5,5 @@ package com.bot.unobot.card;
  */
 public interface Card {
     String getName();
-    String getColor();
+    Color getColor();
 }

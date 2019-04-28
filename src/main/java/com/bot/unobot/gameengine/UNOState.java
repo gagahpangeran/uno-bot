@@ -98,7 +98,7 @@ public class UNOState implements State {
      * @param cardColor
      */
     @Override
-    public void acceptUsersCard(String cardName, String cardColor) {
+    public void acceptUsersCard(String cardName, Color cardColor) {
 
     }
 
@@ -165,7 +165,7 @@ public class UNOState implements State {
     }
 
     @Override
-    public void setCurrentColor(String currentColor) {
+    public void setCurrentColor(Color currentColor) {
 
     }
 

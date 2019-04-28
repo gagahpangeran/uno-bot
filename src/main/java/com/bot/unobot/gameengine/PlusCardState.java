@@ -1,5 +1,6 @@
 package com.bot.unobot.gameengine;
 
+import com.bot.unobot.card.Color;
 import com.bot.unobot.player.Player;
 import com.bot.unobot.card.PlusCard;
 
@@ -20,7 +21,7 @@ public class PlusCardState implements State {
     GameMaster gameMaster;
     String display;
     Player currentPlayer;
-    String currentColor;
+    Color currentColor;
 
 
 
@@ -32,7 +33,7 @@ public class PlusCardState implements State {
         this.gameMaster=gameMaster;
         this.display = "";
         this.currentPlayer = null;
-        this.currentColor ="";
+        this.currentColor = null;
 
     }
 
@@ -94,7 +95,7 @@ public class PlusCardState implements State {
      * @param cardColor
      */
     @Override
-    public void acceptUsersCard(String cardName, String cardColor){
+    public void acceptUsersCard(String cardName, Color cardColor){
     }
 
     /**
@@ -118,7 +119,7 @@ public class PlusCardState implements State {
     }
 
     @Override
-    public void setCurrentColor(String currentColor) {
+    public void setCurrentColor(Color currentColor) {
         this.currentColor=currentColor;
     }
 }

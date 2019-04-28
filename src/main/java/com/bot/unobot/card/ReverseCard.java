@@ -2,9 +2,9 @@ package com.bot.unobot.card;
 
 public class ReverseCard implements Card {
     String name;
-    String color;
+    Color color;
 
-    public ReverseCard(String name, String color){
+    public ReverseCard(String name, Color color){
         this.name=name;
         this.color=color;
     }
@@ -15,7 +15,7 @@ public class ReverseCard implements Card {
     }
 
     @Override
-    public String getColor() {
+    public Color getColor() {
         return color;
     }
 }
