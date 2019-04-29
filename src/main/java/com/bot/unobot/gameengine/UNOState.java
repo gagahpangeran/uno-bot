@@ -114,7 +114,7 @@ public class UNOState implements State {
     }
 
     /*
-    * handler bisa menggunakan method ini denganc cara memasukan string berupa id user yang bilang "UNO!"
+    * handler bisa menggunakan method ini dengan cara memasukan string berupa id user yang bilang "UNO!"
     *
     * */
     @Override
