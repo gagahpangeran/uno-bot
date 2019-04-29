@@ -36,6 +36,6 @@ public class StateTest {
 //                "Kartu Anda adalah sebagai berikut: \n";
 //        Assert.assertTrue( ordinaryCardState.display.contains(display));
 //        Assert.assertThat(ordinaryCardState.color_set_by_player, CoreMatchers.is("yellow"));
-//        //Assert.assertThat(ordinaryCardState.display, CoreMatchers.is(""));
+//        Assert.assertThat(ordinaryCardState.display, CoreMatchers.is(""));
     }
 }
