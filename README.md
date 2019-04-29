@@ -4,11 +4,11 @@ Line chatbot for playing UNO
 
 ## Anggota Kelompok
 
-- Muhammad Ashlah Shinfain (1606895884)
-- Andika Hanavian Atmam (1606918585)
-- Gagah Pangeran Rosfatiputra (1706039566)
-- Jeffrey (1706039843)
-- Vincentius Adi Kurnianto (1706979480)
+- Muhammad Ashlah Shinfain      (1606895884)
+- Andika Hanavian Atmam         (1606918585)
+- Gagah Pangeran Rosfatiputra   (1706039566)
+- Jeffrey                       (1706039843)
+- Vincentius Adi Kurnianto      (1706979480)
 
 ## How to develop
 
