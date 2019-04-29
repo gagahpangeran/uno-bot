@@ -33,7 +33,7 @@ public class SkipCardState implements State {
      */
     @Override
     public String getCurrentPlayer(){
-        this.currentPlayer = gameMaster.players.get(gameMaster.currentTurn);
+        this.currentPlayer = gameMaster.players.get(gameMaster.currentTurn%gameMaster.playerSize);
         this.display ="Aduhhh....\n" +
                 "\n" +
                 "Temen Anda ternyata mengeluarkan kartu Skip\n" +
@@ -66,11 +66,13 @@ public class SkipCardState implements State {
          *
          *
          * */
-        this.gameMaster.currentTurn +=1;
+       /*
+       Sementara ini di comment dulu
+       this.gameMaster.currentTurn +=1;
         if (this.gameMaster.currentTurn <0){
             this.gameMaster.currentTurn += this.gameMaster.playerSize;
         }
-        currentColor = this.gameMaster.toBeReusedCardStack.peek().getColor();
+        currentColor = this.gameMaster.toBeReusedCardStack.peek().getColor();*/
 
     }
 
@@ -108,9 +110,13 @@ public class SkipCardState implements State {
 
     @Override
     public void update() {
+        this.gameMaster.currentTurn +=1;
+        if (this.gameMaster.currentTurn <0){
+            this.gameMaster.currentTurn += this.gameMaster.playerSize;
+        }
+        currentColor = this.gameMaster.toBeReusedCardStack.peek().getColor();
         this.gameMaster.currentState = this.gameMaster.undeterminedCardState;
         this.gameMaster.currentState.setCurrentColor(currentColor);
-        this.gameMaster.currentTurn+=1;
     }
 
     @Override

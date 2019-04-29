@@ -33,7 +33,7 @@ public class ReverseCardState implements State {
      */
     @Override
     public String getCurrentPlayer(){
-        this.currentPlayer = gameMaster.players.get(gameMaster.currentTurn);
+        this.currentPlayer = gameMaster.players.get(gameMaster.currentTurn%gameMaster.playerSize);
         this.display ="Aduhhh....\n" +
                 "\n" +
                 "Temen Anda ternyata mengeluarkan kartu reverse\n" +
@@ -66,12 +66,14 @@ public class ReverseCardState implements State {
         *
         *
         * */
-        this.gameMaster.currentTurn -=2;
+       /*
+       Semetara, blok kodingan ini dicomment dulu
+       this.gameMaster.currentTurn -=2;
         if (this.gameMaster.currentTurn <0){
             this.gameMaster.currentTurn += this.gameMaster.playerSize;
         }
         currentColor = this.gameMaster.toBeReusedCardStack.peek().getColor();
-//        this.gameMaster.currentState = new UndeterminedOrdinaryCardState(currentColor);
+//        this.gameMaster.currentState = new UndeterminedOrdinaryCardState(currentColor);*/
     }
 
     /**
@@ -113,9 +115,14 @@ public class ReverseCardState implements State {
 
     @Override
     public void update() {
+        this.gameMaster.currentTurn -=2;
+        if (this.gameMaster.currentTurn <0){
+            this.gameMaster.currentTurn += this.gameMaster.playerSize;
+        }
+        currentColor = this.gameMaster.toBeReusedCardStack.peek().getColor();
         this.gameMaster.currentState = this.gameMaster.undeterminedCardState;
         this.gameMaster.currentState.setCurrentColor(currentColor);
-        this.gameMaster.currentTurn+=1;
+
 
     }
 }

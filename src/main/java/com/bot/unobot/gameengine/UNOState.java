@@ -135,6 +135,7 @@ public class UNOState implements State {
                     "Itu artinya kamu menjadi pemenang!\n" +
                     "\n" +
                     "Kamu mendapatkan Juara "+Integer.toString(this.gameMaster.currentChampionPosition);
+            this.gameMaster.playerSize = this.gameMaster.players.size();
             this.gameMaster.currentChampionPosition+=1;
         }else{
             for(int i=0; i<2;i++){

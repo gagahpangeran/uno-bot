@@ -33,7 +33,7 @@ public class OrdinaryCardState implements State {
      */
     @Override
     public String getCurrentPlayer(){
-        this.currentPlayer = gameMaster.players.get(gameMaster.currentTurn); // mungkin ini nanti masih diedit lagi, apakah di - incrementnya di sini atau di engine
+        this.currentPlayer = gameMaster.players.get(gameMaster.currentTurn%gameMaster.playerSize); // mungkin ini nanti masih diedit lagi, apakah di - incrementnya di sini atau di engine
         this.display =
                 "Sekarang giliran Anda untuk bermain.\n" +
                 "\n" +

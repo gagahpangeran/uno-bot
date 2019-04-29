@@ -270,6 +270,49 @@ public class GameMaster {
         }
     }
 
+    /*
+    *Method ini digunakan untuk memberi tahu jumlah karu dari semua pemain
+    * dan juga memberi tahu kartu apa yang sekarang berada di top of stack tobereused cards
+    * */
+
+    public void displayGameCondition(){
+        stringOnDisplay = "Klasemen Permainan\n\n";
+        for (Player player : players ){
+            stringOnDisplay+=player.getId()+"\n"+
+                    "Jumlah Kartu Tersisa: "+player.getCardsCollection().size()+"\n\n";
+        }
+        stringOnDisplay+="Kartu terakhir yang dimainkan: "+toBeReusedCardStack.peek().getName()+" "+toBeReusedCardStack.peek().getColor();
+    }
+
+    /*
+    * Method ini digunakan untuk menampilkan string yang harus ditampilkan oleh bot ketika dia ngechat pemain
+    * String yang diproduksi akan menampilkan daftar kartu2 yang ada di tangan pemain
+    *
+    * */
+
+    public void displayCurrentPlayerStatistic(){
+        Player currentPlayer = players.get(currentTurn%playerSize);
+       stringOnDisplay = "Hi "+currentPlayer.getId()+"! \n"+
+               "Koleksi kartu kamu sekarang adalah :\n\n";
+       for (Card card: currentPlayer.getCardsCollection()){
+           stringOnDisplay+=card.getName()+" "+card.getColor()+" \n";
+
+       }
+       stringOnDisplay+="Jika ingin keluarkan kartu ketik .use (Nama Kartu) (Warna Kartu)\n" +
+               "Jika ingin mengambil kartu dari deck ketik .draw";
+    }
+
+    /*
+    *
+    *
+    * */
+
+    public void recycleToBeUsedCardStack(){
+        Collections.shuffle(toBeReusedCardStack);
+        cardStack = toBeReusedCardStack;
+        toBeReusedCardStack = new Stack<>();
+    }
+
 
 
 

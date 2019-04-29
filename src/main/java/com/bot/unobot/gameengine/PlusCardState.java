@@ -43,7 +43,7 @@ public class PlusCardState implements State {
      * @return current player's ID
      */
     public String getCurrentPlayer(){
-        this.currentPlayer = gameMaster.players.get(gameMaster.currentTurn);
+        this.currentPlayer = gameMaster.players.get(gameMaster.currentTurn%gameMaster.playerSize);
         this.display ="Aduh.......\n" +
                 "\n" +
                 "Kamu kena kartu plus ... :'(\n" +
