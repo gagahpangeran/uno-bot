@@ -23,7 +23,6 @@ public class GameMasterTest {
     public void setUp(){ gameMaster =  new GameMaster();}
 
     @Test
-
     public void test_init_game() {
 
         String expected =
@@ -53,7 +52,6 @@ public class GameMasterTest {
     }
 
     @Test
-
     public void test_add_player(){
         gameMaster.addPlayer("1234");
         Assert.assertEquals(gameMaster.getPlayers().size(), 1);

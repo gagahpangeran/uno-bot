@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public class Player {
     //Variables
-//    String name;
+    //String name;
     String id;
     ArrayList<Card> cards;
 
