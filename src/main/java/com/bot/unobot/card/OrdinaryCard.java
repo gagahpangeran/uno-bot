@@ -6,17 +6,19 @@ package com.bot.unobot.card;
  */
 public class OrdinaryCard implements Card {
     //Variables
-    String name;
+    String symbol;
     Color color;
+    Effect effect;
 
     /**
      * Ordinary Card Constructor
-     * @param name
+     * @param symbol
      * @param color
      */
-    public OrdinaryCard(String name, Color color){
-        this.name = name;
+    public OrdinaryCard(String symbol, Color color){
+        this.symbol = symbol;
         this.color = color;
+        this.effect = Effect.NOTHING;
     }
 
     /**
@@ -25,8 +27,8 @@ public class OrdinaryCard implements Card {
      * @return card's name
      */
     @Override
-    public String getName() {
-        return name;
+    public Effect getEffect() {
+        return effect;
     }
 
     /**
@@ -37,5 +39,15 @@ public class OrdinaryCard implements Card {
     @Override
     public Color getColor() {
         return color;
+    }
+
+    @Override
+    public String getSymbol() {
+        return symbol;
+    }
+
+    @Override
+    public void setColor(Color color) {
+        this.color = color;
     }
 }

@@ -52,4 +52,10 @@ public class Player {
     public ArrayList<Card> getCardsCollection(){
         return cards;
     }
+
+    //debug
+
+    public void setCards(ArrayList<Card> cards) {
+        this.cards = cards;
+    }
 }

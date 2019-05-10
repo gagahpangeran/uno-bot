@@ -1,11 +1,5 @@
 package com.bot.unobot.gameengine;
 
-import com.bot.unobot.gameengine.GameMaster;
-import com.bot.unobot.gameengine.OrdinaryCardState;
-import com.bot.unobot.gameengine.State;
-import com.bot.unobot.player.Player;
-import org.hamcrest.CoreMatchers;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

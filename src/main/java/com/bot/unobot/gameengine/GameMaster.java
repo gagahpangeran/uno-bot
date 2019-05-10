@@ -2,9 +2,11 @@ package com.bot.unobot.gameengine;
 
 import com.bot.unobot.card.*;
 import com.bot.unobot.player.Player;
+import org.yaml.snakeyaml.util.ArrayUtils;
 
 import java.text.CollationElementIterator;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Stack;
 
@@ -12,310 +14,497 @@ import java.util.Stack;
  * GameMaster
  * A class consisting of variables and methods for running the UNO Game.
  */
+
+//Nanti akan ada method nextTurn yang akan mengupdate state sama turn for each player
+//Plizzz dong jangan diprotes... ku sudah capek ngoding gameEngine :(
 public class GameMaster {
-    //Variable
-    OrdinaryCardState ordinaryCardState;
-    PlusCardState plusCardState;
-    ReverseCardState reverseCardState;
-    SkipCardState skipCardState;
-    UndeterminedOrdinaryCardState undeterminedCardState;
-    //UNOState UNOState;
-    State currentState;
+    private GameState normalState;
+    private GameState wildState;
+    private GameState plusState;
+    private GameState currentState;
+    private Stack<Card> trashCards;
+    private  Stack<Card> newCards;
+    private String messageToGroup;
+    private String messageToPlayer;
+    private int championPosition;
 
-    ArrayList<Player> players;
-    Stack<Card> cardStack;
-    Stack<Card> toBeReusedCardStack;
+    private ArrayList<Player> players;
 
-    int currentTurn;
-    int playerSize;
-    int currentChampionPosition; //to know the player's rank
-    String stringOnDisplay;
-    Player playerInUNOState; // diubah
+    public GameMaster() {
+        this.normalState = new NormalState(this);
+        //this.wildState = new WildState(this);
+        this.plusState = new PlusState(this);
+        this.currentState = this.normalState;
+        this.players = new ArrayList<>();
+        this.championPosition = 1;
+        this.messageToGroup ="";
+        this.messageToPlayer="";
+        this.newCards = new Stack<Card>();
+        this.trashCards  =  new Stack<Card>();
+    }
 
-    /**
-     * Game Master Constructor
-     */
-   public GameMaster(){
-       this.ordinaryCardState =  new OrdinaryCardState(this);
-       this.plusCardState =  new PlusCardState(this);
-       this.reverseCardState = new ReverseCardState(this);
-       this.skipCardState = new SkipCardState(this);
-       this.undeterminedCardState =  new UndeterminedOrdinaryCardState();
+    public void plus(Card[] cards) {
+        this.currentState.plus(cards);
+    }
 
-       this.currentState = null;
-       //this.UNOState = new UNOState(this);
-       this.players =  new ArrayList<>();
-       this.cardStack =  new Stack<>();
-       this.toBeReusedCardStack = new Stack<>();
-       this.currentTurn = 0;
-       this.playerSize = 0;
-       this.currentChampionPosition = 1;
-       this.stringOnDisplay = "";
-       this.playerInUNOState = null;
+    public void wild(Card[] cards) {
+        this.currentState.wild(cards);
+    }
 
-   }
+    public void giveUp() {
+        this.currentState.giveUp();
+    }
 
-    /**
-     * Game Initialization
-     * Initialize the game by shuffling the stacks of cards and the players turn. It also prints some messages
-     * to display during the start of the game.
-     */
-   public void initGame(){
-       fillCardStack();
-       Collections.shuffle(cardStack);
-       this.stringOnDisplay = "Selamat bergabung di Game UNO dengan kearifan lokal by UNO Bot\n" +
-               "\n" +
-               "Kenapa ada kearifan lokalnya? Karena Game UNO ini diutak-atik sedikit peraturannya untuk menyesuaikan kebiasaan orang Indonesia \"Yang Menang Yang Keluar Dulu\" :v\n" +
-               "\n" +
-               "Untuk bergabung menjadi player, ketik .join\n" +
-               "Untuk keluar dari permainan ketik .forfeit\n" +
-               "Untuk mengetahui status game saat ini, ketik .status\n" +
-               "Untuk mengatakan \"UNO!\", ketik .uno\n" +
-               "Untuk mengeluarkan kartu, silahkan ketik [Nama_Kartu] spasi [Warna_Kartu]\n" +
-               "Untuk menampilkan bantuan, ketik .help\n" +
-               "Untuk menampilkan peraturan permainan,ketik .rules\n" +
-               "Untuk memenangkan permainan, Anda harus jago (dan HOKI) tentunya :v\n" +
-               "\n" +
-               "Peraturan UNO sama dengan peraturan originalnya, hanya saja ketentuan pemenang diganti \"Yang Menang Yang Habis Duluan\"\n" +
-               "\n" +
-               "Selain itu semuanya sama\n" +
-               "\n" +
-               "Selamat bermain semuanya!\n" +
-               "\n" +
-               "\n"
-               ;
-   }
+    public void setColor(Color color) {
+        this.currentState.setColor(color);
+    }
+
+    public void put(ArrayList<Card> cards) {
+        this.currentState.put(cards);
+    }
+
+    public String getMessageToGroup() {
+        return messageToGroup;
+    }
+
+    public String getMessageToPlayer() {
+        return messageToPlayer;
+    }
+
+    public void setMessageToGroup(String messageToGroup) {
+        this.messageToGroup = messageToGroup;
+    }
+
+    public void setMessageToPlayer(String messageToPlayer) {
+        this.messageToPlayer = messageToPlayer;
+    }
+
+    public void setChampionPosition(int championPosition) {
+        this.championPosition = championPosition;
+    }
+
+    public int getChampionPosition() {
+        return championPosition;
+    }
 
 
 
-//diubah
+    public boolean isPuttable(Card prevCard, ArrayList<Card> cards) {
+        Card currentCard = cards.get(0);
+
+//        boolean isValid = checkCardsIntegrity(cards);
+//        if (prevCard instanceof WildCard){
+//            return ((((WildCard) prevCard).getColor() == currentCard.getColor()) ||
+//                    (prevCard.getSymbol().equals(currentCard.getSymbol())));
+//        }
+        //debug
+        System.out.println("prevcard symbol: "+prevCard.getSymbol());
+        System.out.println("currentcard symbol: "+currentCard.getSymbol());
+        System.out.println((prevCard.getColor() == currentCard.getColor()) ||
+                (prevCard.getSymbol().equals(currentCard.getSymbol()) || currentCard.getColor() == Color.SPECIAL));
+        return ((prevCard.getColor() == currentCard.getColor()) ||
+                (prevCard.getSymbol().equals(currentCard.getSymbol())  || currentCard.getColor() == Color.SPECIAL));
+    }
+
+    //Logic : jika konversi berhasil return Card[] else return null
+    public ArrayList<Card> converStringstoCards(ArrayList<String> card) {
+        //System.out.println("heheheh");
+        ArrayList<Card> convertedCards = new ArrayList<>();
+        for (String cardInString : card){
+            Color colorOfCardInString = null;
+            String[] cardInStringIndentity = cardInString.split(";");
+            switch (cardInStringIndentity[1].toUpperCase()){
+                case "RED":
+                    colorOfCardInString = Color.RED;
+                    break;
+                case "YELLOW":
+                    colorOfCardInString = Color.YELLOW;
+                    break;
+                case "GREEN":
+                    colorOfCardInString = Color.GREEN;
+                    break;
+                case "BLUE":
+                    colorOfCardInString = Color.BLUE;
+                    break;
+            }
+            for (Card card1: getPlayers().get(this.currentState.getCurrPlayerIndex()).getCardsCollection()){
+                if (cardInStringIndentity[0].equals(card1.getSymbol())&&colorOfCardInString.equals(card1.getColor())){
+                    convertedCards.add(card1);
+                }
+            }
+        }
+        if (convertedCards.size() == card.size()){
+            for (Card card1: convertedCards){
+                getPlayers().get(this.currentState.getCurrPlayerIndex()).getCardsCollection().remove(card1);
+            }
+            //debug
+//            for (Card card1: convertedCards){
+//                System.out.println(card1.getSymbol()+"ss"+card1.getColor());
+//            }
+            return convertedCards;
+
+        }
+        System.out.println("bangsat");
+        convertedCards.clear();
+        return convertedCards;
+
+    }
+
+    public ArrayList<Card> converStringstoCards(ArrayList<String> card, String colorSetByPlayer) {
+        //System.out.println("heheheh");
+        ArrayList<Card> convertedCards = new ArrayList<>();
+        for (String cardInString : card){
+            Color colorOfCardInString = null;
+            String[] cardInStringIndentity = cardInString.split(";");
+            switch (cardInStringIndentity[1].toUpperCase()){
+                case "RED":
+                    colorOfCardInString = Color.RED;
+                    break;
+                case "YELLOW":
+                    colorOfCardInString = Color.YELLOW;
+                    break;
+                case "GREEN":
+                    colorOfCardInString = Color.GREEN;
+                    break;
+                case "BLUE":
+                    colorOfCardInString = Color.BLUE;
+                    break;
+                case "SPECIAL":
+                    colorOfCardInString = Color.SPECIAL;
+            }
+            for (Card card1: getPlayers().get(this.currentState.getCurrPlayerIndex()).getCardsCollection()){
+                if (cardInStringIndentity[0].equals(card1.getSymbol())&&colorOfCardInString.equals(card1.getColor())){
+                    if (card1.getEffect().equals(Color.SPECIAL)){
+                        switch (colorSetByPlayer.toUpperCase()){
+                            case "RED":
+                                card1.setColor(Color.RED);
+                                break;
+                            case "YELLOW":
+                                card1.setColor(Color.YELLOW);
+                                break;
+                            case "GREEN":
+                                card1.setColor(Color.GREEN);
+                                break;
+                            case "BLUE":
+                                card1.setColor(Color.BLUE);
+                                break;
+                        }
+
+                    }
+                    convertedCards.add(card1);
+                }
+            }
+        }
+        if (convertedCards.size() == card.size()){
+            for (Card card1: convertedCards){
+                getPlayers().get(this.currentState.getCurrPlayerIndex()).getCardsCollection().remove(card1);
+            }
+            //debug
+//            for (Card card1: convertedCards){
+//                System.out.println(card1.getSymbol()+"ss"+card1.getColor());
+//            }
+            return convertedCards;
+
+        }
+        System.out.println("bangsat");
+        convertedCards.clear();
+        return convertedCards;
+
+    }
+
+
+
+    // gua tambahin
+
     /*
-    * getFirsState
-    * return State that will become the first state of the game
-    *
+    * Method ini buat mastiin bahwa kartu yang dikeluarin user beneran kartu yang dia punya dan bukan kartu yang dia gak punya
     * */
-   public State getFirstState(){
-       Collections.shuffle(cardStack);
-       toBeReusedCardStack.push(cardStack.pop());
-       Card firstCard = cardStack.peek();
-       if(firstCard instanceof SkipCard){
-           return skipCardState;
-       }else if (firstCard instanceof PlusCard){
-           if(firstCard.getColor().equals("Black")){
-               cardStack.push(toBeReusedCardStack.pop());
-               getFirstState();
-           }else{
-               return plusCardState;
-           }
-       }else if (firstCard instanceof ReverseCard){
-           return reverseCardState;
-       }else if (firstCard instanceof WildCard){
-           cardStack.push(toBeReusedCardStack.pop());
-           getFirstState();
-       }
-       return ordinaryCardState ;
 
-   }
+//    public boolean checkCardsIntegrity(Card[] cards){
+//        for (int i=0;i<cards.length;i++){
+//            boolean cardIsThere = this.players.get(this.currentState.getCurrPlayerIndex()).getCardsCollection().contains(cards[i]);
+//            if (!cardIsThere) return false;
+//        }
+//        return true;
+//    }
 
-   /*
-   * fillCardStack
-   * fill and shuffle the cardStack
-   * */
+    //Untuk sementara symbol dibikin string
 
-   public void fillCardStack(){
-       /*
-       * Card production order:
-       * 1 red
-       * 2 green
-       * 3 blue
-       * 4 yellow
-       * */
 
-       //the making of 76 ordinary cards
-       String reverse = "Reverse";
-       String skip = "Skip";
-       for (Color color: Color.values()){
-           if (color != Color.SPECIAL) {
-               cardStack.push(new OrdinaryCard(Integer.toString(0), color));
+    public boolean checkCombo(ArrayList<Card> cards) {
+        String comboSymbol = cards.get(0).getSymbol();
 
-               for (int i = 0; i < 2; i++) {
-                   for (int j = 1; j <= 9; j++)
-                       cardStack.push(new OrdinaryCard(Integer.toString(j), color));
+        if (cards.get(0) instanceof WildCard){
+            if (cards.size()==1) return true;
+            else{
+                ArrayList<Card> tempCards = (ArrayList<Card>) cards.subList(1, cards.size());
+                for (Card card:tempCards){
+                    if (!card.getSymbol().equals(comboSymbol)) {
+                        return false;
+                    }
+                }
 
-                   cardStack.push(new SkipCard(skip, color));
-                   cardStack.push(new ReverseCard(reverse, color));
-                   cardStack.push(new PlusCard("+2", color, 2));
-               }
-           } else {
-               for (int i = 0; i < 4; i++) {
-                   cardStack.push(new WildCard(color));
-                   cardStack.push(new PlusCard("4", color, 4));
-               }
-           }
-       }
-   }
+            }
+        }
+
+
+        for (Card card: cards) {
+            if (!card.getSymbol().equals(comboSymbol)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /*method ini */
+
+    public void createNewCards(){
+
+        for (int i =1;i<5;i++) {
+            Color color;
+            if (i==1){
+                color = Color.RED;
+            }else if (i==2){
+                color = Color.YELLOW;
+            }else if (i==3){
+                color = Color.GREEN;
+            }else {
+                color = Color.BLUE;
+            }
+            for (int j =1;j<20;j++) {
+                String cardName = Integer.toString(j%10);
+                OrdinaryCard ordinaryCard = new OrdinaryCard(cardName,color);
+                newCards.push(ordinaryCard);
+            }
+
+            for ( int k =1; k<=6; k++) {
+                if (1<=k && k<=2) {
+                    PlusCard card = new PlusCard(color,2);
+                    newCards.push(card);
+
+                }else if (3<=k && k<=4){
+                    SkipCard card = new SkipCard(color);
+                    newCards.push(card);
+                }else {
+                    ReverseCard card = new ReverseCard(color);
+                    newCards.push(card);
+                }
+
+            }
+
+        }
+
+        for (int l=1;l<9;l++){
+            if (l<5){
+                WildCard card =  new WildCard(Color.SPECIAL);
+                newCards.push(card);
+            }else{
+                PlusCard card =  new PlusCard(Color.SPECIAL,4);
+            }
+
+        }
+        Collections.shuffle(newCards);
+
+    }
+
+    public void recycleTrashCards(){
+        for (int i =0;i<trashCards.size();i++){
+            newCards.push(trashCards.pop());
+        }
+        Collections.shuffle(newCards);
+    }
+
+
+
+    public int getNrOfPlayers(){
+        return players.size();
+    }
 
     public ArrayList<Player> getPlayers() {
         return players;
     }
 
-    /**
-     * Add Player
-     * Adding new player into the game and also adding the new player into arraylist of players.
-     * @param id
-     */
-   public void addPlayer(String id){
-       Player player = new Player( id);
-       this.players.add(player);
-       Collections.shuffle(this.players);
+    public Stack<Card> getNewCards() {
+        return newCards;
+    }
 
-   }
+    public Stack<Card> getTrashCards() {
+        return trashCards;
+    }
 
-   public Player findPlayer(String id) {
-       for (Player player: players)
-           if (id.equals(player.getId()))
-               return player;
-       return null;
-   }
+    public void addToTrash(ArrayList<Card> cards){
+        for (Card card: cards){
+            players.get(this.currentState.getCurrPlayerIndex()).getCardsCollection().remove(card);
+            trashCards.push(card);
+        }
+    }
 
-    /**
-     * Remove Player
-     * Removing a certain player from the game and from arraylist of players.
-     * @param player
-     */
-   public void removePlayer(Player player){
-       this.players.remove(player);
-       this.playerSize = this.players.size();
-   }
-
-    /**
-     * UNO Checker
-     * Checking the number of cards a certain player has.
-     */
-   public boolean UNOChecker(){
-       // return True kalau ada yang tinggal 1 kartunya
-       // return False otherwise
-       for (Player player: this.players){
-           if (player.getCardsCollection().size()<=1){
-               playerInUNOState = player;
-               return true;
+    public ArrayList<Card> setColorFromWildCardByPlayer (ArrayList<Card> cardArrayList,String color){
+        color = color.toLowerCase();
+       if (this.currentState.getLastCard().getColor() == Color.SPECIAL){
+           switch (color){
+               case "red":
+                   cardArrayList.get(cardArrayList.size()-1).setColor(Color.RED);
+                   //this.currentState.getLastCard().setColor(Color.RED);
+                   break;
+               case "yellow":
+                   cardArrayList.get(cardArrayList.size()-1).setColor(Color.YELLOW);
+                   //this.currentState.getLastCard().setColor(Color.YELLOW);
+                   break;
+               case "green":
+                   cardArrayList.get(cardArrayList.size()-1).setColor(Color.GREEN);
+                   //this.currentState.getLastCard().setColor(Color.GREEN);
+                   break;
+               case "blue":
+                   cardArrayList.get(cardArrayList.size()-1).setColor(Color.BLUE);
+                   //this.currentState.getLastCard().setColor(Color.BLUE);
+                   break;
+                   default:
 
            }
        }
-       return false;
-   }
+       return cardArrayList;
+    }
 
-   public String getCurrentPlayer(){
-       if (currentState instanceof UNOState){
-        return ((UNOState) currentState).concurrentState.getCurrentPlayer();
-       }
-       return currentState.getCurrentPlayer();
-   }
-
-   public void acceptUsersCard(String cardName,Color cardColor){
-       if (currentState instanceof UNOState){
-            ((UNOState) currentState).concurrentState.acceptUsersCard(cardName, cardColor);
-       }else{
-       currentState.acceptUsersCard(cardName, cardColor);
-       }
-   }
-   public void takeAnotherCard(){
-       if(currentState instanceof UNOState){
-           ((UNOState) currentState).concurrentState.takeAnotherCard();
-       }else{
-           currentState.takeAnotherCard();
-       }
-
-   }
-
-   public String getStringOnDisplay(){
-       return stringOnDisplay;
-   }
-
-    /**
-     * Update
-     *
-     */
-    public void update(){
-        // nanti di update, current playernya i increment 1 :)
-        /*
-         * Beberapa notulensi:
-         * 1. Pas reverse state, abis situ state selanjutnya adalah UndeterminedOrdinaryCardState
-         * 2. Begitu juga habis plus card
-         *
-         * asumsi awal : kartu ordinary bisa dilawan dengan plus card
-         *
-         * beberapa metode update ke next state yang akan diterapkan:
-         *
-         * yang pake if :
-         * - ordinary
-         *
-         * - (mungkin) UNO
-         * - (mungkin) Winner
-         * - (mungkin) WInnerState
-         * - (mungkin) WildCard
-         *
-         * yang enggak :
-         * - reverse
-         * - skip
-         * - pluscard
-         * disini nanti diupdate scara otomatis di statenya.
-         *
-         * */
-        this.currentState.update();
-        if (UNOChecker() && !playerInUNOState.equals(null)){
-            UNOState UNOState = new UNOState(this);
-            UNOState.setConcurrentState(currentState);
-            currentState = UNOState;
+    public void initGame(){
+        createNewCards();
+        Collections.shuffle(newCards);
+        for (Player player : players){
+            for (int i=0;i<7;i++){
+                player.getCardsCollection().add(newCards.pop());
+            }
         }
-    }
-
-    /*
-    *Method ini digunakan untuk memberi tahu jumlah karu dari semua pemain
-    * dan juga memberi tahu kartu apa yang sekarang berada di top of stack tobereused cards
-    * */
-
-    public void displayGameCondition(){
-        stringOnDisplay = "Klasemen Permainan\n\n";
-        for (Player player : players ){
-            stringOnDisplay+=player.getId()+"\n"+
-                    "Jumlah Kartu Tersisa: "+player.getCardsCollection().size()+"\n\n";
+        trashCards.push(newCards.pop());
+        Card lastCard = trashCards.peek();
+        this.currentState.setLastCard(lastCard);
+        while (lastCard.getEffect() != Effect.NOTHING){
+            newCards.push(trashCards.pop());
+            Collections.shuffle(newCards);
+            trashCards.push(newCards.pop());
+            lastCard = trashCards.peek();
         }
-        stringOnDisplay+="Kartu terakhir yang dimainkan: "+toBeReusedCardStack.peek().getName()+" "+toBeReusedCardStack.peek().getColor();
+        //for debugging
+        System.out.println("Game sudah dimulai");
+
     }
 
-    /*
-    * Method ini digunakan untuk menampilkan string yang harus ditampilkan oleh bot ketika dia ngechat pemain
-    * String yang diproduksi akan menampilkan daftar kartu2 yang ada di tangan pemain
-    *
+    public GameState getCurrentState() {
+        return currentState;
+    }
+
+    public void setCurrentState(GameState currentState) {
+        this.currentState = currentState;
+    }
+
+    public GameState getNormalState() {
+        return normalState;
+    }
+
+    public GameState getPlusState() {
+        return plusState;
+    }
+
+    public void addPlayer (String playerId){
+        players.add(new Player(playerId));
+        //debug
+        System.out.println(playerId+" "+"terdaftar!");
+    }
+
+    /*Beberapa Sting yang akan digenerate untuk ditampilkan
+    * ----------------------------------------------------------------------------------------------------------------------------------------------------------------
     * */
 
-    public void displayCurrentPlayerStatistic(){
-        Player currentPlayer = players.get(currentTurn%playerSize);
-       stringOnDisplay = "Hi "+currentPlayer.getId()+"! \n"+
-               "Koleksi kartu kamu sekarang adalah :\n\n";
-       for (Card card: currentPlayer.getCardsCollection()){
-           stringOnDisplay+=card.getName()+" "+card.getColor()+" \n";
+    public String getInfo(){
+        String info = "Daftar pemain dan kartunya:\n\n";
+        for (Player player: players){
+            info+=player.getId()+"\n"+"jumlah kartu = "+player.getCardsCollection().size()+"\n\n";
+        }
+        if (this.currentState.getDirection() == Direction.CW){
+            info+="Reverse:\nTrue\n\n\n";
+        }else{
+            info+="Reverse:\nFalse\n\n\n";
+        }
+        info+="Kartu yang terakhir dimainkan: "+trashCards.peek().getSymbol()+" "+trashCards.peek().getColor()+"\n";
+        info+="Giliran sekarang : "+players.get(currentState.getCurrPlayerIndex()).getId();
 
-       }
-       stringOnDisplay+="Jika ingin keluarkan kartu ketik .use (Nama Kartu) (Warna Kartu)\n" +
-               "Jika ingin mengambil kartu dari deck ketik .draw";
+        return info;
     }
 
-    /*
-    *
-    *
-    * */
+    public String getMessageForPlayer(String playerId){
+        Player target = null;
+        String message = "Kartu kamu sekarang:\n";
+        for (Player player : players){
+            if (player.getId().equals(playerId)){
+                target = player;
 
-    public void recycleToBeUsedCardStack(){
-        Collections.shuffle(toBeReusedCardStack);
-        cardStack = toBeReusedCardStack;
-        toBeReusedCardStack = new Stack<>();
+            }
+        }
+
+       if(target.equals(null)) return "aaaaa ngebuggggg!!!!";
+        for (Card card: target.getCardsCollection()){
+            message+=card.getSymbol()+" "+card.getColor()+" \n";
+        }
+        message+="jika ingin mengeluarkan ketik : put[spasi]namakartu1;warnakartu1[spasi]namakartu2;warnakartu2dst...\n" +
+                "jika tidak punya kartu dan ingin ngedraw ketik : draw";
+        return message;
+    }
+
+    public String putSucceed(){
+        return "Sukses meletakkan kartu!";
+    }
+
+    public String putFailed(){
+        return "Kartu yang kamu letakkan tidak valid, coba ketik ulang, atau kalau emang kamu bohong, ketik draw saja :)";
+    }
+
+    public String nextTurnString(){
+        return "Giliran kamu udah beres, tunggu giliranmu selanjutnya ya";
+    }
+
+    public String winnerString(String playerId){
+
+        return "Selamat... pemain "+playerId+" berhasil meraih peringkat - "+championPosition+"\n" +
+                "Game akan secara otomatis meng-kick pemain "+playerId;
+    }
+
+    public String failedToWin(String playerId){
+        for (Player player: players){
+            if (playerId.equals(playerId)){
+                for (int i=0;i<2;i++){
+                    player.getCardsCollection().add(newCards.pop());
+                }
+            }
+        }
+        return "karena pemain "+playerId+" telat bilang uno... jadi otomatis dia dapet dua kartu deh\n" +
+                "Makanya jangan telat bos! ngohahahahahaha";
     }
 
 
-
-
-
-
+    public String getRule() {
+        return "FINALRULE!!!\n" +
+                "- Syarat kartu anda diterima:\n" +
+                "1. kartu anda memiliki warna yang sama atau symbol yang sama dengan apa yang ditaruh pemain sebelumnya\n" +
+                "2. kartu angka tidak bisa dicombo.\n" +
+                "3. kartu yang bisa dicombo hanyalah plus,reverse,dan skip.\n" +
+                "4. Combo hanya berlaku jika dia sejenis. Jika tidak maka akan ditolak\n" +
+                "5. \n" +
+                "- Jika Pemain terkena skip, namun dia punya skip, dia tetap gabisa main dan tetap di skip\n" +
+                "- Jika pemain gak punya kartu, maka di harus draw. Setelah draw pemain tidak bisa jalan lagi. Harus tunggu gilirannya lagi.\n" +
+                "- Pemain yang kartunya abis duluan, dialah pemenangnya\n" +
+                "- Aturan Khusus WildCard:\n" +
+                "\n" +
+                "1. Jika anda mendapatkan WildCard atau Plus 4 maka cara menggunakannya adalah dengan mengetik set;[warna yang diinginkan] di akhir kalimat\n" +
+                "\n" +
+                "put Wildcard;special set;green\n" +
+                "put Wildcard;special 7;blue set blue\n" +
+                "put +2;green +2;yellow +4;special set;blue\n" +
+                "\n" +
+                "Untuk Wildcard selalu ketik di awal kalimat\n" +
+                "Untuk +4 selalu ketik di akhir kalimat\n" +
+                "\n" +
+                "Misal kartu terakhir yang dikeluarkan : 7 Red\n" +
+                "Kartu yang ada punya: 6 Yellow dan WildCard\n" +
+                "Cara memakai : put Wildcard;special 6;yellow set;yellow\n";
+    }
 }
