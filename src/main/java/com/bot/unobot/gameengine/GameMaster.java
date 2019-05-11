@@ -23,7 +23,7 @@ public class GameMaster {
     private GameState plusState;
     private GameState currentState;
     private Stack<Card> trashCards;
-    private  Stack<Card> newCards;
+    private Stack<Card> newCards;
     private String messageToGroup;
     private String messageToPlayer;
     private int championPosition;

@@ -10,7 +10,7 @@ public class WildCard implements Card {
 
     public WildCard(Color color){
 
-        this.color=color;
+        this.color = color;
         this.effect = Effect.NOTHING;
 //        this.colorSetByPlayer  = null;
         this.symbol = "Wild";

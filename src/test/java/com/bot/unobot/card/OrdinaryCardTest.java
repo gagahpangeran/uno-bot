@@ -2,7 +2,6 @@ package com.bot.unobot.card;
 
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,6 +18,10 @@ public class OrdinaryCardTest {
     public void OrdinaryCards_Test(){
         card = new OrdinaryCard("1",Color.YELLOW);
         Assert.assertThat(card.getColor(), CoreMatchers.is(Color.YELLOW));
-        Assert.assertThat(card.getName(), CoreMatchers.is("1"));
+        Assert.assertThat(card.getSymbol(), CoreMatchers.is("1"));
+        Assert.assertThat(card.getEffect(), CoreMatchers.is(Effect.NOTHING));
+
+        card.setColor(Color.BLUE);
+        Assert.assertThat(card.getColor(), CoreMatchers.is(Color.BLUE));
     }
 }

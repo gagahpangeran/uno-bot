@@ -20,6 +20,10 @@ public class WildCardTest {
     public void OrdinaryCards_Test(){
         card = new WildCard(Color.YELLOW);
         Assert.assertThat(card.getColor(), CoreMatchers.is(Color.YELLOW));
-        Assert.assertThat(card.getName(), CoreMatchers.is("Wildcard"));
+        Assert.assertThat(card.getSymbol(), CoreMatchers.is("Wild"));
+        Assert.assertThat(card.getEffect(), CoreMatchers.is(Effect.NOTHING));
+
+        card.setColor(Color.BLUE);
+        Assert.assertThat(card.getColor(), CoreMatchers.is(Color.BLUE));
     }
 }

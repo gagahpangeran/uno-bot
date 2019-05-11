@@ -8,9 +8,8 @@ public class PlusCard implements Card {
     Effect effect;
     String symbol;
 
-    public PlusCard( Color color, int plus){
-
-        this.color=color;
+    public PlusCard(Color color, int plus){
+        this.color = color;
         this.plus = plus;
         this.effect = Effect.PLUS;
         symbol = "+"+Integer.toString(plus);

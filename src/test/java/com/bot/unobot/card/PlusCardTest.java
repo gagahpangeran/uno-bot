@@ -3,7 +3,6 @@ package com.bot.unobot.card;
 import com.bot.unobot.card.PlusCard;
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,10 +16,14 @@ public class PlusCardTest {
     public PlusCard card;
 
     @Test
-    public void OrdinaryCards_Test(){
-        card = new PlusCard("1",Color.YELLOW, 4);
+    public void PlusCards_Test(){
+        card = new PlusCard(Color.YELLOW, 4);
         Assert.assertThat(card.getColor(), CoreMatchers.is(Color.YELLOW));
-        Assert.assertThat(card.getName(), CoreMatchers.is("1"));
+        Assert.assertThat(card.getSymbol(), CoreMatchers.is("+4"));
         Assert.assertThat(card.getPlus(), CoreMatchers.is(4));
+        Assert.assertThat(card.getEffect(), CoreMatchers.is(Effect.PLUS));
+
+        card.setColor(Color.BLUE);
+        Assert.assertThat(card.getColor(), CoreMatchers.is(Color.BLUE));
     }
 }
