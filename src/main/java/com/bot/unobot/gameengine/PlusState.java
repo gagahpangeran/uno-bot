@@ -64,6 +64,16 @@ public class PlusState implements GameState {
     }
 
     @Override
+
+    /*
+     * @param cards = ArrayList<Card> yang player keluarkan. ini merupakan ArrayList<Card> yang dihasilkan dari method GameMaster.convertStringToCards(ArrayList<sting> card)
+     * Jika arraylis kosong, maka kartu yang dikeluarkan tidak valid
+     * Jika sebaliknya, maka kumpulan kartu akan diterima
+     *
+     *
+     * */
+
+
     public void put(ArrayList<Card> cards) {
         if (!cards.isEmpty()){
 
@@ -72,18 +82,23 @@ public class PlusState implements GameState {
                 this.lastCard = cards.get(cards.size()-1);
                 this.gameMaster.addToTrash(cards); /// ketika di add to trash maka dia dikeluarin dari kartu pemain
                 this.numberOfCombos+=countCombos(cards);
-                nextTurn();
                 this.gameMaster.setMessageToGroup(this.gameMaster.putSucceed());
+                nextTurn();
             }else{
                 this.gameMaster.setMessageToGroup(this.gameMaster.putFailed());
             }
-            nextTurn();
+
 
         }else{
             this.gameMaster.setMessageToGroup(this.gameMaster.putFailed());
         }
 
     }
+
+    /*
+    * IsPuttablenya puat plus state agak beda, karena hanya kartu plus saja yang diterima, selain itu ya dia gak terima
+    *
+    * */
 
     public boolean isPuttableForPlusCards(ArrayList<Card> cards){
         for (Card card: cards){
@@ -127,6 +142,11 @@ public class PlusState implements GameState {
 
     }
 
+    /*
+    * Draw kartu bagi korban :X
+    *
+    * */
+
     @Override
     public void draw() {
         for ( int i = 0; i<numberOfCombos;i++){
@@ -148,6 +168,16 @@ public class PlusState implements GameState {
         this.numberOfCombos = numberOfCombos;
     }
 
+    /*
+     * @param playerId = id player yang bilang UNo
+     * Jadi cara kerja method ini adalah:
+     * 1. Pertama dicek apakah dari semua pemain ada yang benar2 kartunya cuma 1
+     * 2. Misalnya udah ketemu pemain yang kartunya cuma 1, dicek apakah idnya dia sama kayak id yang bilang uno
+     * 3. Jika iya maka winner di set menjadi pemain tersebut, else di set null
+     * 4. Diceknya menggunakan method establishedWinner
+     * Jika ada yang bilaing UNO, namun belum ada yang kartunya tinggal 1, maka akan dikasih tau kalau belum ada yang UNO
+     * */
+
     @Override
     public void checkAndGetWinner (String playerId){
         Player winner =  null;
@@ -163,6 +193,19 @@ public class PlusState implements GameState {
         establishedWinner(winner, idOfTheOneSupposedToWin);
 
     }
+
+    /*
+     * @param player = Player yang dihasilkan oleh method checkAndGetWinner ( Player winner pada method ini)
+     * @playerIDWhoSupposedToWin = pemain yang benar benar kartunya tinggal 1.
+     * Jika player null, maka ya pemain tersebut musti ambil 2 kartu karena dia telat bilang uno
+     * Else:
+     * - Kick pemain dari grup
+     * - update posisi juara yang diperebutkan. Misal juara 1 udah ada, yaudah berarti diupdate jad 2 dst....
+     *
+     *
+     *
+     *
+     * */
 
     @Override
     public void establishedWinner(Player player, String playerIdWhoSupposedToWin){

@@ -10,6 +10,10 @@ import com.bot.unobot.player.Player;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/*
+* Berikut ini gw akan ngasih dokumentasi tentang Class ini
+* */
+
 public class NormalState implements GameState {
 
     GameMaster gameMaster;
@@ -32,6 +36,14 @@ public class NormalState implements GameState {
 
 
     //agak dimodif method isPuttable - nya
+
+    /*
+    * @param cards = ArrayList<Card> yang player keluarkan. ini merupakan ArrayList<Card> yang dihasilkan dari method GameMaster.convertStringToCards(ArrayList<sting> card)
+    * Jika arraylis kosong, maka kartu yang dikeluarkan tidak valid
+    * Jika sebaliknya, maka kumpulan kartu akan diterima
+    *
+    *
+    * */
 
     public void put(ArrayList<Card> cards) {
         if (!cards.isEmpty()){
@@ -69,6 +81,7 @@ public class NormalState implements GameState {
 
     }
     // gua tambahin
+    /*Draw Cards*/
     @Override
     public void draw(){
         if (this.gameMaster.getNewCards().size()<1){
@@ -115,6 +128,15 @@ public class NormalState implements GameState {
     }
 
     //guatambahin
+    /*
+    * @param playerId = id player yang bilang UNo
+    * Jadi cara kerja method ini adalah:
+    * 1. Pertama dicek apakah dari semua pemain ada yang benar2 kartunya cuma 1
+    * 2. Misalnya udah ketemu pemain yang kartunya cuma 1, dicek apakah idnya dia sama kayak id yang bilang uno
+    * 3. Jika iya maka winner di set menjadi pemain tersebut, else di set null
+    * 4. Diceknya menggunakan method establishedWinner
+    * Jika ada yang bilaing UNO, namun belum ada yang kartunya tinggal 1, maka akan dikasih tau kalau belum ada yang UNO
+    * */
     @Override
     public void checkAndGetWinner (String playerId){
         Player winner =  null;
@@ -133,6 +155,19 @@ public class NormalState implements GameState {
         else {this.gameMaster.setMessageToGroup("Belum ada yang UNO bang wkwkwk");}
 
     }
+
+    /*
+    * @param player = Player yang dihasilkan oleh method checkAndGetWinner ( Player winner pada method ini)
+    * @playerIDWhoSupposedToWin = pemain yang benar benar kartunya tinggal 1.
+    * Jika player null, maka ya pemain tersebut musti ambil 2 kartu karena dia telat bilang uno
+    * Else:
+    * - Kick pemain dari grup
+    * - update posisi juara yang diperebutkan. Misal juara 1 udah ada, yaudah berarti diupdate jad 2 dst....
+    *
+    *
+    *
+    *
+    * */
     @Override
     public void establishedWinner(Player player, String playerIdWhoSupposedToWin){
         if (player == null){
