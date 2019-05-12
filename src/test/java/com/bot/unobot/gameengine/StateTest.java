@@ -11,25 +11,15 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 public class StateTest {
     GameMaster gameMaster;
-    State testState;
+    GameState testState;
 
     @Before
     public void setUp(){
         gameMaster =  new GameMaster();;
-        testState = new OrdinaryCardState(gameMaster);
+
     }
 
     @Test
     public void OrdinaryStateTest(){
-//        OrdinaryCardState ordinaryCardState = (OrdinaryCardState)testState;
-//        ordinaryCardState.setNextColor("yellow");
-//        ordinaryCardState.gameMaster.add_player(new Player("Joni"));
-//        ordinaryCardState.get_current_player();
-//        String display = "Kini giliran Anda untuk bermain :\n" +
-//                "\n" +
-//                "Kartu Anda adalah sebagai berikut: \n";
-//        Assert.assertTrue( ordinaryCardState.display.contains(display));
-//        Assert.assertThat(ordinaryCardState.color_set_by_player, CoreMatchers.is("yellow"));
-//        //Assert.assertThat(ordinaryCardState.display, CoreMatchers.is(""));
     }
 }

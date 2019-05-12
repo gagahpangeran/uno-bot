@@ -17,8 +17,11 @@ public class ReverseCardTest {
 
     @Test
     public void ReverseCards_Test(){
-        card = new ReverseCard("Reverse", Color.YELLOW);
-        Assert.assertThat(card.getColor(), CoreMatchers.is(Color.YELLOW));
-        Assert.assertThat(card.getName(), CoreMatchers.is("Reverse"));
+        ReverseCard testCard = new ReverseCard(Color.GREEN);
+        Assert.assertThat(testCard.getEffect(), CoreMatchers.is(Effect.REVERSE));
+        Assert.assertEquals(Effect.REVERSE, testCard.getEffect());
+        testCard.setColor(Color.BLUE);
+        Assert.assertEquals("reverse", testCard.getSymbol().toLowerCase());
+        Assert.assertThat(testCard.getColor(), CoreMatchers.is(Color.BLUE));
     }
 }

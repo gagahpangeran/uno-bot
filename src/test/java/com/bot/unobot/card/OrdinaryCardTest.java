@@ -17,8 +17,10 @@ public class OrdinaryCardTest {
 
     @Test
     public void OrdinaryCards_Test(){
-        card = new OrdinaryCard("1",Color.YELLOW);
-        Assert.assertThat(card.getColor(), CoreMatchers.is(Color.YELLOW));
-        Assert.assertThat(card.getName(), CoreMatchers.is("1"));
+        OrdinaryCard testCard = new OrdinaryCard("7",Color.GREEN);
+        Assert.assertThat(testCard.getEffect(), CoreMatchers.is(Effect.NOTHING));
+        Assert.assertEquals(Effect.NOTHING, testCard.getEffect());
+        testCard.setColor(Color.BLUE);
+        Assert.assertThat(testCard.getColor(), CoreMatchers.is(Color.BLUE));
     }
 }

@@ -54,7 +54,18 @@ public class GameSimulator {
 
 
         //------------------------------------------------------------------------------------------
-
+        /*Cara Make GameSimulator:
+        * exit --> keluar
+        * mulai ---> mulai game
+        * playernow ---> nyari tau pemain yang jalan sekarang siapa
+        * daftar [id_pemain] --> daftarin pemain
+        * kartu [id_pemain] ---> melihat daftar kartu milik [id_pemain]
+        * uno [id_pemain] ---> mensimulasikan misalnya yang bilang uno adalah pemain ber-id [id_pemain]
+        * draw ---> nge-draw kartu
+        * rule ----> lihat rule
+        * put [symbol];[warna] set;[warna_yang_ingin_di_set] ( berlaku kalau keluarin wildcard or plus 4) ----> buat ngeluarin kartu
+        *
+        * */
         boolean temp = true;
         Scanner tokenizer = new Scanner(System.in);
         String[] commands = tokenizer.nextLine().split(" ");

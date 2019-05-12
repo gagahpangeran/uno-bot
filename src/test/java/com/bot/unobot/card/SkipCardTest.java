@@ -18,8 +18,11 @@ public class SkipCardTest {
 
     @Test
     public void SkipCards_Test(){
-        card = new SkipCard("skip",Color.YELLOW);
-        Assert.assertThat(card.getColor(), CoreMatchers.is(Color.YELLOW));
-        Assert.assertThat(card.getName(), CoreMatchers.is("skip"));
+        SkipCard testCard = new SkipCard(Color.GREEN);
+        Assert.assertThat(testCard.getEffect(), CoreMatchers.is(Effect.STOP));
+        Assert.assertEquals(Effect.STOP, testCard.getEffect());
+        testCard.setColor(Color.BLUE);
+        Assert.assertEquals("skip", testCard.getSymbol().toLowerCase());
+        Assert.assertThat(testCard.getColor(), CoreMatchers.is(Color.BLUE));
     }
 }
