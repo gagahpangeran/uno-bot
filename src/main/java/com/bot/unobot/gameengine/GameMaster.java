@@ -268,11 +268,21 @@ public class GameMaster {
                 comboSymbol = cards.get(1).getSymbol();
             }
         }
-        for (Card card: cards) {
-            if (!card.getSymbol().equals(comboSymbol)&&!(card instanceof WildCard)) {
-                return false;
+        if (cards.get(0) instanceof PlusCard){
+            for (Card card: cards) {
+                if (!card.getEffect().equals(cards.get(0).getEffect())&&!(card instanceof WildCard)) {
+                    return false;
+                }
+            }
+
+        }else{
+            for (Card card: cards) {
+                if (!card.getSymbol().equals(comboSymbol)&&!(card instanceof WildCard)) {
+                    return false;
+                }
             }
         }
+
 
         return true;
     }
@@ -485,6 +495,8 @@ public class GameMaster {
         }else{
             info+="Reverse:\nFalse\n\n\n";
         }
+        //debug
+        if (currentState.getLastCard() == null && currentState instanceof PlusState) System.out.println("ngix");
 
         info+="Kartu yang terakhir dimainkan: "+currentState.getLastCard().getSymbol()+" "+currentState.getLastCard().getColor()+"\n";
         info+="Giliran sekarang : "+players.get(currentState.getCurrPlayerIndex()).getId();

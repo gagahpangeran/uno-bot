@@ -13,7 +13,8 @@ public class GameSimulator {
 
     public static void main (String[] args){
         GameMaster gameMaster = new GameMaster();
-       UNOTestCase(gameMaster);
+      PlusTestCase(gameMaster);
+
 
         //------------------------------------------------------------------------------------------
 
@@ -254,6 +255,7 @@ public class GameSimulator {
         gameMaster.addPlayer("b");
         gameMaster.addPlayer("c");
         gameMaster.initGame();
+        System.out.println(gameMaster.getMessageToGroup());
         for(Player player:gameMaster.getPlayers()){
             switch (player.getId()){
                 case "a":

@@ -48,6 +48,10 @@ public class NormalState implements GameState {
     public void put(ArrayList<Card> cards) {
         if (!cards.isEmpty()){
 
+            //debug
+            System.out.println("is-puttable: "+this.gameMaster.isPuttable(lastCard, cards));
+            System.out.println("checkcombo: "+this.gameMaster.checkCombo(cards));
+
 
             if (this.gameMaster.isPuttable(lastCard, cards) &&
                     this.gameMaster.checkCombo(cards)) {
@@ -55,42 +59,46 @@ public class NormalState implements GameState {
                 this.gameMaster.addToTrash(cards);
 
                 if (this.gameMaster.getTrashCards().peek().getEffect() == Effect.PLUS) {
-                    this.gameMaster.setCurrentState(this.gameMaster.getPlusState());
-                    this.gameMaster.getCurrentState().setCurrPlayerIndex(getCurrPlayerIndex());/// mempertahankan catatan currentplayerindex
-                    PlusCard tempPlusCard =  (PlusCard) this.gameMaster.getTrashCards().peek();
-                    PlusState temp = (PlusState) this.gameMaster.getCurrentState();
-                    temp.setNumberOfCombos(tempPlusCard.getPlus());
+                    int tempIndex = getCurrPlayerIndex();
+                    PlusState temp = (PlusState) this.gameMaster.getPlusState();
+                    temp.setCurrPlayerIndex(tempIndex);
                     this.gameMaster.setCurrentState(temp);
-                }else if (this.gameMaster.getTrashCards().peek().getEffect() == Effect.STOP){
-                    int numberOfSkip = 0;// mengapa pakai ini? Karena bisa jadi dia mengeluarkan Skip card dengan wildcard, jadi kita akan hitung ulang jumlah stop yang dikeluarkan sehingga wildcard tidak dianggap sebagai stop
-                    for (Card card:cards){
-                        if (card.getEffect().equals(Effect.STOP)){
-                            numberOfSkip+=1;
-                        }
-                    }
+                    this.gameMaster.put(cards);
 
-                    currPlayerIndex+=(1*numberOfSkip);
-                }else if (this.gameMaster.getTrashCards().peek().getEffect() == Effect.REVERSE){
-                    int numberOfReverse = 0; // mengapa pakai ini? Karena bisa jadi dia mengeluarkan Reverse card dengan wildcard, jadi kita akan hitung ulang jumlah stop yang dikeluarkan sehingga wildcard tidak dianggap sebagai reverse
-                    for (Card card:cards){
-                        if (card.getEffect().equals(Effect.REVERSE)){
-                            numberOfReverse+=1;
-                        }
-                    }
-                    for (int i =0; i<numberOfReverse;i++){
-                        this.direction = this.direction.getOpposite();
-                    }
-                }
-                //debug
-                System.out.println(gameMaster.getPlayers().get(getCurrPlayerIndex()).getCardsCollection().size());
-                if (gameMaster.getPlayers().get(getCurrPlayerIndex()).getCardsCollection().size()<1 && gameMaster.getPlayers().get(getCurrPlayerIndex()).isUNO()){
-                    gameMaster.setMessageToGroup(gameMaster.putSucceed());
-                    establishedWinner(gameMaster.getPlayers().get(getCurrPlayerIndex()), gameMaster.getPlayers().get(getCurrPlayerIndex()).getId());
                 }else{
-                    gameMaster.setMessageToGroup(gameMaster.putSucceed()+"ss");
-                    nextTurn();
-                }
+                    if (this.gameMaster.getTrashCards().peek().getEffect() == Effect.STOP){
+                        int numberOfSkip = 0;// mengapa pakai ini? Karena bisa jadi dia mengeluarkan Skip card dengan wildcard, jadi kita akan hitung ulang jumlah stop yang dikeluarkan sehingga wildcard tidak dianggap sebagai stop
+                        for (Card card:cards){
+                            if (card.getEffect().equals(Effect.STOP)){
+                                numberOfSkip+=1;
+                            }
+                        }
 
+                        currPlayerIndex+=(1*numberOfSkip);
+                    }else if (this.gameMaster.getTrashCards().peek().getEffect() == Effect.REVERSE){
+                        int numberOfReverse = 0; // mengapa pakai ini? Karena bisa jadi dia mengeluarkan Reverse card dengan wildcard, jadi kita akan hitung ulang jumlah stop yang dikeluarkan sehingga wildcard tidak dianggap sebagai reverse
+                        for (Card card:cards){
+                            if (card.getEffect().equals(Effect.REVERSE)){
+                                numberOfReverse+=1;
+                            }
+                        }
+                        for (int i =0; i<numberOfReverse;i++){
+                            this.direction = this.direction.getOpposite();
+                        }
+
+                    }
+                    //debug
+                    System.out.println(gameMaster.getPlayers().get(getCurrPlayerIndex()).getCardsCollection().size());
+                    if (gameMaster.getPlayers().get(getCurrPlayerIndex()).getCardsCollection().size()<1 && gameMaster.getPlayers().get(getCurrPlayerIndex()).isUNO()){
+                        gameMaster.setMessageToGroup(gameMaster.putSucceed());
+                        establishedWinner(gameMaster.getPlayers().get(getCurrPlayerIndex()), gameMaster.getPlayers().get(getCurrPlayerIndex()).getId());
+                    }else{
+                        gameMaster.setMessageToGroup(gameMaster.putSucceed()+"ss");
+                        nextTurn();
+                    }
+
+
+                }
 
             }else{
                 this.gameMaster.setMessageToGroup(this.gameMaster.putFailed()+" as");

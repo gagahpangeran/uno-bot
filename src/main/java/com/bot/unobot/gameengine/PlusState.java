@@ -77,11 +77,17 @@ public class PlusState implements GameState {
     public void put(ArrayList<Card> cards) {
         if (!cards.isEmpty()){
 
+//            //debug
+//            System.out.println("x is-puttable: "+isPuttableForPlusCards(cards));
+//            System.out.println(" x checkcombo: "+this.gameMaster.isPuttable(lastCard, cards));
+
             if (isPuttableForPlusCards(cards) &&
                     this.gameMaster.checkCombo(cards)) {
                 this.lastCard = cards.get(cards.size()-1);
                 this.gameMaster.addToTrash(cards); /// ketika di add to trash maka dia dikeluarin dari kartu pemain
                 this.numberOfCombos+=countCombos(cards);
+                //debug
+                System.out.println("last card: "+lastCard.getSymbol()+" "+lastCard.getColor());
                 this.gameMaster.setMessageToGroup(this.gameMaster.putSucceed());
                 nextTurn();
             }else{
@@ -153,7 +159,12 @@ public class PlusState implements GameState {
             }
             this.gameMaster.getPlayers().get(getCurrPlayerIndex()).getCardsCollection().add(this.gameMaster.getNewCards().pop());
         }
-        nextTurn();
+        numberOfCombos = 0;
+        this.gameMaster.setCurrentState(gameMaster.getNormalState());
+        this.gameMaster.getCurrentState().setCurrPlayerIndex(Math.floorMod(getCurrPlayerIndex()+1, this.gameMaster.getNrOfPlayers()));
+        this.gameMaster.getCurrentState().setLastCard(this.gameMaster.getTrashCards().peek());
+
+        //nextTurn();
 
 
     }
