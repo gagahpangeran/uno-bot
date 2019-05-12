@@ -11,7 +11,7 @@ public class WildCard implements Card {
     public WildCard(Color color){
 
         this.color=color;
-        this.effect = Effect.NOTHING;
+        this.effect = Effect.CHANGE_COLOR;
 //        this.colorSetByPlayer  = null;
         this.symbol = "Wild";
     }

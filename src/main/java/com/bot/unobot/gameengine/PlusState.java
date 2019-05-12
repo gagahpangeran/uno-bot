@@ -50,7 +50,7 @@ public class PlusState implements GameState {
 
     @Override
     public int getCurrPlayerIndex() {
-        return currPlayerIndex%this.gameMaster.getNrOfPlayers();
+        return Math.floorMod(currPlayerIndex, gameMaster.getNrOfPlayers());
     }
 
     @Override
@@ -134,12 +134,10 @@ public class PlusState implements GameState {
     @Override
     public void nextTurn() {
         if (direction.equals(Direction.CW)){
-            currPlayerIndex = (currPlayerIndex +1)%this.gameMaster.getNrOfPlayers();
+            currPlayerIndex = Math.floorMod(currPlayerIndex +1,this.gameMaster.getNrOfPlayers());
         }else{
-            currPlayerIndex = (currPlayerIndex -1)%this.gameMaster.getNrOfPlayers();
+            currPlayerIndex = Math.floorMod(currPlayerIndex -1,this.gameMaster.getNrOfPlayers());
         }
-        //this.gameMaster.setMessageToGroup(this.gameMaster.nextTurnString());
-
     }
 
     /*

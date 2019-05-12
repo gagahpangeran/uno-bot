@@ -103,8 +103,9 @@ public class GameMaster {
     public boolean isPuttable(Card prevCard, ArrayList<Card> cards) {
         Card currentCard = cards.get(0);
 
+
         return ((prevCard.getColor() == currentCard.getColor()) ||
-                (prevCard.getSymbol().equals(currentCard.getSymbol())  || currentCard.getColor() == Color.SPECIAL));
+                (prevCard.getSymbol().equals(currentCard.getSymbol())) || currentCard instanceof WildCard);
     }
 
     /*
@@ -143,9 +144,13 @@ public class GameMaster {
                 case "BLUE":
                     colorOfCardInString = Color.BLUE;
                     break;
+//                case "SPECIAL":
+//                    colorOfCardInString = Color.SPECIAL;
+//                    break;
             }
             for (Card card1: getPlayers().get(this.currentState.getCurrPlayerIndex()).getCardsCollection()){
-                if (cardInStringIndentity[0].equals(card1.getSymbol())&&colorOfCardInString.equals(card1.getColor())){
+
+                if (cardInStringIndentity[0].toUpperCase().equals(card1.getSymbol().toUpperCase())&&colorOfCardInString.equals(card1.getColor())){
                     convertedCards.add(card1);
                 }
             }
@@ -200,8 +205,11 @@ public class GameMaster {
                     colorOfCardInString = Color.SPECIAL;
             }
             for (Card card1: getPlayers().get(this.currentState.getCurrPlayerIndex()).getCardsCollection()){
-                if (cardInStringIndentity[0].equals(card1.getSymbol())&&colorOfCardInString.equals(card1.getColor())){
-                    if (card1.getEffect().equals(Color.SPECIAL)){
+
+
+                if (cardInStringIndentity[0].toLowerCase().equals(card1.getSymbol().toLowerCase())&&colorOfCardInString.equals(card1.getColor())){
+                    if (card1.getColor().equals(Color.SPECIAL)){
+
                         switch (colorSetByPlayer.toUpperCase()){
                             case "RED":
                                 card1.setColor(Color.RED);
@@ -222,6 +230,8 @@ public class GameMaster {
                 }
             }
         }
+
+
         if (convertedCards.size() == card.size()){
             for (Card card1: convertedCards){
                 getPlayers().get(this.currentState.getCurrPlayerIndex()).getCardsCollection().remove(card1);
@@ -252,8 +262,14 @@ public class GameMaster {
 
     public boolean checkCombo(ArrayList<Card> cards) {
         String comboSymbol = cards.get(0).getSymbol();
+        if (cards.get(0) instanceof WildCard){
+            if (cards.size()<2){ return true;}
+            else {
+                comboSymbol = cards.get(1).getSymbol();
+            }
+        }
         for (Card card: cards) {
-            if (!card.getSymbol().equals(comboSymbol)&&!card.getEffect().equals(Effect.CHANGE_COLOR)) {
+            if (!card.getSymbol().equals(comboSymbol)&&!(card instanceof WildCard)) {
                 return false;
             }
         }
@@ -364,6 +380,13 @@ public class GameMaster {
         return trashCards;
     }
 
+    public Player getSpecificPlayer(String playerId){
+        for (Player player: players){
+            if (player.getId().equals(playerId)) return player;
+        }
+        return null;
+    }
+
     /*
     * @param cards = ArrayList<Card> yang merupakan kartu kartu yang dikeluarkan player
     * Memasukkan kartu kartu yang dikeluarkan player ke stack trashCards
@@ -425,15 +448,12 @@ public class GameMaster {
                 player.getCardsCollection().add(newCards.pop());
             }
         }
-        trashCards.push(newCards.pop());
-        Card lastCard = trashCards.peek();
-        this.currentState.setLastCard(lastCard);
-        while (lastCard.getEffect() != Effect.NOTHING){
-            newCards.push(trashCards.pop());
+        while (!newCards.peek().getEffect().equals(Effect.NOTHING)){
             Collections.shuffle(newCards);
-            trashCards.push(newCards.pop());
-            lastCard = trashCards.peek();
         }
+
+        trashCards.push(newCards.pop());
+        this.currentState.setLastCard(trashCards.peek());
         setMessageToGroup("Game sudah dimulai!!!!");
 
     }
@@ -465,7 +485,8 @@ public class GameMaster {
         }else{
             info+="Reverse:\nFalse\n\n\n";
         }
-        info+="Kartu yang terakhir dimainkan: "+trashCards.peek().getSymbol()+" "+trashCards.peek().getColor()+"\n";
+
+        info+="Kartu yang terakhir dimainkan: "+currentState.getLastCard().getSymbol()+" "+currentState.getLastCard().getColor()+"\n";
         info+="Giliran sekarang : "+players.get(currentState.getCurrPlayerIndex()).getId();
 
         return info;
@@ -485,7 +506,7 @@ public class GameMaster {
         for (Card card: target.getCardsCollection()){
             message+=card.getSymbol()+" "+card.getColor()+" \n";
         }
-        message+="Kartu yang terakhir dimainkan: "+this.currentState.getLastCard().getSymbol()+"\n";
+        message+="Kartu yang terakhir dimainkan: "+this.currentState.getLastCard().getSymbol()+" "+currentState.getLastCard().getColor()+" \n";
         message+="jika ingin mengeluarkan ketik : put[spasi]namakartu1;warnakartu1[spasi]namakartu2;warnakartu2dst...\n" +
                 "jika tidak punya kartu dan ingin ngedraw ketik : draw";
         return message;
@@ -510,15 +531,13 @@ public class GameMaster {
     }
 
     public String failedToWin(String playerId){
-        for (Player player: players){
-            if (!player.getId().equals(playerId)){
-                for (int i=0;i<2;i++){
-                    player.getCardsCollection().add(newCards.pop());
-                }
-            }
-        }
+
         return "karena pemain "+playerId+" telat bilang uno... jadi otomatis dia dapet dua kartu deh\n" +
                 "Makanya jangan telat bos! ngohahahahahaha";
+    }
+
+    public String unoSafeString(String playerId){
+        return "Selamat .... Player "+playerId+" aman. Anda tidak perlu ambil 2 kartu karena sudah bilang UNO";
     }
 
 

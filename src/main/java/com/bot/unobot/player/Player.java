@@ -6,12 +6,17 @@ import java.util.ArrayList;
 
 /**
  * Player Class
+ * id = player's Id
+ * cars = koleksi kartu pemain
+ * isUNO = apakah player itu lagi UNo atau tidak.
+ * Definisi lagi UNO = ketika pemain tersebut kartunya tinggal satu dan dia berhasil bilang UNO
  */
 public class Player {
     //Variables
 //    String name;
     String id;
     ArrayList<Card> cards;
+    boolean isUNO;
 
     /**
      * Player Constructor
@@ -20,6 +25,7 @@ public class Player {
     public Player(String id){
         this.id =id;
         this.cards = new ArrayList<>();
+        this.isUNO = false;
     }
 
     /**
@@ -57,5 +63,13 @@ public class Player {
 
     public void setCards(ArrayList<Card> cards) {
         this.cards = cards;
+    }
+
+    public void setUNO(boolean UNO) {
+        isUNO = UNO;
+    }
+
+    public boolean isUNO() {
+        return isUNO;
     }
 }

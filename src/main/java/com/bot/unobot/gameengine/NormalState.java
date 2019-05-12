@@ -48,6 +48,7 @@ public class NormalState implements GameState {
     public void put(ArrayList<Card> cards) {
         if (!cards.isEmpty()){
 
+
             if (this.gameMaster.isPuttable(lastCard, cards) &&
                     this.gameMaster.checkCombo(cards)) {
                 this.lastCard = cards.get(cards.size()-1);
@@ -67,6 +68,7 @@ public class NormalState implements GameState {
                             numberOfSkip+=1;
                         }
                     }
+
                     currPlayerIndex+=(1*numberOfSkip);
                 }else if (this.gameMaster.getTrashCards().peek().getEffect() == Effect.REVERSE){
                     int numberOfReverse = 0; // mengapa pakai ini? Karena bisa jadi dia mengeluarkan Reverse card dengan wildcard, jadi kita akan hitung ulang jumlah stop yang dikeluarkan sehingga wildcard tidak dianggap sebagai reverse
@@ -79,13 +81,23 @@ public class NormalState implements GameState {
                         this.direction = this.direction.getOpposite();
                     }
                 }
-                nextTurn();
+                //debug
+                System.out.println(gameMaster.getPlayers().get(getCurrPlayerIndex()).getCardsCollection().size());
+                if (gameMaster.getPlayers().get(getCurrPlayerIndex()).getCardsCollection().size()<1 && gameMaster.getPlayers().get(getCurrPlayerIndex()).isUNO()){
+                    gameMaster.setMessageToGroup(gameMaster.putSucceed());
+                    establishedWinner(gameMaster.getPlayers().get(getCurrPlayerIndex()), gameMaster.getPlayers().get(getCurrPlayerIndex()).getId());
+                }else{
+                    gameMaster.setMessageToGroup(gameMaster.putSucceed()+"ss");
+                    nextTurn();
+                }
+
+
             }else{
-                this.gameMaster.setMessageToGroup(this.gameMaster.putFailed());
+                this.gameMaster.setMessageToGroup(this.gameMaster.putFailed()+" as");
             }
 
         }else{
-            this.gameMaster.setMessageToGroup(this.gameMaster.putFailed());
+            this.gameMaster.setMessageToGroup(this.gameMaster.putFailed()+" bs");
         }
     }
 
@@ -108,9 +120,9 @@ public class NormalState implements GameState {
     @Override
     public void nextTurn() {
         if (direction.equals(Direction.CW)){
-            currPlayerIndex = (currPlayerIndex +1)%this.gameMaster.getNrOfPlayers();
+            currPlayerIndex = Math.floorMod(currPlayerIndex +1,this.gameMaster.getNrOfPlayers());
         }else{
-            currPlayerIndex = (currPlayerIndex -1)%this.gameMaster.getNrOfPlayers();
+            currPlayerIndex = Math.floorMod(currPlayerIndex -1,this.gameMaster.getNrOfPlayers());
         }
 
 
@@ -138,7 +150,7 @@ public class NormalState implements GameState {
     }
     @Override
     public int getCurrPlayerIndex() {
-        return currPlayerIndex%this.gameMaster.getPlayers().size();
+        return Math.floorMod(currPlayerIndex, gameMaster.getNrOfPlayers());
     }
 
     //guatambahin
@@ -157,7 +169,7 @@ public class NormalState implements GameState {
         String idOfTheOneSupposedToWin = null;
         boolean existsAPlayerWhoseCardIsJustOne = false;
         for (int i = 0; i<this.gameMaster.getNrOfPlayers();i++){
-            if (this.gameMaster.getPlayers().get(i).getCardsCollection().size()==1){
+            if (this.gameMaster.getPlayers().get(i).getCardsCollection().size()<=1 && !this.gameMaster.getPlayers().get(i).isUNO() ){
                 existsAPlayerWhoseCardIsJustOne = true;
                 if (this.gameMaster.getPlayers().get(i).getId().equals(playerId)){
                     winner = this.gameMaster.getPlayers().get(i);
@@ -165,7 +177,10 @@ public class NormalState implements GameState {
                 idOfTheOneSupposedToWin = this.gameMaster.getPlayers().get(i).getId();
             }
         }
-        if (existsAPlayerWhoseCardIsJustOne){establishedWinner(winner, idOfTheOneSupposedToWin);}
+        if (existsAPlayerWhoseCardIsJustOne && !gameMaster.getSpecificPlayer(playerId).isUNO()){establishedWinner(winner, idOfTheOneSupposedToWin);}
+        else if ( existsAPlayerWhoseCardIsJustOne && gameMaster.getSpecificPlayer(playerId).isUNO()){
+            this.gameMaster.setMessageToGroup("Pemain "+playerId+" sudah aman woy wkwkwk");
+        }
         else {this.gameMaster.setMessageToGroup("Belum ada yang UNO bang wkwkwk");}
 
     }
@@ -175,8 +190,10 @@ public class NormalState implements GameState {
     * @playerIDWhoSupposedToWin = pemain yang benar benar kartunya tinggal 1.
     * Jika player null, maka ya pemain tersebut musti ambil 2 kartu karena dia telat bilang uno
     * Else:
-    * - Kick pemain dari grup
-    * - update posisi juara yang diperebutkan. Misal juara 1 udah ada, yaudah berarti diupdate jad 2 dst....
+    * - Pemain dianggap aman
+    * -  Jika kartu pemain benar- benar tinggal nol, maka:
+    * 1. Dia jadi juara dan di-kick dari permainan
+    * 2. update posisi juara yang diperebutkan. Misal juara 1 udah ada, yaudah berarti diupdate jad 2 dst....
     *
     *
     *
@@ -185,11 +202,30 @@ public class NormalState implements GameState {
     @Override
     public void establishedWinner(Player player, String playerIdWhoSupposedToWin){
         if (player == null){
+            //debug
+            System.out.println("zzzzzzz");
+
+            for (int i=0;i<2;i++){
+                if (gameMaster.getNewCards().size()<1) gameMaster.recycleTrashCards();
+                this.gameMaster.getSpecificPlayer(playerIdWhoSupposedToWin).getCardsCollection().add(gameMaster.getNewCards().pop());
+            }
+
+            //debug
+            System.out.println(gameMaster.getSpecificPlayer(playerIdWhoSupposedToWin).getCardsCollection().size());
+            this.gameMaster.getSpecificPlayer(playerIdWhoSupposedToWin).setUNO(false);
             this.gameMaster.setMessageToGroup(this.gameMaster.failedToWin(playerIdWhoSupposedToWin));
         }else{
-            this.gameMaster.setMessageToGroup(this.gameMaster.winnerString(player.getId()));
-            this.gameMaster.getPlayers().remove(player);
-            this.gameMaster.setChampionPosition(this.gameMaster.getChampionPosition()+1);
+            if (player.getCardsCollection().size()<1){
+                this.gameMaster.setMessageToGroup(this.gameMaster.winnerString(player.getId()));
+                this.gameMaster.getPlayers().remove(player);
+                this.gameMaster.setChampionPosition(this.gameMaster.getChampionPosition()+1);
+
+
+            }else{
+                this.gameMaster.getSpecificPlayer(playerIdWhoSupposedToWin).setUNO(true);
+                this.gameMaster.setMessageToGroup(gameMaster.unoSafeString(playerIdWhoSupposedToWin));
+            }
+
         }
     }
 

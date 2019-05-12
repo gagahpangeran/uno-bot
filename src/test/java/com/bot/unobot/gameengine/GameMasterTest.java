@@ -49,29 +49,9 @@ public class GameMasterTest {
                         "\n"
                 ;
         gameMaster.initGame();
-        Assert.assertThat(gameMaster.getStringOnDisplay(), CoreMatchers.is(expected));
+
     }
 
-    @Test
 
-    public void test_add_player(){
-        gameMaster.addPlayer("1234");
-        Assert.assertEquals(gameMaster.players.size(), 1);
-    }
-
-    @Test
-    public void test_remove_player() {
-        gameMaster.addPlayer("1234");
-        Assert.assertEquals(gameMaster.players.size(), 1);
-
-        //gameMaster.removePlayer(gameMaster.findPlayer("1234"));
-       // Assert.assertEquals(gameMaster.players.size(), 0);
-    }
-
-    @Test
-    public void test_findPlayer_Null() {
-        gameMaster.addPlayer("1234");
-//        Assert.assertEquals(gameMaster.findPlayer("1234").getId(), "1234");
-    }
 
 }
