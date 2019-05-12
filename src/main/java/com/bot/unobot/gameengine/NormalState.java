@@ -61,9 +61,23 @@ public class NormalState implements GameState {
                     temp.setNumberOfCombos(tempPlusCard.getPlus());
                     this.gameMaster.setCurrentState(temp);
                 }else if (this.gameMaster.getTrashCards().peek().getEffect() == Effect.STOP){
-                    currPlayerIndex+=1;
+                    int numberOfSkip = 0;// mengapa pakai ini? Karena bisa jadi dia mengeluarkan Skip card dengan wildcard, jadi kita akan hitung ulang jumlah stop yang dikeluarkan sehingga wildcard tidak dianggap sebagai stop
+                    for (Card card:cards){
+                        if (card.getEffect().equals(Effect.STOP)){
+                            numberOfSkip+=1;
+                        }
+                    }
+                    currPlayerIndex+=(1*numberOfSkip);
                 }else if (this.gameMaster.getTrashCards().peek().getEffect() == Effect.REVERSE){
-                    this.direction = this.direction.getOpposite();
+                    int numberOfReverse = 0; // mengapa pakai ini? Karena bisa jadi dia mengeluarkan Reverse card dengan wildcard, jadi kita akan hitung ulang jumlah stop yang dikeluarkan sehingga wildcard tidak dianggap sebagai reverse
+                    for (Card card:cards){
+                        if (card.getEffect().equals(Effect.REVERSE)){
+                            numberOfReverse+=1;
+                        }
+                    }
+                    for (int i =0; i<numberOfReverse;i++){
+                        this.direction = this.direction.getOpposite();
+                    }
                 }
                 nextTurn();
             }else{
