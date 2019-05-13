@@ -405,13 +405,22 @@ public class GameMaster {
         return plusState;
     }
 
-    public void addPlayer (String playerId){
+    public void addPlayer(String playerId){
         players.add(new Player(playerId));
         //debug
-        System.out.println(playerId+" "+"terdaftar!");
+        System.out.println(playerId+" terdaftar!");
     }
 
-    /*Beberapa Sting yang akan digenerate untuk ditampilkan
+    public Player findPlayer(String PlayerId) {
+        for (Player player: players){
+            if(player.getId().equals(PlayerId)) {
+                return player;
+            }
+        }
+        return null;
+    }
+
+    /*Beberapa String yang akan digenerate untuk ditampilkan
     * ----------------------------------------------------------------------------------------------------------------------------------------------------------------
     * */
 

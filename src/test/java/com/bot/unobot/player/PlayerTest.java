@@ -27,17 +27,18 @@ public class PlayerTest {
 
     @Test
     public void Player_Test(){
-        gameMaster.addPlayer("1234");
+        Player player = new Player("1234");
         Assert.assertThat(player.getId(), CoreMatchers.is("1234"));
         Assert.assertThat(player.getCardsCollection().size(), CoreMatchers.is(0));
     }
 
     @Test
     public void ShowsPlayersCards_Test(){
-//        Card[] zz = {new WildCard(Color.RED)};
-//        player.setCards(new ArrayList<Card>(Arrays.asList(zz)));
-//        Assert.assertThat(player.getCardsCollection().size(), CoreMatchers.is(1));
-//
-//        Assert.assertThat(player.showsPlayersCards(), CoreMatchers.containsString("1."));
+        Player player = new Player("1234");
+        Card[] zz = {new WildCard(Color.RED)};
+        player.setCards(new ArrayList<>(Arrays.asList(zz)));
+        Assert.assertThat(player.getCardsCollection().size(), CoreMatchers.is(1));
+
+        Assert.assertThat(player.showsPlayersCards(), CoreMatchers.containsString("1."));
     }
 }
