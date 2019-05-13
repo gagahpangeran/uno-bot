@@ -17,7 +17,7 @@ public class SkipCardTest {
     public SkipCard card;
 
     @Test
-    public void SkipCards_Test(){
+    public void testSkipCards(){
         card = new SkipCard(Color.YELLOW);
         Assert.assertThat(card.getColor(), CoreMatchers.is(Color.YELLOW));
         Assert.assertThat(card.getSymbol(), CoreMatchers.is("Skip"));

@@ -15,7 +15,7 @@ public class OrdinaryCardTest {
     public OrdinaryCard card;
 
     @Test
-    public void OrdinaryCards_Test(){
+    public void testOrdinaryCards(){
         card = new OrdinaryCard("1",Color.YELLOW);
         Assert.assertThat(card.getColor(), CoreMatchers.is(Color.YELLOW));
         Assert.assertThat(card.getSymbol(), CoreMatchers.is("1"));

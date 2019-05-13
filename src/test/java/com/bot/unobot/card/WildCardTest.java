@@ -17,7 +17,7 @@ public class WildCardTest {
     public WildCard card;
 
     @Test
-    public void OrdinaryCards_Test(){
+    public void testWildCards(){
         card = new WildCard(Color.YELLOW);
         Assert.assertThat(card.getColor(), CoreMatchers.is(Color.YELLOW));
         Assert.assertThat(card.getSymbol(), CoreMatchers.is("Wild"));

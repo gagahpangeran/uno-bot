@@ -16,7 +16,7 @@ public class PlusCardTest {
     public PlusCard card;
 
     @Test
-    public void PlusCards_Test(){
+    public void testPlusCards(){
         card = new PlusCard(Color.YELLOW, 4);
         Assert.assertThat(card.getColor(), CoreMatchers.is(Color.YELLOW));
         Assert.assertThat(card.getSymbol(), CoreMatchers.is("+4"));

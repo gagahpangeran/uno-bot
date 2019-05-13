@@ -26,14 +26,14 @@ public class PlayerTest {
     public GameMaster gameMaster;
 
     @Test
-    public void Player_Test(){
+    public void testCreatePlayer(){
         Player player = new Player("1234");
         Assert.assertThat(player.getId(), CoreMatchers.is("1234"));
         Assert.assertThat(player.getCardsCollection().size(), CoreMatchers.is(0));
     }
 
     @Test
-    public void ShowsPlayersCards_Test(){
+    public void testSuccessShowsPlayersCards(){
         Player player = new Player("1234");
         Card[] zz = {new WildCard(Color.RED)};
         player.setCards(new ArrayList<>(Arrays.asList(zz)));

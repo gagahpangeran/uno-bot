@@ -411,15 +411,6 @@ public class GameMaster {
         System.out.println(playerId+" terdaftar!");
     }
 
-    public Player findPlayer(String PlayerId) {
-        for (Player player: players){
-            if(player.getId().equals(PlayerId)) {
-                return player;
-            }
-        }
-        return null;
-    }
-
     /*Beberapa String yang akan digenerate untuk ditampilkan
     * ----------------------------------------------------------------------------------------------------------------------------------------------------------------
     * */
