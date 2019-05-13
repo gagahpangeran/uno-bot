@@ -12,7 +12,10 @@ import java.util.*;
 public class GameSimulator {
 
     public static void main (String[] args){
+
+
         GameMaster gameMaster = new GameMaster();
+
       PlusTestCase(gameMaster);
 
 
@@ -339,6 +342,61 @@ public class GameSimulator {
 
             }
         }
+    }
+
+    public static void dataKartu(){
+        GameMaster gameMaster =  new GameMaster();
+        gameMaster.createNewCards();
+        System.out.println(gameMaster.getNewCards().size());
+        int ordinary_red= 0;
+        int ordinary_blue = 0;
+        int ordinary_green =0;
+        int ordinary_yellow = 0;
+        int plus  = 0;
+        int ordinary = 0;
+        int skip = 0;
+        int reverse = 0;
+        int wild = 0;
+        while (!gameMaster.getNewCards().empty()){
+            switch (gameMaster.getNewCards().peek().getEffect()){
+                case PLUS:
+                    plus+=1;
+                    break;
+                case STOP:
+                    skip+=1;
+                    break;
+                case NOTHING:
+                    ordinary+=1;
+                    switch (gameMaster.getNewCards().peek().getColor()){
+                        case RED:
+                            ordinary_red+=1;
+                            break;
+                        case BLUE:
+                            ordinary_blue+=1;
+                            break;
+                        case GREEN:
+                            ordinary_green+=1;
+                            break;
+                        case YELLOW:
+                            ordinary_yellow+=1;
+
+                    }
+                    break;
+                case REVERSE:
+                    reverse+=1;
+                    break;
+                    case CHANGE_COLOR:
+                        wild+=1;
+                        break;
+
+            }
+            gameMaster.getNewCards().pop();
+        }
+
+        System.out.println("ordinary red: "+ordinary_red+"\n"+"ordinary blue: "+ordinary_blue+"\n"+"ordinary green: "+ordinary_green+"\n"+"ordinary yellow: "+ordinary_yellow+"\n");
+        System.out.println("plus: "+ plus+"\n"+"ordinary: "+ordinary+"\n"+"skip: "+skip+"\n"+"reverse: "+reverse+"\n"+"wild: "+wild+"\n")   ;
+
+
     }
 
     /*

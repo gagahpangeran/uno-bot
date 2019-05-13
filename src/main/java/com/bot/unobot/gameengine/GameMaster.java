@@ -28,8 +28,8 @@ public class GameMaster {
     private  Stack<Card> newCards; // stack of cards yang merupakan kartu yang belum pernah masuk ke tangan pemain
     private String messageToGroup; // string yang ditampilkan oleh bot ke grup
     private String messageToPlayer; // string yang ditampilkan oleh bot ke player individually
-    private int championPosition; // Posisi juara yang diperebutkan. Misalnya ketika belum ada yang menang, berarti yang diperebutkan juara 1, ketika juara 1 udah ada, yang diperebutkan juara 2 dst...
-
+    private int championPosition;// Posisi juara yang diperebutkan. Misalnya ketika belum ada yang menang, berarti yang diperebutkan juara 1, ketika juara 1 udah ada, yang diperebutkan juara 2 dst...
+    private String ruleString;
     private ArrayList<Player> players; // ArrayList isinya pemain - pemain yang akan bergabung dalam permainan
 
     /*
@@ -46,6 +46,7 @@ public class GameMaster {
         this.messageToPlayer="";
         this.newCards = new Stack<Card>();
         this.trashCards  =  new Stack<Card>();
+        this.ruleString = "FINALRULE!!!\n" + "- Syarat kartu anda diterima:\n" + "1. kartu anda memiliki warna yang sama atau symbol yang sama dengan apa yang ditaruh pemain sebelumnya\n" + "2. kartu angka tidak bisa dicombo.\n" + "3. kartu yang bisa dicombo hanyalah plus,reverse,dan skip.\n" + "4. Combo hanya berlaku jika dia sejenis. Jika tidak maka akan ditolak\n" + "5. \n" + "- Jika Pemain terkena skip, namun dia punya skip, dia tetap gabisa main dan tetap di skip\n" + "- Jika pemain gak punya kartu, maka di harus draw. Setelah draw pemain tidak bisa jalan lagi. Harus tunggu gilirannya lagi.\n" + "- Pemain yang kartunya abis duluan, dialah pemenangnya\n" + "- Aturan Khusus WildCard:\n" + "\n" + "1. Jika anda mendapatkan WildCard atau Plus 4 maka cara menggunakannya adalah dengan mengetik set;[warna yang diinginkan] di akhir kalimat\n" + "\n" + "put Wildcard;special set;green\n" + "put Wildcard;special 7;blue set blue\n" + "put +2;green +2;yellow +4;special set;blue\n" + "\n" + "Untuk Wildcard selalu ketik di awal kalimat\n" + "Untuk +4 selalu ketik di akhir kalimat\n" + "\n" + "Misal kartu terakhir yang dikeluarkan : 7 Red\n" + "Kartu yang ada punya: 6 Yellow dan WildCard\n" + "Cara memakai : put Wildcard;special 6;yellow set;yellow\n";
     }
 
     /*Beberapa setter and getter*/
@@ -129,9 +130,7 @@ public class GameMaster {
         Card currentCard = cards.get(0);
 
 
-        return ((prevCard.getColor() == currentCard.getColor()) ||
-                (prevCard.getSymbol().equals(currentCard.getSymbol())) || currentCard instanceof WildCard);
-    }
+        return ((prevCard.getColor() == currentCard.getColor()) || (prevCard.getSymbol().equals(currentCard.getSymbol())) || currentCard instanceof WildCard); }
 
     /*
     * @param card = Jadi, karena player akan memberi inputan berupa string, input user perlu dikonversi menjadi sebuah object berupa ArrayList<Card>
@@ -185,9 +184,7 @@ public class GameMaster {
                 getPlayers().get(this.currentState.getCurrPlayerIndex()).getCardsCollection().remove(card1);
             }
 
-            return convertedCards;
-
-        }
+            return convertedCards; }
         convertedCards.clear();
         return convertedCards;
 
@@ -330,10 +327,10 @@ public class GameMaster {
                 color = Color.YELLOW;
             }else if (i==3){
                 color = Color.GREEN;
-            }else {
+            }else  {
                 color = Color.BLUE;
             }
-            for (int j =1;j<20;j++) {
+            for (int j =1;j<=19;j++) {
                 String cardName = Integer.toString(j%10);
                 OrdinaryCard ordinaryCard = new OrdinaryCard(cardName,color);
                 newCards.push(ordinaryCard);
@@ -362,10 +359,11 @@ public class GameMaster {
                 newCards.push(card);
             }else{
                 PlusCard card =  new PlusCard(Color.SPECIAL,4);
+                newCards.push(card);
             }
-
         }
-        Collections.shuffle(newCards);
+        //debug
+       Collections.shuffle(newCards);
 
     }
 
@@ -376,7 +374,8 @@ public class GameMaster {
     * */
 
     public void recycleTrashCards(){
-        for (int i =0;i<trashCards.size();i++){
+
+        while (!trashCards.empty()){
             newCards.push(trashCards.pop());
         }
         Collections.shuffle(newCards);
@@ -398,43 +397,16 @@ public class GameMaster {
     * */
 
     public void addToTrash(ArrayList<Card> cards){
+        ArrayList<Card> temp = (ArrayList<Card>)cards.clone();
         for (Card card: cards){
-            players.get(this.currentState.getCurrPlayerIndex()).getCardsCollection().remove(card);
             trashCards.push(card);
+        }
+        for (Card card: temp){
+            this.getPlayers().get(getCurrentState().getCurrPlayerIndex()).getCardsCollection().remove(card);
         }
     }
 
-    /*
-    * Method ini redundant, akan saya hapus rencananya
-    *
-    * */
 
-    public ArrayList<Card> setColorFromWildCardByPlayer (ArrayList<Card> cardArrayList,String color){
-        color = color.toLowerCase();
-       if (this.currentState.getLastCard().getColor() == Color.SPECIAL){
-           switch (color){
-               case "red":
-                   cardArrayList.get(cardArrayList.size()-1).setColor(Color.RED);
-                   //this.currentState.getLastCard().setColor(Color.RED);
-                   break;
-               case "yellow":
-                   cardArrayList.get(cardArrayList.size()-1).setColor(Color.YELLOW);
-                   //this.currentState.getLastCard().setColor(Color.YELLOW);
-                   break;
-               case "green":
-                   cardArrayList.get(cardArrayList.size()-1).setColor(Color.GREEN);
-                   //this.currentState.getLastCard().setColor(Color.GREEN);
-                   break;
-               case "blue":
-                   cardArrayList.get(cardArrayList.size()-1).setColor(Color.BLUE);
-                   //this.currentState.getLastCard().setColor(Color.BLUE);
-                   break;
-                   default:
-
-           }
-       }
-       return cardArrayList;
-    }
 
     /*
     *Method yang dieksekusi untuk memulai permainan
@@ -447,6 +419,7 @@ public class GameMaster {
 
     public void initGame(){
         createNewCards();
+        //debug
         Collections.shuffle(newCards);
         for (Player player : players){
             for (int i=0;i<7;i++){
@@ -514,64 +487,21 @@ public class GameMaster {
             message+=card.getSymbol()+" "+card.getColor()+" \n";
         }
         message+="Kartu yang terakhir dimainkan: "+this.currentState.getLastCard().getSymbol()+" "+currentState.getLastCard().getColor()+" \n";
-        message+="jika ingin mengeluarkan ketik : put[spasi]namakartu1;warnakartu1[spasi]namakartu2;warnakartu2dst...\n" +
-                "jika tidak punya kartu dan ingin ngedraw ketik : draw";
-        return message;
-    }
+        message+="jika ingin mengeluarkan ketik : put[spasi]namakartu1;warnakartu1[spasi]namakartu2;warnakartu2dst...\n" + "jika tidak punya kartu dan ingin ngedraw ketik : draw";
+        return message; }
 
-    public String putSucceed(){
-        return "Sukses meletakkan kartu!";
-    }
+    public String putSucceed(){ return "Sukses meletakkan kartu!"; }
 
-    public String putFailed(){
-        return "Kartu yang kamu letakkan tidak valid, coba ketik ulang, atau kalau emang kamu bohong, ketik draw saja :)";
-    }
-
-    public String nextTurnString(){
-        return "Giliran kamu udah beres, tunggu giliranmu selanjutnya ya";
-    }
-
-    public String winnerString(String playerId){
-
-        return "Selamat... pemain "+playerId+" berhasil meraih peringkat - "+championPosition+"\n" +
-                "Game akan secara otomatis meng-kick pemain "+playerId;
-    }
-
-    public String failedToWin(String playerId){
-
-        return "karena pemain "+playerId+" telat bilang uno... jadi otomatis dia dapet dua kartu deh\n" +
-                "Makanya jangan telat bos! ngohahahahahaha";
-    }
-
-    public String unoSafeString(String playerId){
-        return "Selamat .... Player "+playerId+" aman. Anda tidak perlu ambil 2 kartu karena sudah bilang UNO";
-    }
+    public String putFailed(){ return "Kartu yang kamu letakkan tidak valid, coba ketik ulang, atau kalau emang kamu bohong, ketik draw saja :)"; }
 
 
-    public String getRule() {
-        return "FINALRULE!!!\n" +
-                "- Syarat kartu anda diterima:\n" +
-                "1. kartu anda memiliki warna yang sama atau symbol yang sama dengan apa yang ditaruh pemain sebelumnya\n" +
-                "2. kartu angka tidak bisa dicombo.\n" +
-                "3. kartu yang bisa dicombo hanyalah plus,reverse,dan skip.\n" +
-                "4. Combo hanya berlaku jika dia sejenis. Jika tidak maka akan ditolak\n" +
-                "5. \n" +
-                "- Jika Pemain terkena skip, namun dia punya skip, dia tetap gabisa main dan tetap di skip\n" +
-                "- Jika pemain gak punya kartu, maka di harus draw. Setelah draw pemain tidak bisa jalan lagi. Harus tunggu gilirannya lagi.\n" +
-                "- Pemain yang kartunya abis duluan, dialah pemenangnya\n" +
-                "- Aturan Khusus WildCard:\n" +
-                "\n" +
-                "1. Jika anda mendapatkan WildCard atau Plus 4 maka cara menggunakannya adalah dengan mengetik set;[warna yang diinginkan] di akhir kalimat\n" +
-                "\n" +
-                "put Wildcard;special set;green\n" +
-                "put Wildcard;special 7;blue set blue\n" +
-                "put +2;green +2;yellow +4;special set;blue\n" +
-                "\n" +
-                "Untuk Wildcard selalu ketik di awal kalimat\n" +
-                "Untuk +4 selalu ketik di akhir kalimat\n" +
-                "\n" +
-                "Misal kartu terakhir yang dikeluarkan : 7 Red\n" +
-                "Kartu yang ada punya: 6 Yellow dan WildCard\n" +
-                "Cara memakai : put Wildcard;special 6;yellow set;yellow\n";
-    }
+
+    public String winnerString(String playerId){ return "Selamat... pemain "+playerId+" berhasil meraih peringkat - "+championPosition+"\n" + "Game akan secara otomatis meng-kick pemain "+playerId; }
+
+    public String failedToWin(String playerId){ return "karena pemain "+playerId+" telat bilang uno... jadi otomatis dia dapet dua kartu deh\n" + "Makanya jangan telat bos! ngohahahahahaha"; }
+
+    public String unoSafeString(String playerId){ return "Selamat .... Player "+playerId+" aman. Anda tidak perlu ambil 2 kartu karena sudah bilang UNO"; }
+
+
+    public String getRule() { return ruleString; }
 }

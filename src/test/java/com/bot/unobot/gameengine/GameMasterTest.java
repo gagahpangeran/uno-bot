@@ -1,8 +1,6 @@
 package com.bot.unobot.gameengine;
 
-import com.bot.unobot.card.Card;
-import com.bot.unobot.card.Color;
-import com.bot.unobot.card.OrdinaryCard;
+import com.bot.unobot.card.*;
 import com.bot.unobot.gameengine.GameMaster;
 import com.bot.unobot.player.Player;
 import org.hamcrest.CoreMatchers;
@@ -60,6 +58,10 @@ public class GameMasterTest {
     @Test
     public void setteAndGetterTest(){
         GameMaster gameMaster1 = new GameMaster();
+        gameMaster1.initGame();
+        Assert.assertEquals(0, gameMaster1.getPlayers().size());
+        Assert.assertEquals(107, gameMaster1.getNewCards().size());
+        Assert.assertEquals(1, gameMaster1.getTrashCards().size());
         gameMaster1.setMessageToGroup("Halo");
         gameMaster1.setMessageToPlayer("Hi");
         gameMaster1.setChampionPosition(2);
@@ -77,9 +79,7 @@ public class GameMasterTest {
        GameState state = gameMaster1.getCurrentState();
         Assert.assertEquals(state.hashCode(), gameMaster1.getCurrentState().hashCode());
         Assert.assertEquals(gameMaster1.getPlayers().size(), gameMaster1.getNrOfPlayers());
-        Assert.assertEquals(0, gameMaster1.getPlayers().size());
-        Assert.assertEquals(0, gameMaster1.getNewCards().size());
-        Assert.assertEquals(0, gameMaster1.getTrashCards().size());
+
 
 
 
@@ -113,6 +113,199 @@ public class GameMasterTest {
         gameMaster.initGame();
         String temp = gameMaster.getInfo();
         Assert.assertEquals(temp, gameMaster.getInfo());
+        ReverseCard tempCard = new ReverseCard(Color.BLUE);
+        gameMaster.getTrashCards().push(tempCard);
+        gameMaster.getSpecificPlayer("1234").getCardsCollection().add(tempCard);
+        ArrayList<String> tempArrayList = new ArrayList<>();
+        tempArrayList.add("reverse;blue");
+        gameMaster.put(gameMaster.converStringstoCards(tempArrayList));
+        temp = gameMaster.getInfo();
+        Assert.assertEquals(temp, gameMaster.getInfo());
+        temp = gameMaster.getMessageForPlayer(gameMaster.getPlayers().get(0).getId());
+        Assert.assertEquals(temp, gameMaster.getMessageForPlayer("1234"));
+        Assert.assertEquals(true, gameMaster.getRule().toLowerCase().contains("final"));
+        Assert.assertEquals(true, gameMaster.unoSafeString("1234").toLowerCase().contains("ambil 2 kartu"));
+        Assert.assertEquals(true, gameMaster.failedToWin("1234").toLowerCase().contains("jangan telat"));
+        Assert.assertEquals(true, gameMaster.winnerString("1234").toLowerCase().contains("selamat"));
+
+        String rule = "FINALRULE!!!\n" +
+                "- Syarat kartu anda diterima:\n" +
+                "1. kartu anda memiliki warna yang sama atau symbol yang sama dengan apa yang ditaruh pemain sebelumnya\n" +
+                "2. kartu angka tidak bisa dicombo.\n" +
+                "3. kartu yang bisa dicombo hanyalah plus,reverse,dan skip.\n" +
+                "4. Combo hanya berlaku jika dia sejenis. Jika tidak maka akan ditolak\n" +
+                "5. \n" +
+                "- Jika Pemain terkena skip, namun dia punya skip, dia tetap gabisa main dan tetap di skip\n" +
+                "- Jika pemain gak punya kartu, maka di harus draw. Setelah draw pemain tidak bisa jalan lagi. Harus tunggu gilirannya lagi.\n" +
+                "- Pemain yang kartunya abis duluan, dialah pemenangnya\n" +
+                "- Aturan Khusus WildCard:\n" +
+                "\n" +
+                "1. Jika anda mendapatkan WildCard atau Plus 4 maka cara menggunakannya adalah dengan mengetik set;[warna yang diinginkan] di akhir kalimat\n" +
+                "\n" +
+                "put Wildcard;special set;green\n" +
+                "put Wildcard;special 7;blue set blue\n" +
+                "put +2;green +2;yellow +4;special set;blue\n" +
+                "\n" +
+                "Untuk Wildcard selalu ketik di awal kalimat\n" +
+                "Untuk +4 selalu ketik di akhir kalimat\n" +
+                "\n" +
+                "Misal kartu terakhir yang dikeluarkan : 7 Red\n" +
+                "Kartu yang ada punya: 6 Yellow dan WildCard\n" +
+                "Cara memakai : put Wildcard;special 6;yellow set;yellow\n";
+        Assert.assertEquals(rule, gameMaster.getRule());
+        Assert.assertEquals(true, gameMaster.putSucceed().toLowerCase().contains("sukses"));
+        Assert.assertEquals(true, gameMaster.putFailed().toLowerCase().contains("tidak valid"));
+
+
+
+
+
+
+
+
+    }
+
+    @Test
+    public void  displayInfoTest(){
+        GameMaster gameMaster =  new GameMaster();
+        gameMaster.addPlayer("1234");
+        gameMaster.initGame();
+        String string1 =  "4. Combo hanya berlaku jika dia sejenis. Jika tidak maka akan ditolak\n" +
+                "5. \n" ;
+        String string2 =  "- Pemain yang kartunya abis duluan, dialah pemenangnya\n" +
+                "- Aturan Khusus WildCard:\n" ;
+        String string3 = "\n" +
+                "put Wildcard;special set;green\n" ;
+        String string4 = "\n" +
+                "Untuk Wildcard selalu ketik di awal kalimat\n";
+        String string5 =   "Misal kartu terakhir yang dikeluarkan : 7 Red\n" +
+                "Kartu yang ada punya: 6 Yellow dan WildCard\n" ;
+        Assert.assertEquals(true, gameMaster.getRule().contains(string1));
+        Assert.assertEquals(true, gameMaster.getRule().contains(string2));
+        Assert.assertEquals(true, gameMaster.getRule().contains(string3));
+        Assert.assertEquals(true, gameMaster.getRule().contains(string4));
+        Assert.assertEquals(true, gameMaster.getRule().contains(string5));
+
+    }
+
+    @Test
+    public void restOfTheMethodsTest(){
+        GameMaster gameMaster = new GameMaster();
+        gameMaster.addPlayer("123");
+        gameMaster.initGame();
+        gameMaster.addToTrash(gameMaster.getSpecificPlayer("123").getCardsCollection());
+        Assert.assertEquals(8, gameMaster.getTrashCards().size());
+        gameMaster.recycleTrashCards();
+        Assert.assertEquals(108, gameMaster.getNewCards().size());
+
+
+
+    }
+
+    @Test
+    public void converStringstoCardsTest(){
+        GameMaster gameMaster = new GameMaster();
+        gameMaster.addPlayer("12");
+        gameMaster.initGame();
+        Card tempCard = new OrdinaryCard("7", Color.BLUE);
+        gameMaster.getTrashCards().push(tempCard);
+        gameMaster.getSpecificPlayer("12").getCardsCollection().add(tempCard);
+        gameMaster.getCurrentState().setLastCard(gameMaster.getTrashCards().peek());
+        String[] inputanUser = {tempCard.getSymbol()+";"+tempCard.getColor()};
+        ArrayList<String> temps =  new ArrayList<>(Arrays.asList(inputanUser));
+        ArrayList<Card> result = gameMaster.converStringstoCards(temps);
+       // Assert.assertEquals(1, result.size());
+        Assert.assertEquals(1, result.size());
+
+        gameMaster.getTrashCards().pop();
+        gameMaster.getSpecificPlayer("12").getCardsCollection().remove(tempCard);
+        tempCard.setColor(Color.RED);
+        gameMaster.getTrashCards().push(tempCard);
+        gameMaster.getSpecificPlayer("12").getCardsCollection().add(tempCard);
+        gameMaster.getCurrentState().setLastCard(gameMaster.getTrashCards().peek());
+        inputanUser[0] = tempCard.getSymbol()+";"+tempCard.getColor();
+        temps =  new ArrayList<>(Arrays.asList(inputanUser));
+        result = gameMaster.converStringstoCards(temps);
+        Assert.assertEquals(1, result.size());
+
+
+        gameMaster.getTrashCards().pop();
+        gameMaster.getSpecificPlayer("12").getCardsCollection().remove(tempCard);
+        tempCard.setColor(Color.GREEN);
+        gameMaster.getTrashCards().push(tempCard);
+        gameMaster.getSpecificPlayer("12").getCardsCollection().add(tempCard);
+        gameMaster.getCurrentState().setLastCard(gameMaster.getTrashCards().peek());
+        inputanUser[0] = tempCard.getSymbol()+";"+tempCard.getColor();
+        temps =  new ArrayList<>(Arrays.asList(inputanUser));
+        result = gameMaster.converStringstoCards(temps);
+        Assert.assertEquals(1, result.size());
+
+
+        gameMaster.getTrashCards().pop();
+        gameMaster.getSpecificPlayer("12").getCardsCollection().remove(tempCard);
+        tempCard.setColor(Color.YELLOW);
+        gameMaster.getTrashCards().push(tempCard);
+        gameMaster.getSpecificPlayer("12").getCardsCollection().add(tempCard);
+        gameMaster.getCurrentState().setLastCard(gameMaster.getTrashCards().peek());
+        inputanUser[0] = tempCard.getSymbol()+";"+tempCard.getColor();
+        temps =  new ArrayList<>(Arrays.asList(inputanUser));
+        result = gameMaster.converStringstoCards(temps);
+        Assert.assertEquals(1, result.size());
+
+        Assert.assertEquals(null, gameMaster.getSpecificPlayer("asu"));
+
+
+
+    }
+
+    @Test
+    public void convertStringToCardsTest2(){
+        GameMaster gameMaster = new GameMaster();
+        gameMaster.addPlayer("12");
+        gameMaster.initGame();
+        Card tempCard = new WildCard(Color.SPECIAL);
+
+        gameMaster.getSpecificPlayer("12").getCardsCollection().add(tempCard);
+        gameMaster.getCurrentState().setLastCard(gameMaster.getTrashCards().peek());
+        String[] inputanUser = {tempCard.getSymbol()+";"+tempCard.getColor()};
+        ArrayList<String> temps =  new ArrayList<>(Arrays.asList(inputanUser));
+//        String inputanWarna = gameMaster.getTrashCards().peek().getColor()+"";
+        ArrayList<Card> result = gameMaster.converStringstoCards(temps,Color.RED+"");
+        Assert.assertEquals(1, result.size());
+
+        //gameMaster.getTrashCards().pop();
+        gameMaster.getSpecificPlayer("12").getCardsCollection().remove(tempCard);
+        tempCard = new WildCard(Color.SPECIAL);
+        gameMaster.getSpecificPlayer("12").getCardsCollection().add(tempCard);
+        gameMaster.getCurrentState().setLastCard(gameMaster.getTrashCards().peek());
+        inputanUser[0] = tempCard.getSymbol()+";"+tempCard.getColor();
+        temps =  new ArrayList<>(Arrays.asList(inputanUser));
+//        String inputanWarna = gameMaster.getTrashCards().peek().getColor()+"";
+        result = gameMaster.converStringstoCards(temps,Color.BLUE+"");
+        Assert.assertEquals(1, result.size());
+
+        //gameMaster.getTrashCards().pop();
+        gameMaster.getSpecificPlayer("12").getCardsCollection().remove(tempCard);
+        tempCard = new WildCard(Color.SPECIAL);
+        gameMaster.getSpecificPlayer("12").getCardsCollection().add(tempCard);
+        gameMaster.getCurrentState().setLastCard(gameMaster.getTrashCards().peek());
+        inputanUser[0] = tempCard.getSymbol()+";"+tempCard.getColor();
+        temps =  new ArrayList<>(Arrays.asList(inputanUser));
+//        String inputanWarna = gameMaster.getTrashCards().peek().getColor()+"";
+        result = gameMaster.converStringstoCards(temps,Color.GREEN+"");
+        Assert.assertEquals(1, result.size());
+
+       // gameMaster.getTrashCards().pop();
+        gameMaster.getSpecificPlayer("12").getCardsCollection().remove(tempCard);
+        tempCard = new WildCard(Color.SPECIAL);
+        gameMaster.getSpecificPlayer("12").getCardsCollection().add(tempCard);
+        gameMaster.getCurrentState().setLastCard(gameMaster.getTrashCards().peek());
+        inputanUser[0] = tempCard.getSymbol()+";"+tempCard.getColor();
+        temps =  new ArrayList<>(Arrays.asList(inputanUser));
+//        String inputanWarna = gameMaster.getTrashCards().peek().getColor()+"";
+        result = gameMaster.converStringstoCards(temps,Color.YELLOW+"");
+        Assert.assertEquals(1, result.size());
+
     }
 
 
