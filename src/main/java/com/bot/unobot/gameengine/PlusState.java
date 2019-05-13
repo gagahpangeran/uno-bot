@@ -55,7 +55,6 @@ public class PlusState implements GameState {
 
     @Override
     public void plus(Card[] cards) {
-
     }
 
     @Override

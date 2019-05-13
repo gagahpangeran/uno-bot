@@ -50,21 +50,10 @@ public class GameMaster {
 
     /*Beberapa setter and getter*/
 
-    public void plus(Card[] cards) {
-        this.currentState.plus(cards);
-    }
 
-    public void wild(Card[] cards) {
-        this.currentState.wild(cards);
-    }
-
-    public void giveUp() {
-        this.currentState.giveUp();
-    }
-
-    public void setColor(Color color) {
-        this.currentState.setColor(color);
-    }
+//    public void setColor(Color color) {
+//        this.currentState.setColor(color);
+//    }
 
     public void put(ArrayList<Card> cards) {
         this.currentState.put(cards);
@@ -92,6 +81,42 @@ public class GameMaster {
 
     public int getChampionPosition() {
         return championPosition;
+    }
+
+    /*beberapa getter*/
+
+    public GameState getCurrentState() {
+        return currentState;
+    }
+
+    public void setCurrentState(GameState currentState) {
+        this.currentState = currentState;
+    }
+
+    public GameState getNormalState() {
+        return normalState;
+    }
+
+    public GameState getPlusState() {
+        return plusState;
+    }
+
+
+
+    public int getNrOfPlayers(){
+        return players.size();
+    }
+
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
+    public Stack<Card> getNewCards() {
+        return newCards;
+    }
+
+    public Stack<Card> getTrashCards() {
+        return trashCards;
     }
 
 
@@ -203,6 +228,9 @@ public class GameMaster {
                     break;
                 case "SPECIAL":
                     colorOfCardInString = Color.SPECIAL;
+                    break;
+                    default:
+
             }
             for (Card card1: getPlayers().get(this.currentState.getCurrPlayerIndex()).getCardsCollection()){
 
@@ -223,6 +251,7 @@ public class GameMaster {
                             case "BLUE":
                                 card1.setColor(Color.BLUE);
                                 break;
+                                default:
                         }
 
                     }
@@ -354,41 +383,7 @@ public class GameMaster {
     }
 
 
-    /*beberapa getter*/
 
-    public GameState getCurrentState() {
-        return currentState;
-    }
-
-    public void setCurrentState(GameState currentState) {
-        this.currentState = currentState;
-    }
-
-    public GameState getNormalState() {
-        return normalState;
-    }
-
-    public GameState getPlusState() {
-        return plusState;
-    }
-
-
-
-    public int getNrOfPlayers(){
-        return players.size();
-    }
-
-    public ArrayList<Player> getPlayers() {
-        return players;
-    }
-
-    public Stack<Card> getNewCards() {
-        return newCards;
-    }
-
-    public Stack<Card> getTrashCards() {
-        return trashCards;
-    }
 
     public Player getSpecificPlayer(String playerId){
         for (Player player: players){
