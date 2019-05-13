@@ -16,14 +16,12 @@ public class PlusCardTest {
     public PlusCard card;
 
     @Test
-    public void testPlusCards(){
-        card = new PlusCard(Color.YELLOW, 4);
-        Assert.assertThat(card.getColor(), CoreMatchers.is(Color.YELLOW));
-        Assert.assertThat(card.getSymbol(), CoreMatchers.is("+4"));
-        Assert.assertThat(card.getPlus(), CoreMatchers.is(4));
-        Assert.assertThat(card.getEffect(), CoreMatchers.is(Effect.PLUS));
-
-        card.setColor(Color.BLUE);
-        Assert.assertThat(card.getColor(), CoreMatchers.is(Color.BLUE));
+    public void PlusCards_Test(){
+        PlusCard testCard = new PlusCard(Color.GREEN,2);
+        Assert.assertThat(testCard.getEffect(), CoreMatchers.is(Effect.PLUS));
+        Assert.assertEquals(Effect.PLUS, testCard.getEffect());
+        Assert.assertEquals("+2", testCard.getSymbol());
+        testCard.setColor(Color.BLUE);
+        Assert.assertThat(testCard.getColor(), CoreMatchers.is(Color.BLUE));
     }
 }

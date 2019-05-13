@@ -1,9 +1,6 @@
 package com.bot.unobot.player;
 
-import com.bot.unobot.card.Card;
-import com.bot.unobot.card.Color;
-import com.bot.unobot.card.OrdinaryCard;
-import com.bot.unobot.card.WildCard;
+import com.bot.unobot.card.*;
 import com.bot.unobot.gameengine.GameMaster;
 import com.bot.unobot.player.Player;
 import org.hamcrest.CoreMatchers;
@@ -26,19 +23,28 @@ public class PlayerTest {
     public GameMaster gameMaster;
 
     @Test
-    public void testCreatePlayer(){
+    public void testCreatePlayer() {
         Player player = new Player("1234");
         Assert.assertThat(player.getId(), CoreMatchers.is("1234"));
         Assert.assertThat(player.getCardsCollection().size(), CoreMatchers.is(0));
+        Card[] cards = {new OrdinaryCard("7", Color.YELLOW),
+                new WildCard(Color.SPECIAL),
+                new PlusCard(Color.SPECIAL, 4),
+                new PlusCard(Color.BLUE, 2),
+                new PlusCard(Color.RED, 2)
+        };
+        player.setCards(new ArrayList<>(Arrays.asList(cards)));
+        Assert.assertEquals(5, player.getCardsCollection().size());
+        Assert.assertEquals(false, player.isUNO());
+        player.setUNO(true);
+        Assert.assertEquals(true, player.isUNO());
     }
 
     @Test
-    public void testSuccessShowsPlayersCards(){
+    public void testSuccessShowsPlayersCards() {
         Player player = new Player("1234");
         Card[] zz = {new WildCard(Color.RED)};
         player.setCards(new ArrayList<>(Arrays.asList(zz)));
         Assert.assertThat(player.getCardsCollection().size(), CoreMatchers.is(1));
-
-        Assert.assertThat(player.showsPlayersCards(), CoreMatchers.containsString("1."));
     }
 }

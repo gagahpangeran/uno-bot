@@ -15,13 +15,12 @@ public class OrdinaryCardTest {
     public OrdinaryCard card;
 
     @Test
-    public void testOrdinaryCards(){
-        card = new OrdinaryCard("1",Color.YELLOW);
-        Assert.assertThat(card.getColor(), CoreMatchers.is(Color.YELLOW));
-        Assert.assertThat(card.getSymbol(), CoreMatchers.is("1"));
-        Assert.assertThat(card.getEffect(), CoreMatchers.is(Effect.NOTHING));
 
-        card.setColor(Color.BLUE);
-        Assert.assertThat(card.getColor(), CoreMatchers.is(Color.BLUE));
+    public void OrdinaryCards_Test(){
+        OrdinaryCard testCard = new OrdinaryCard("7",Color.GREEN);
+        Assert.assertThat(testCard.getEffect(), CoreMatchers.is(Effect.NOTHING));
+        Assert.assertEquals(Effect.NOTHING, testCard.getEffect());
+        testCard.setColor(Color.BLUE);
+        Assert.assertThat(testCard.getColor(), CoreMatchers.is(Color.BLUE));
     }
 }

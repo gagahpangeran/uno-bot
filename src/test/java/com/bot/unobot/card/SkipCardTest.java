@@ -17,13 +17,12 @@ public class SkipCardTest {
     public SkipCard card;
 
     @Test
-    public void testSkipCards(){
-        card = new SkipCard(Color.YELLOW);
-        Assert.assertThat(card.getColor(), CoreMatchers.is(Color.YELLOW));
-        Assert.assertThat(card.getSymbol(), CoreMatchers.is("Skip"));
-        Assert.assertThat(card.getEffect(), CoreMatchers.is(Effect.STOP));
-
-        card.setColor(Color.BLUE);
-        Assert.assertThat(card.getColor(), CoreMatchers.is(Color.BLUE));
+    public void SkipCards_Test(){
+        SkipCard testCard = new SkipCard(Color.GREEN);
+        Assert.assertThat(testCard.getEffect(), CoreMatchers.is(Effect.STOP));
+        Assert.assertEquals(Effect.STOP, testCard.getEffect());
+        testCard.setColor(Color.BLUE);
+        Assert.assertEquals("skip", testCard.getSymbol().toLowerCase());
+        Assert.assertThat(testCard.getColor(), CoreMatchers.is(Color.BLUE));
     }
 }

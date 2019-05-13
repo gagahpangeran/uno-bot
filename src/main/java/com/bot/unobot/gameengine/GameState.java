@@ -40,5 +40,7 @@ public interface GameState {
 
     public void setLastCard(Card lastCard);
 
+
+
     //public ArrayList<Card> converStringstoCards(String[] cards);
 }

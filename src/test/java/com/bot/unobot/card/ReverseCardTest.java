@@ -16,13 +16,12 @@ public class ReverseCardTest {
     public ReverseCard card;
 
     @Test
-    public void testReverseCards(){
-        card = new ReverseCard(Color.YELLOW);
-        Assert.assertThat(card.getColor(), CoreMatchers.is(Color.YELLOW));
-        Assert.assertThat(card.getSymbol(), CoreMatchers.is("Reverse"));
-        Assert.assertThat(card.getEffect(), CoreMatchers.is(Effect.REVERSE));
-
-        card.setColor(Color.BLUE);
-        Assert.assertThat(card.getColor(), CoreMatchers.is(Color.BLUE));
+    public void ReverseCards_Test(){
+        ReverseCard testCard = new ReverseCard(Color.GREEN);
+        Assert.assertThat(testCard.getEffect(), CoreMatchers.is(Effect.REVERSE));
+        Assert.assertEquals(Effect.REVERSE, testCard.getEffect());
+        testCard.setColor(Color.BLUE);
+        Assert.assertEquals("reverse", testCard.getSymbol().toLowerCase());
+        Assert.assertThat(testCard.getColor(), CoreMatchers.is(Color.BLUE));
     }
 }
