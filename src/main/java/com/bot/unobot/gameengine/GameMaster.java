@@ -179,13 +179,9 @@ public class GameMaster {
                 }
             }
         }
-        if (convertedCards.size() == card.size()){
-            for (Card card1: convertedCards){
-                getPlayers().get(this.currentState.getCurrPlayerIndex()).getCardsCollection().remove(card1);
-            }
-
-            return convertedCards; }
-        convertedCards.clear();
+        if (convertedCards.size() != card.size()){
+            convertedCards.clear();
+        }
         return convertedCards;
 
     }
@@ -258,17 +254,14 @@ public class GameMaster {
         }
 
 
-        if (convertedCards.size() == card.size()){
-            for (Card card1: convertedCards){
-                getPlayers().get(this.currentState.getCurrPlayerIndex()).getCardsCollection().remove(card1);
-            }
-
-            return convertedCards;
-
+        if (convertedCards.size() != card.size()){
+            convertedCards.clear();
         }
-
-        convertedCards.clear();
+        //debug
+        System.out.println(convertedCards.size());
         return convertedCards;
+
+
 
     }
 
