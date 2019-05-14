@@ -1,7 +1,7 @@
 package com.bot.unobot.card;
 
 /**
- * Card Interface
+ * UNO Card's Interface
  */
 public interface Card {
     String getName();
