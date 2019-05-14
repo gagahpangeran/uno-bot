@@ -108,7 +108,7 @@ public class GameMasterTest {
         gameMaster.getSpecificPlayer("1234").getCardsCollection().add(tempCard);
         ArrayList<String> tempArrayList = new ArrayList<>();
         tempArrayList.add("reverse;blue");
-        gameMaster.put(gameMaster.converStringstoCards(tempArrayList));
+        gameMaster.put(gameMaster.convertStringstoCards(tempArrayList));
         temp = gameMaster.getInfo();
         Assert.assertEquals(temp, gameMaster.getInfo());
         temp = gameMaster.getMessageForPlayer(gameMaster.getPlayers().get(0).getId());
@@ -206,7 +206,7 @@ public class GameMasterTest {
         gameMasters1.getCurrentState().setLastCard(gameMasters1.getTrashCards().peek());
         String[] inputanUser = {tempCard.getSymbol()+";"+tempCard.getColor(), tempCard1.getSymbol()+";"+tempCard1.getColor()};
         List<String> temps =  new ArrayList<>(Arrays.asList(inputanUser));
-        List<Card> result = gameMasters1.converStringstoCards(temps,gameMasters1.getSpecificPlayer("1").getCardsCollection().get(0).getColor()+"");
+        List<Card> result = gameMasters1.convertStringstoCards(temps,gameMasters1.getSpecificPlayer("1").getCardsCollection().get(0).getColor()+"");
         Assert.assertEquals(2, result.size());
 
     }
@@ -234,7 +234,7 @@ public class GameMasterTest {
 //        String[] inputanUser = {tempCard.getSymbol()+";"+tempCard.getColor(),
 //                                tempCard1.getSymbol()+";"+tempCard1.getColor()};
 //        ArrayList<String> temps =  new ArrayList<>(Arrays.asList(inputanUser));
-//        ArrayList<Card> result = gameMasters1.converStringstoCards(temps,Color.RED+"");
+//        ArrayList<Card> result = gameMasters1.convertStringstoCards(temps,Color.RED+"");
 //        Assert.assertEquals(2, result.size());
 //
 //    }
@@ -258,7 +258,7 @@ public class GameMasterTest {
 //        String[] inputanUser = {tempCard.getSymbol()+";"+tempCard.getColor(),
 //                tempCard1.getSymbol()+";"+tempCard1.getColor()};
 //        ArrayList<String> temps =  new ArrayList<>(Arrays.asList(inputanUser));
-//        ArrayList<Card> result = gameMasters2.converStringstoCards(temps,Color.BLUE+"");
+//        ArrayList<Card> result = gameMasters2.convertStringstoCards(temps,Color.BLUE+"");
 //        Assert.assertEquals(2, result.size());
 //
 //    }
@@ -283,7 +283,7 @@ public class GameMasterTest {
 //        String[] inputanUser = {tempCard.getSymbol()+";"+tempCard.getColor(),
 //                tempCard1.getSymbol()+";"+tempCard1.getColor()};
 //        ArrayList<String> temps =  new ArrayList<>(Arrays.asList(inputanUser));
-//        ArrayList<Card> result = gameMasters3.converStringstoCards(temps,Color.GREEN+"");
+//        ArrayList<Card> result = gameMasters3.convertStringstoCards(temps,Color.GREEN+"");
 //        Assert.assertEquals(2, result.size());
 //
 //    }
@@ -308,7 +308,7 @@ public class GameMasterTest {
 //        String[] inputanUser = {tempCard.getSymbol()+";"+tempCard.getColor(),
 //                tempCard1.getSymbol()+";"+tempCard1.getColor()};
 //        ArrayList<String> temps =  new ArrayList<>(Arrays.asList(inputanUser));
-//        ArrayList<Card> result = gameMastersz.converStringstoCards(temps,Color.YELLOW+"".toLowerCase());
+//        ArrayList<Card> result = gameMastersz.convertStringstoCards(temps,Color.YELLOW+"".toLowerCase());
 //        Assert.assertEquals(2, result.size());
 //
 //    }

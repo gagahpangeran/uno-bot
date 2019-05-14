@@ -43,5 +43,5 @@ public interface GameState {
 
 
 
-    //public ArrayList<Card> converStringstoCards(String[] cards);
+    //public ArrayList<Card> convertStringstoCards(String[] cards);
 }

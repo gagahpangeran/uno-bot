@@ -147,7 +147,7 @@ public class GameMaster {
     * */
 
 
-    public List<Card> converStringstoCards(List<String> card) {
+    public List<Card> convertStringstoCards(List<String> card) {
 
         ArrayList<Card> convertedCards = new ArrayList<>();
         for (String cardInString : card){
@@ -201,7 +201,7 @@ public class GameMaster {
     *
     * */
 
-    public List<Card> converStringstoCards(List<String> card, String colorSetByPlayer) {
+    public List<Card> convertStringstoCards(List<String> card, String colorSetByPlayer) {
         List<Card> convertedCards = new ArrayList<>();
         for (String cardInString : card){
             Color colorOfCardInString = null;
@@ -222,12 +222,12 @@ public class GameMaster {
                 case "SPECIAL":
                     colorOfCardInString = Color.SPECIAL;
                     break;
-                    default:
+                default:
+                    break;
             }
             for (Card card1: getPlayers().get(this.currentState.getCurrPlayerIndex()).getCardsCollection()){
                 if (cardInStringIdentity[0].equalsIgnoreCase(card1.getSymbol())&& colorOfCardInString.equals(card1.getColor())){
                     if (card1.getColor().equals(Color.SPECIAL)){
-
                         switch (colorSetByPlayer.toUpperCase()){
                             case "RED":
                                 card1.setColor(Color.RED);
@@ -241,9 +241,9 @@ public class GameMaster {
                             case "BLUE":
                                 card1.setColor(Color.BLUE);
                                 break;
-                                default:
+                            default:
+                                break;
                         }
-
                     }
                     convertedCards.add(card1);
                 }
@@ -291,8 +291,6 @@ public class GameMaster {
                 }
             }
         }
-
-
         return true;
     }
 
@@ -301,17 +299,23 @@ public class GameMaster {
     * */
 
     public void createNewCards(){
-
         for (int i =1;i<5;i++) {
-            Color color;
-            if (i==1){
-                color = Color.RED;
-            }else if (i==2){
-                color = Color.YELLOW;
-            }else if (i==3){
-                color = Color.GREEN;
-            }else  {
-                color = Color.BLUE;
+            Color color = Color.RED; //to be used as initialization
+            switch(i) {
+                case 1:
+                    color = Color.RED;
+                    break;
+                case 2:
+                    color = Color.YELLOW;
+                    break;
+                case 3:
+                    color = Color.GREEN;
+                    break;
+                case 4:
+                    color = Color.BLUE;
+                    break;
+                default:
+                    break;
             }
             for (int j =1;j<=19;j++) {
                 String cardName = Integer.toString(j%10);
@@ -473,11 +477,13 @@ public class GameMaster {
         }
 
        if(target == (null)) return "aaaaa ngebuggggg!!!!";
-        for (Card card: target.getCardsCollection()){
-            message.append(card.getSymbol());
-            message.append(" ");
-            message.append(card.getColor());
-            message.append(" \n");
+        {
+            for (Card card : target.getCardsCollection()) {
+                message.append(card.getSymbol());
+                message.append(" ");
+                message.append(card.getColor());
+                message.append(" \n");
+            }
         }
         message.append("Kartu yang terakhir dimainkan: ");
         message.append(this.currentState.getLastCard().getSymbol());

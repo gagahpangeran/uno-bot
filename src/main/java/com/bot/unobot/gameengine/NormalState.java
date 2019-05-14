@@ -70,8 +70,8 @@ public class NormalState implements GameState {
                                 numberOfSkip+=1;
                             }
                         }
-
                         currPlayerIndex+=(1*numberOfSkip);
+
                     }else if (this.gameMaster.getTrashCards().peek().getEffect() == Effect.REVERSE){
                         int numberOfReverse = 0; // mengapa pakai ini? Karena bisa jadi dia mengeluarkan Reverse card dengan wildcard, jadi kita akan hitung ulang jumlah stop yang dikeluarkan sehingga wildcard tidak dianggap sebagai reverse
                         for (Card card:cards){
@@ -93,8 +93,6 @@ public class NormalState implements GameState {
                         gameMaster.setMessageToGroup(gameMaster.putSucceed()+"ss");
                         nextTurn();
                     }
-
-
                 }
 
             }else{
