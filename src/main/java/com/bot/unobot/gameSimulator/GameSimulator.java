@@ -77,7 +77,6 @@ public class GameSimulator {
         String s = commands[0];
 
         while (temp){
-
             switch (s){
                 case "exit":
                     System.exit(0);
@@ -132,9 +131,11 @@ public class GameSimulator {
                     break;
                 case "rule":
                     System.out.println(gameMaster.getRule());
+                    break;
 
                     default:
                         System.out.println("command yang lu masukin salah! Coba Lagi!");
+                        break;
 
             }
             commands = tokenizer.nextLine().split(" ");
@@ -178,7 +179,8 @@ public class GameSimulator {
                             new OrdinaryCard("3",Color.RED)};
                     player.setCards(new ArrayList<>(Arrays.asList(zzzz)));
                     break;
-
+                default:
+                    break;
 
             }
         }
@@ -220,11 +222,10 @@ public class GameSimulator {
                             new OrdinaryCard("3",Color.RED)};
                     player.setCards(new ArrayList<>(Arrays.asList(zzzz)));
                     break;
-
-
+                default:
+                    break;
             }
         }
-
     }
 
     public static void SkipTestCase(GameMaster gameMaster){
@@ -259,8 +260,8 @@ public class GameSimulator {
                             new OrdinaryCard("3",Color.RED)};
                     player.setCards(new ArrayList<>(Arrays.asList(zzzz)));
                     break;
-
-
+                default:
+                    break;
             }
         }
 
@@ -299,8 +300,8 @@ public class GameSimulator {
                             new OrdinaryCard("3",Color.RED)};
                     player.setCards(new ArrayList<>(Arrays.asList(zzzz)));
                     break;
-
-
+                default:
+                    break;
             }
         }
 
@@ -340,8 +341,8 @@ public class GameSimulator {
                             new OrdinaryCard("3",Color.RED)};
                     player.setCards(new ArrayList<>(Arrays.asList(zzzz)));
                     break;
-
-
+                default:
+                    break;
             }
         }
     }
@@ -381,7 +382,9 @@ public class GameSimulator {
                             break;
                         case YELLOW:
                             ordinary_yellow+=1;
-
+                            break;
+                        default:
+                            break;
                     }
                     break;
                 case REVERSE:

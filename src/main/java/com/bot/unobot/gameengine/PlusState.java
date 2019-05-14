@@ -153,7 +153,7 @@ public class PlusState implements GameState {
     @Override
     public void draw() {
         for ( int i = 0; i<numberOfCombos;i++){
-            if (this.gameMaster.getNewCards().size()<1){
+            if (this.gameMaster.getNewCards().isEmpty()){
                 this.gameMaster.recycleTrashCards();
             }
             this.gameMaster.getPlayers().get(getCurrPlayerIndex()).getCardsCollection().add(this.gameMaster.getNewCards().pop());
@@ -217,7 +217,7 @@ public class PlusState implements GameState {
 
     @Override
     public void establishedWinner(Player player, String playerIdWhoSupposedToWin){
-        if (player.equals(null)){
+        if (player == null){
             this.gameMaster.setMessageToGroup(this.gameMaster.failedToWin(playerIdWhoSupposedToWin));
         }else{
             this.gameMaster.setMessageToGroup(this.gameMaster.winnerString(player.getId()));

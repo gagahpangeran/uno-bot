@@ -2,11 +2,8 @@ package com.bot.unobot.gameengine;
 
 import com.bot.unobot.card.*;
 import com.bot.unobot.player.Player;
-import org.yaml.snakeyaml.util.ArrayUtils;
 
-import java.text.CollationElementIterator;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Stack;
 
@@ -25,7 +22,7 @@ public class GameMaster {
     private GameState plusState; // Plus State adalah state dimana ketika kartu yang terakhir ditaruh kartu plus
     private GameState currentState;
     private Stack<Card> trashCards; // stack of cards yang merupakan kartu yang "dibuang" pemain ketika dia mengeluarkan kartu
-    private  Stack<Card> newCards; // stack of cards yang merupakan kartu yang belum pernah masuk ke tangan pemain
+    private Stack<Card> newCards; // stack of cards yang merupakan kartu yang belum pernah masuk ke tangan pemain
     private String messageToGroup; // string yang ditampilkan oleh bot ke grup
     private String messageToPlayer; // string yang ditampilkan oleh bot ke player individually
     private int championPosition;// Posisi juara yang diperebutkan. Misalnya ketika belum ada yang menang, berarti yang diperebutkan juara 1, ketika juara 1 udah ada, yang diperebutkan juara 2 dst...
@@ -33,8 +30,8 @@ public class GameMaster {
     private ArrayList<Player> players; // ArrayList isinya pemain - pemain yang akan bergabung dalam permainan
 
     /*
-    * Class Constructor -- gak perlu dijelasin lagi lah ya :)
-    * */
+     * Class Constructor -- gak perlu dijelasin lagi lah ya :)
+     * */
     public GameMaster() {
         this.normalState = new NormalState(this);
         //this.wildState = new WildState(this);
@@ -171,10 +168,12 @@ public class GameMaster {
 //                case "SPECIAL":
 //                    colorOfCardInString = Color.SPECIAL;
 //                    break;
+                default:
+                    break;
             }
             for (Card card1: getPlayers().get(this.currentState.getCurrPlayerIndex()).getCardsCollection()){
 
-                if (cardInStringIndentity[0].toUpperCase().equals(card1.getSymbol().toUpperCase())&&colorOfCardInString.equals(card1.getColor())){
+                if (cardInStringIndentity[0].equalsIgnoreCase(card1.getSymbol())&&colorOfCardInString.equals(card1.getColor())){
                     convertedCards.add(card1);
                 }
             }
@@ -228,7 +227,7 @@ public class GameMaster {
             for (Card card1: getPlayers().get(this.currentState.getCurrPlayerIndex()).getCardsCollection()){
 
 
-                if (cardInStringIndentity[0].toLowerCase().equals(card1.getSymbol().toLowerCase())&&colorOfCardInString.equals(card1.getColor())){
+                if (cardInStringIndentity[0].equalsIgnoreCase(card1.getSymbol())&& colorOfCardInString.equals(card1.getColor())){
                     if (card1.getColor().equals(Color.SPECIAL)){
 
                         switch (colorSetByPlayer.toUpperCase()){
@@ -257,12 +256,7 @@ public class GameMaster {
         if (convertedCards.size() != card.size()){
             convertedCards.clear();
         }
-        //debug
-        System.out.println(convertedCards.size());
         return convertedCards;
-
-
-
     }
 
 
@@ -447,54 +441,69 @@ public class GameMaster {
     /**/
 
     public String getInfo(){
-        String info = "Daftar pemain dan kartunya:\n\n";
+        StringBuilder info = new StringBuilder();
+        info.append("Daftar pemain dan kartunya:\n\n");
         for (Player player: players){
-            info+=player.getId()+"\n"+"jumlah kartu = "+player.getCardsCollection().size()+"\n\n";
+            info.append(player.getId());
+            info.append("\n Jumlah kartu = ");
+            info.append(player.getCardsCollection().size());
+            info.append("\n\n");
         }
         if (this.currentState.getDirection() == Direction.CW){
-            info+="Reverse:\nTrue\n\n\n";
+            info.append("Reverse:\nTrue\n\n\n");
         }else{
-            info+="Reverse:\nFalse\n\n\n";
+            info.append("Reverse:\nFalse\n\n\n");
         }
-        //debug
-        if (currentState.getLastCard() == null && currentState instanceof PlusState) System.out.println("ngix");
+        info.append("Kartu yang terakhir dimainkan: ");
+        info.append(currentState.getLastCard().getSymbol());
+        info.append(" ");
+        info.append(currentState.getLastCard().getColor());
+        info.append("\n");
 
-        info+="Kartu yang terakhir dimainkan: "+currentState.getLastCard().getSymbol()+" "+currentState.getLastCard().getColor()+"\n";
-        info+="Giliran sekarang : "+players.get(currentState.getCurrPlayerIndex()).getId();
+        info.append("Giliran sekarang : ");
+        info.append(players.get(currentState.getCurrPlayerIndex()).getId());
 
-        return info;
+        String output = info.toString();
+        return output;
     }
 
     public String getMessageForPlayer(String playerId){
         Player target = null;
-        String message = "Kartu kamu sekarang:\n";
+        StringBuilder message = new StringBuilder();
+        message.append("Kartu kamu sekarang:\n");
         for (Player player : players){
             if (player.getId().equals(playerId)){
                 target = player;
-
             }
         }
 
        if(target == (null)) return "aaaaa ngebuggggg!!!!";
         for (Card card: target.getCardsCollection()){
-            message+=card.getSymbol()+" "+card.getColor()+" \n";
+            message.append(card.getSymbol());
+            message.append(" ");
+            message.append(card.getColor());
+            message.append(" \n");
         }
-        message+="Kartu yang terakhir dimainkan: "+this.currentState.getLastCard().getSymbol()+" "+currentState.getLastCard().getColor()+" \n";
-        message+="jika ingin mengeluarkan ketik : put[spasi]namakartu1;warnakartu1[spasi]namakartu2;warnakartu2dst...\n" + "jika tidak punya kartu dan ingin ngedraw ketik : draw";
-        return message; }
+        message.append("Kartu yang terakhir dimainkan: ");
+        message.append(this.currentState.getLastCard().getSymbol());
+        message.append(" ");
+        message.append(currentState.getLastCard().getColor());
+        message.append(" \n");
+
+        message.append("Jika ingin mengeluarkan ketik : put[spasi]namakartu1;warnakartu1[spasi]namakartu2;warnakartu2dst...\n" + "jika tidak punya kartu dan ingin ngedraw ketik : draw");
+        String output = message.toString();
+        return output;
+    }
 
     public String putSucceed(){ return "Sukses meletakkan kartu!"; }
 
     public String putFailed(){ return "Kartu yang kamu letakkan tidak valid, coba ketik ulang, atau kalau emang kamu bohong, ketik draw saja :)"; }
-
-
 
     public String winnerString(String playerId){ return "Selamat... pemain "+playerId+" berhasil meraih peringkat - "+championPosition+"\n" + "Game akan secara otomatis meng-kick pemain "+playerId; }
 
     public String failedToWin(String playerId){ return "karena pemain "+playerId+" telat bilang uno... jadi otomatis dia dapet dua kartu deh\n" + "Makanya jangan telat bos! ngohahahahahaha"; }
 
     public String unoSafeString(String playerId){ return "Selamat .... Player "+playerId+" aman. Anda tidak perlu ambil 2 kartu karena sudah bilang UNO"; }
-
 
     public String getRule() { return ruleString; }
 }

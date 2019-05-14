@@ -58,6 +58,8 @@ public class HandlerController {
                 this.replyMessage("Leave group!");
                 this.leave(groupId);
                 break;
+             default:
+                 break;
         }
         return command;
     }
@@ -87,7 +89,7 @@ public class HandlerController {
         try {
             name = lineMessagingClient.getProfile(userId).get().getDisplayName();
         } catch (Exception e) {
-                System.out.println(e);
+            System.out.println(e);
         }
         return name;
     }

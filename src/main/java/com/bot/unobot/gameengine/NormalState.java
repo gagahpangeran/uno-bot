@@ -8,7 +8,6 @@ import com.bot.unobot.card.PlusCard;
 import com.bot.unobot.player.Player;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /*
 * Berikut ini gw akan ngasih dokumentasi tentang Class ini
@@ -89,7 +88,7 @@ public class NormalState implements GameState {
                     }
                     //debug
                     System.out.println(gameMaster.getPlayers().get(getCurrPlayerIndex()).getCardsCollection().size());
-                    if (gameMaster.getPlayers().get(getCurrPlayerIndex()).getCardsCollection().size()<1 && gameMaster.getPlayers().get(getCurrPlayerIndex()).isUNO()){
+                    if (gameMaster.getPlayers().get(getCurrPlayerIndex()).getCardsCollection().isEmpty() && gameMaster.getPlayers().get(getCurrPlayerIndex()).isUNO()){
                         gameMaster.setMessageToGroup(gameMaster.putSucceed());
                         establishedWinner(gameMaster.getPlayers().get(getCurrPlayerIndex()), gameMaster.getPlayers().get(getCurrPlayerIndex()).getId());
                     }else{
@@ -118,7 +117,7 @@ public class NormalState implements GameState {
     /*Draw Cards*/
     @Override
     public void draw(){
-        if (this.gameMaster.getNewCards().size()<1){
+        if (this.gameMaster.getNewCards().isEmpty()){
             this.gameMaster.recycleTrashCards();
         }
         this.gameMaster.getPlayers().get(getCurrPlayerIndex()).getCardsCollection().add(this.gameMaster.getNewCards().pop());
@@ -214,7 +213,7 @@ public class NormalState implements GameState {
             System.out.println("zzzzzzz");
 
             for (int i=0;i<2;i++){
-                if (gameMaster.getNewCards().size()<1) gameMaster.recycleTrashCards();
+                if (gameMaster.getNewCards().isEmpty()) gameMaster.recycleTrashCards();
                 this.gameMaster.getSpecificPlayer(playerIdWhoSupposedToWin).getCardsCollection().add(gameMaster.getNewCards().pop());
             }
 
@@ -223,7 +222,7 @@ public class NormalState implements GameState {
             this.gameMaster.getSpecificPlayer(playerIdWhoSupposedToWin).setUNO(false);
             this.gameMaster.setMessageToGroup(this.gameMaster.failedToWin(playerIdWhoSupposedToWin));
         }else{
-            if (player.getCardsCollection().size()<1){
+            if (player.getCardsCollection().isEmpty()){
                 this.gameMaster.setMessageToGroup(this.gameMaster.winnerString(player.getId()));
                 this.gameMaster.getPlayers().remove(player);
                 this.gameMaster.setChampionPosition(this.gameMaster.getChampionPosition()+1);
