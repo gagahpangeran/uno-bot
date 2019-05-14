@@ -1,21 +1,34 @@
 package com.bot.unobot.card;
 
 public class ReverseCard implements Card {
-    String name;
-    String color;
 
-    public ReverseCard(String name, String color){
-        this.name=name;
-        this.color=color;
+    Color color;
+    Effect effect;
+    String symbol;
+
+    public ReverseCard(Color color){
+        this.color = color;
+        this.effect = Effect.REVERSE;
+        this.symbol = "Reverse";
     }
 
     @Override
-    public String getName() {
-        return name;
+    public Effect getEffect() {
+        return effect;
     }
 
     @Override
-    public String getColor() {
+    public Color getColor() {
         return color;
+    }
+
+    @Override
+    public String getSymbol() {
+        return symbol;
+    }
+
+    @Override
+    public void setColor(Color color) {
+        this.color = color;
     }
 }

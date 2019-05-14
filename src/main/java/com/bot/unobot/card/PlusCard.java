@@ -2,27 +2,40 @@ package com.bot.unobot.card;
 
 public class PlusCard implements Card {
 
-    String name;
-    String color;
+
+    Color color;
     int plus;
+    Effect effect;
+    String symbol;
 
-    public PlusCard(String name, String color, int plus){
-        this.name=name;
-        this.color=color;
+    public PlusCard(Color color, int plus){
+        this.color = color;
         this.plus = plus;
+        this.effect = Effect.PLUS;
+        symbol = "+"+Integer.toString(plus);
     }
 
     @Override
-    public String getName() {
-        return name;
+    public Effect getEffect() {
+        return effect;
     }
 
     @Override
-    public String getColor() {
+    public Color getColor() {
         return color;
     }
 
     public int getPlus() {
         return plus;
+    }
+
+    @Override
+    public String getSymbol() {
+        return symbol;
+    }
+
+    @Override
+    public void setColor(Color color) {
+        this.color = color;
     }
 }

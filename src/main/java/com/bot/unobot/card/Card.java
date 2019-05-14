@@ -4,6 +4,11 @@ package com.bot.unobot.card;
  * UNO Card's Interface
  */
 public interface Card {
-    String getName();
-    String getColor();
+
+    Color getColor();
+    Effect getEffect();
+    String getSymbol();
+    // gua yang nambahin
+    void setColor (Color color);
+
 }
