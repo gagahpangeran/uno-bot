@@ -1,0 +1,109 @@
+algoritman penyelesaian task pembuatan gameEngine:
+1. Fungsi buat construct dan ngacak kartu
+2. Fungsi buat recycle kartu
+3. Init_game
+4. tambahin int current_player sebagai atribut kelas gameEngine
+
+
+case unik :
+Wildcard dipake buat ngelawan semuanya =  true.
+Jika
+
+
+ketika pemain ngeluarin plus empat atau wildcard:
+bot nanya pemain : Mau ngeluarin warna apa?
+Terus pemain jawab: "Biru"
+Nah abis itu si Bot akan mengeset warna dia dari special jadi Biru
+
+case dimana dia ngasih kartu tapi boongan
+gamemaster harus ngecek integritas inputnannya
+
+
+
+
+
+
+beberapa command dari game simulation:
+
+daftar [nama_pemain] [id]
+info ----- display kartu terakhir sama daftar pemain beserta daftar kartu mereka
+mulai ----- init game
+statenow ----- state sekarang
+playernow ---- pemain yang lagi main sekarang
+kartu [nama_pemain] ---- tampilkan semua kartu pemain
+uno ------ misal ada yang uno
+draw ----- ngedraw kartu bagi pemain yang main sekarang
+exit ----- exit loop
+
+kalimat yang harus disiapkan:
+
+info ---- isinya daftar pemain dan kartunya, kartu top of stack, pemain yang lagi jalan sekarang
+displaykepemain ---- daftar kartu yang dimiliki pemain x
+sukses put --- yaudah sukses gitu
+gagal put ---- kasih tau kalau dia gagal put
+nex turn --- ngasih tau pemain kalau turnnya udah abis
+kalimat winner ---- ngasih taau pemain x juara ke  berapa
+kalimat gagal winner ---- pemain x gak bilang uno, jadinya dia harus ambil 2 kartu..
+
+1.Info
+Daftar pemain dan kartunya:
+
+pemain a
+jumlah kartu  = x
+
+pemain b
+jumlah kartu  = y
+
+Pemain yang di skip:
+
+Reverse:
+True/False
+
+
+Kartu terakhir yang dimainkan : p
+
+Giliran sekarang : h
+
+2.display ke pemain
+
+Kartu kamu sekarang:
+
+nama kartu1
+nama kartu2
+dst
+
+jika ingin mengeluarkan ketik : put[spasi]namkartu1[spasi]namakartu2dst...
+jika tidak punya kartu dan ingin ngedraw ketik : draw
+
+3.Sukses put
+Sukses meletakkan kartu!
+
+4.Gagal put
+Kartu yang kamu letakkan tidak valid, coba ketik ulang, atau kalau emang kamu bohong, ketik draw saja :)
+
+5.Next Turn
+Giliran kamu udah beres, tunggu giliranmu selanjutnya ya
+
+6.Kalimat winner
+Selamat... pemain X berhasil meraih peringkat -n
+Game akan secara otomatis meng-kick pemain X
+
+7.Kalimat Gajadi winner
+karena pemain x telat bilang uno... jadi otomatis dia dapet dua kartu deh
+better luck next time buddy!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

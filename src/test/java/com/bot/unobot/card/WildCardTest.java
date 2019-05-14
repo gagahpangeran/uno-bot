@@ -17,9 +17,12 @@ public class WildCardTest {
     public WildCard card;
 
     @Test
-    public void OrdinaryCards_Test(){
-        card = new WildCard(Color.YELLOW);
-        Assert.assertThat(card.getColor(), CoreMatchers.is(Color.YELLOW));
-        Assert.assertThat(card.getName(), CoreMatchers.is("Wildcard"));
+    public void WIldCards_Test(){
+        WildCard testCard = new WildCard(Color.SPECIAL);
+        Assert.assertThat(testCard.getEffect(), CoreMatchers.is(Effect.CHANGE_COLOR));
+        Assert.assertEquals(Effect.CHANGE_COLOR, testCard.getEffect());
+        testCard.setColor(Color.BLUE);
+        Assert.assertEquals("wild", testCard.getSymbol().toLowerCase());
+        Assert.assertThat(testCard.getColor(), CoreMatchers.is(Color.BLUE));
     }
 }
