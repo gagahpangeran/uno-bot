@@ -417,7 +417,7 @@ public class GameMaster {
     }
 
     /*
-    * Method ini redundant, akan saya hapus rencananya
+    * Karena method ini redundant, akan saya hapus rencananya
     *
     * */
 
