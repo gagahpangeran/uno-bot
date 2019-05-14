@@ -5,10 +5,11 @@ package com.bot.unobot.card;
  */
 public interface Card {
 
+    // gua nampilin getter untuk Card
     Color getColor();
     Effect getEffect();
     String getSymbol();
-    // gua nambahin setter untuk Card
+    // selain itu, gua juga nambahin setter untuk Card
     void setColor (Color color);
 
 }
