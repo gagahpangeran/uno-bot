@@ -22,5 +22,7 @@ public class OrdinaryCardTest {
         Assert.assertEquals(Effect.NOTHING, testCard.getEffect());
         testCard.setColor(Color.BLUE);
         Assert.assertThat(testCard.getColor(), CoreMatchers.is(Color.BLUE));
+        testCard.setSymbol("8");
+        Assert.assertThat(testCard.getSymbol(), CoreMatchers.is("1"));
     }
 }
