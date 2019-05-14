@@ -8,7 +8,7 @@ public interface Card {
     Color getColor();
     Effect getEffect();
     String getSymbol();
-    // gua yang nambahin
+    // gua nambahin setter untuk Card
     void setColor (Color color);
 
 }
