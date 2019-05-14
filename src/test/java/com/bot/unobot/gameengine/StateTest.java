@@ -15,11 +15,10 @@ public class StateTest {
 
     @Before
     public void setUp(){
-        gameMaster =  new GameMaster();;
-
+        gameMaster =  new GameMaster();
     }
 
     @Test
-    public void OrdinaryStateTest(){
+    public void ordinaryStateTest(){
     }
 }

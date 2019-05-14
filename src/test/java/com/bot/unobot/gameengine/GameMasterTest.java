@@ -57,7 +57,7 @@ public class GameMasterTest {
     }
 
     @Test
-    public void setteAndGetterTest(){
+    public void setterAndGetterTest(){
         GameMaster gameMaster1 = new GameMaster();
         gameMaster1.initGame();
         Assert.assertEquals(0, gameMaster1.getPlayers().size());
@@ -77,39 +77,28 @@ public class GameMasterTest {
         Assert.assertEquals(tempState, gameMaster1.getCurrentState());
         int temp = gameMaster1.getPlusState().hashCode();
         Assert.assertEquals(temp, gameMaster1.getPlusState().hashCode());
-       GameState state = gameMaster1.getCurrentState();
+        GameState state = gameMaster1.getCurrentState();
         Assert.assertEquals(state.hashCode(), gameMaster1.getCurrentState().hashCode());
         Assert.assertEquals(gameMaster1.getPlayers().size(), gameMaster1.getNrOfPlayers());
-
-
-
-
-
     }
+
     @Test
     public void isPuttableTest(){
-       GameMaster gameMaster = new GameMaster();
        gameMaster.initGame();
-        Card testCard = new OrdinaryCard("7",Color.RED);
-        gameMaster.getTrashCards().push(testCard);
+       Card testCard = new OrdinaryCard("7",Color.RED);
+       gameMaster.getTrashCards().push(testCard);
        Card[] temp = {testCard,new OrdinaryCard("7",Color.BLUE)};
        Assert.assertEquals(true, gameMaster.isPuttable(gameMaster.getTrashCards().peek(), new ArrayList<>(Arrays.asList(temp))));
-
-
     }
 
     @Test
     public void addPlayerTest(){
-        GameMaster gameMaster = new GameMaster();
         gameMaster.addPlayer("1234");
         Assert.assertEquals(1, gameMaster.getPlayers().size());
-
-
     }
 
     @Test
     public void displayStringTest(){
-        GameMaster gameMaster = new GameMaster();
         gameMaster.addPlayer("1234");
         gameMaster.initGame();
         String temp = gameMaster.getInfo();
@@ -168,7 +157,6 @@ public class GameMasterTest {
 
     @Test
     public void  displayInfoTest(){
-        GameMaster gameMaster =  new GameMaster();
         gameMaster.addPlayer("1234");
         gameMaster.initGame();
         String string1 =  "4. Combo hanya berlaku jika dia sejenis. Jika tidak maka akan ditolak\n" +
@@ -191,7 +179,6 @@ public class GameMasterTest {
 
     @Test
     public void restOfTheMethodsTest(){
-        GameMaster gameMaster = new GameMaster();
         gameMaster.addPlayer("123");
         gameMaster.initGame();
         gameMaster.addToTrash(gameMaster.getSpecificPlayer("123").getCardsCollection());
@@ -217,8 +204,7 @@ public class GameMasterTest {
         Assert.assertEquals(true, gameMasters1.getSpecificPlayer("1").getCardsCollection().contains(tempCard));
         Assert.assertEquals(true, gameMasters1.getSpecificPlayer("1").getCardsCollection().contains(tempCard1));
         gameMasters1.getCurrentState().setLastCard(gameMasters1.getTrashCards().peek());
-        String[] inputanUser = {tempCard.getSymbol()+";"+tempCard.getColor(),
-                tempCard1.getSymbol()+";"+tempCard1.getColor()};
+        String[] inputanUser = {tempCard.getSymbol()+";"+tempCard.getColor(), tempCard1.getSymbol()+";"+tempCard1.getColor()};
         List<String> temps =  new ArrayList<>(Arrays.asList(inputanUser));
         List<Card> result = gameMasters1.converStringstoCards(temps,gameMasters1.getSpecificPlayer("1").getCardsCollection().get(0).getColor()+"");
         Assert.assertEquals(2, result.size());
