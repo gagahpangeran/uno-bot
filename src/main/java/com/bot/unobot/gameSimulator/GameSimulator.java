@@ -110,11 +110,11 @@ public class GameSimulator {
                     System.out.println("yang nge-draw = "+tempss);
                     break;
                 case "put":
-                    ArrayList<String> arrayListOfCards = new ArrayList<>();
+                    List<String> arrayListOfCards = new ArrayList<>();
                     for (int i=1;i<commands.length-1;i++){
                         arrayListOfCards.add(commands[i]);
                     }
-                    ArrayList <Card> temps;
+                    List <Card> temps;
                     if (arrayListOfCards.contains("Wild;SPECIAL".toLowerCase())||arrayListOfCards.contains("+4;SPECIAL".toLowerCase())){
 
                         String colorSetByPlayer = commands[commands.length-1].split(";")[1];

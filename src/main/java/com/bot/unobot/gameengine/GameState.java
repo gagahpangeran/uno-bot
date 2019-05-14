@@ -5,6 +5,7 @@ import com.bot.unobot.card.Color;
 import com.bot.unobot.player.Player;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface GameState {
 
@@ -18,7 +19,7 @@ public interface GameState {
 
 //    public void put(Card[] cards);
 
-    public void put(ArrayList<Card> cards);
+    public void put(List<Card> cards);
 
 
     //tambahan dari gw

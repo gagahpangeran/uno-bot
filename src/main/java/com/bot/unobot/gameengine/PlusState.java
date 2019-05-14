@@ -8,6 +8,7 @@ import com.bot.unobot.card.PlusCard;
 import com.bot.unobot.player.Player;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PlusState implements GameState {
 
@@ -73,15 +74,14 @@ public class PlusState implements GameState {
      * */
 
 
-    public void put(ArrayList<Card> cards) {
+    public void put(List<Card> cards) {
         if (!cards.isEmpty()){
 
 //            //debug
 //            System.out.println("x is-puttable: "+isPuttableForPlusCards(cards));
 //            System.out.println(" x checkcombo: "+this.gameMaster.isPuttable(lastCard, cards));
 
-            if (isPuttableForPlusCards(cards) &&
-                    this.gameMaster.checkCombo(cards)) {
+            if (isPuttableForPlusCards(cards) && this.gameMaster.checkCombo((ArrayList<Card>) cards)) {
                 this.lastCard = cards.get(cards.size()-1);
                 this.gameMaster.addToTrash(cards); /// ketika di add to trash maka dia dikeluarin dari kartu pemain
                 this.numberOfCombos+=countCombos(cards);
@@ -105,7 +105,7 @@ public class PlusState implements GameState {
     *
     * */
 
-    public boolean isPuttableForPlusCards(ArrayList<Card> cards){
+    public boolean isPuttableForPlusCards(List<Card> cards){
         for (Card card: cards){
             if (card.getEffect() != Effect.PLUS){
                 return false;
@@ -114,15 +114,15 @@ public class PlusState implements GameState {
         return true;
     }
 
-    public int countCombos(ArrayList<Card> cards){
-        int numberOfCombos = 0;
+    public int countCombos(List<Card> cards){
+        int noOfCombos = 0;
         for (Card card:cards){
             if (card instanceof PlusCard){
                 PlusCard temp = (PlusCard) card;
-                numberOfCombos+= temp.getPlus();
+                noOfCombos+= temp.getPlus();
             }
         }
-        return numberOfCombos;
+        return noOfCombos;
     }
 
     public void drawCardsForVictim(){
@@ -164,8 +164,6 @@ public class PlusState implements GameState {
         this.gameMaster.getCurrentState().setLastCard(this.gameMaster.getTrashCards().peek());
 
         //nextTurn();
-
-
     }
 
     public int getNumberOfCombos() {

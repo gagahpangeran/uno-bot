@@ -4,6 +4,7 @@ import com.bot.unobot.card.*;
 import com.bot.unobot.player.Player;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Collections;
 import java.util.Stack;
 
@@ -27,7 +28,7 @@ public class GameMaster {
     private String messageToPlayer; // string yang ditampilkan oleh bot ke player individually
     private int championPosition;// Posisi juara yang diperebutkan. Misalnya ketika belum ada yang menang, berarti yang diperebutkan juara 1, ketika juara 1 udah ada, yang diperebutkan juara 2 dst...
     private String ruleString;
-    private ArrayList<Player> players; // ArrayList isinya pemain - pemain yang akan bergabung dalam permainan
+    private List<Player> players; // ArrayList isinya pemain - pemain yang akan bergabung dalam permainan
 
     /*
      * Class Constructor -- gak perlu dijelasin lagi lah ya :)
@@ -41,8 +42,8 @@ public class GameMaster {
         this.championPosition = 1;
         this.messageToGroup ="";
         this.messageToPlayer="";
-        this.newCards = new Stack<Card>();
-        this.trashCards  =  new Stack<Card>();
+        this.newCards = new Stack<>();
+        this.trashCards  =  new Stack<>();
         this.ruleString = "FINALRULE!!!\n" + "- Syarat kartu anda diterima:\n" + "1. kartu anda memiliki warna yang sama atau symbol yang sama dengan apa yang ditaruh pemain sebelumnya\n" + "2. kartu angka tidak bisa dicombo.\n" + "3. kartu yang bisa dicombo hanyalah plus,reverse,dan skip.\n" + "4. Combo hanya berlaku jika dia sejenis. Jika tidak maka akan ditolak\n" + "5. \n" + "- Jika Pemain terkena skip, namun dia punya skip, dia tetap gabisa main dan tetap di skip\n" + "- Jika pemain gak punya kartu, maka di harus draw. Setelah draw pemain tidak bisa jalan lagi. Harus tunggu gilirannya lagi.\n" + "- Pemain yang kartunya abis duluan, dialah pemenangnya\n" + "- Aturan Khusus WildCard:\n" + "\n" + "1. Jika anda mendapatkan WildCard atau Plus 4 maka cara menggunakannya adalah dengan mengetik set;[warna yang diinginkan] di akhir kalimat\n" + "\n" + "put Wildcard;special set;green\n" + "put Wildcard;special 7;blue set blue\n" + "put +2;green +2;yellow +4;special set;blue\n" + "\n" + "Untuk Wildcard selalu ketik di awal kalimat\n" + "Untuk +4 selalu ketik di akhir kalimat\n" + "\n" + "Misal kartu terakhir yang dikeluarkan : 7 Red\n" + "Kartu yang ada punya: 6 Yellow dan WildCard\n" + "Cara memakai : put Wildcard;special 6;yellow set;yellow\n";
     }
 
@@ -53,7 +54,7 @@ public class GameMaster {
 //        this.currentState.setColor(color);
 //    }
 
-    public void put(ArrayList<Card> cards) {
+    public void put(List<Card> cards) {
         this.currentState.put(cards);
     }
 
@@ -105,7 +106,7 @@ public class GameMaster {
         return players.size();
     }
 
-    public ArrayList<Player> getPlayers() {
+    public List<Player> getPlayers() {
         return players;
     }
 
@@ -123,7 +124,7 @@ public class GameMaster {
 * @param cards = Kartu yang dikeluarkan oleh player yang lagi jalan. Berbentuk arraylist karena kartu yang dikeluarkan player bisa lebih dari 1 (ingat kan ada kombo)
 * @return boolean = Kartu akan dianggap bisa ditaruh jika warna sama atau simbol sama atau dia merupakan wildcard
 * */
-    public boolean isPuttable(Card prevCard, ArrayList<Card> cards) {
+    public boolean isPuttable(Card prevCard, List<Card> cards) {
         Card currentCard = cards.get(0);
 
 
@@ -146,7 +147,7 @@ public class GameMaster {
     * */
 
 
-    public ArrayList<Card> converStringstoCards(ArrayList<String> card) {
+    public List<Card> converStringstoCards(List<String> card) {
 
         ArrayList<Card> convertedCards = new ArrayList<>();
         for (String cardInString : card){
@@ -200,12 +201,12 @@ public class GameMaster {
     *
     * */
 
-    public ArrayList<Card> converStringstoCards(ArrayList<String> card, String colorSetByPlayer) {
-        ArrayList<Card> convertedCards = new ArrayList<>();
+    public List<Card> converStringstoCards(List<String> card, String colorSetByPlayer) {
+        List<Card> convertedCards = new ArrayList<>();
         for (String cardInString : card){
             Color colorOfCardInString = null;
-            String[] cardInStringIndentity = cardInString.split(";");
-            switch (cardInStringIndentity[1].toUpperCase()){
+            String[] cardInStringIdentity = cardInString.split(";");
+            switch (cardInStringIdentity[1].toUpperCase()){
                 case "RED":
                     colorOfCardInString = Color.RED;
                     break;
@@ -222,12 +223,9 @@ public class GameMaster {
                     colorOfCardInString = Color.SPECIAL;
                     break;
                     default:
-
             }
             for (Card card1: getPlayers().get(this.currentState.getCurrPlayerIndex()).getCardsCollection()){
-
-
-                if (cardInStringIndentity[0].equalsIgnoreCase(card1.getSymbol())&& colorOfCardInString.equals(card1.getColor())){
+                if (cardInStringIdentity[0].equalsIgnoreCase(card1.getSymbol())&& colorOfCardInString.equals(card1.getColor())){
                     if (card1.getColor().equals(Color.SPECIAL)){
 
                         switch (colorSetByPlayer.toUpperCase()){
@@ -251,8 +249,6 @@ public class GameMaster {
                 }
             }
         }
-
-
         if (convertedCards.size() != card.size()){
             convertedCards.clear();
         }
@@ -273,7 +269,7 @@ public class GameMaster {
     * */
 
 
-    public boolean checkCombo(ArrayList<Card> cards) {
+    public boolean checkCombo(List<Card> cards) {
         String comboSymbol = cards.get(0).getSymbol();
         if (cards.get(0) instanceof WildCard){
             if (cards.size()<2){ return true;}
@@ -383,8 +379,8 @@ public class GameMaster {
     * Memasukkan kartu kartu yang dikeluarkan player ke stack trashCards
     * */
 
-    public void addToTrash(ArrayList<Card> cards){
-        ArrayList<Card> temp = (ArrayList<Card>)cards.clone();
+    public void addToTrash(List<Card> cards){
+        List<Card> temp = new ArrayList<>(cards);
         for (Card card: cards){
             trashCards.push(card);
         }
@@ -463,8 +459,7 @@ public class GameMaster {
         info.append("Giliran sekarang : ");
         info.append(players.get(currentState.getCurrPlayerIndex()).getId());
 
-        String output = info.toString();
-        return output;
+        return info.toString();
     }
 
     public String getMessageForPlayer(String playerId){
@@ -491,8 +486,7 @@ public class GameMaster {
         message.append(" \n");
 
         message.append("Jika ingin mengeluarkan ketik : put[spasi]namakartu1;warnakartu1[spasi]namakartu2;warnakartu2dst...\n" + "jika tidak punya kartu dan ingin ngedraw ketik : draw");
-        String output = message.toString();
-        return output;
+        return message.toString();
     }
 
     public String putSucceed(){ return "Sukses meletakkan kartu!"; }

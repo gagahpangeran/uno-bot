@@ -14,6 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import javax.validation.constraints.AssertFalse;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -218,8 +219,8 @@ public class GameMasterTest {
         gameMasters1.getCurrentState().setLastCard(gameMasters1.getTrashCards().peek());
         String[] inputanUser = {tempCard.getSymbol()+";"+tempCard.getColor(),
                 tempCard1.getSymbol()+";"+tempCard1.getColor()};
-        ArrayList<String> temps =  new ArrayList<>(Arrays.asList(inputanUser));
-        ArrayList<Card> result = gameMasters1.converStringstoCards(temps,gameMasters1.getSpecificPlayer("1").getCardsCollection().get(0).getColor()+"");
+        List<String> temps =  new ArrayList<>(Arrays.asList(inputanUser));
+        List<Card> result = gameMasters1.converStringstoCards(temps,gameMasters1.getSpecificPlayer("1").getCardsCollection().get(0).getColor()+"");
         Assert.assertEquals(2, result.size());
 
     }

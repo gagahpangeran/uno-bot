@@ -3,6 +3,7 @@ package com.bot.unobot.player;
 import com.bot.unobot.card.Card;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Player Class
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 public class Player {
 
     String id;
-    ArrayList<Card> cards;
+    List<Card> cards;
     boolean isUNO;
 
     /**
@@ -54,13 +55,13 @@ public class Player {
      * Return player's card collection
      * @return card collection ArrayList
      */
-    public ArrayList<Card> getCardsCollection(){
+    public List<Card> getCardsCollection(){
         return cards;
     }
 
     //debug
 
-    public void setCards(ArrayList<Card> cards) {
+    public void setCards(List<Card> cards) {
         this.cards = cards;
     }
 

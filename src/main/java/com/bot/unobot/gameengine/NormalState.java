@@ -8,6 +8,7 @@ import com.bot.unobot.card.PlusCard;
 import com.bot.unobot.player.Player;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /*
 * Berikut ini gw akan ngasih dokumentasi tentang Class ini
@@ -44,7 +45,7 @@ public class NormalState implements GameState {
     *
     * */
 
-    public void put(ArrayList<Card> cards) {
+    public void put(List<Card> cards) {
         if (!cards.isEmpty()){
 
             //debug
@@ -52,8 +53,7 @@ public class NormalState implements GameState {
             System.out.println("checkcombo: "+this.gameMaster.checkCombo(cards));
 
 
-            if (this.gameMaster.isPuttable(lastCard, cards) &&
-                    this.gameMaster.checkCombo(cards)) {
+            if (this.gameMaster.isPuttable(lastCard, cards) && this.gameMaster.checkCombo(cards)) {
                 this.lastCard = cards.get(cards.size()-1);
                 this.gameMaster.addToTrash(cards);
 
