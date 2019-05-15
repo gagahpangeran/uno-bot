@@ -6,7 +6,7 @@ import com.bot.unobot.card.Color;
 import com.bot.unobot.card.Effect;
 import com.bot.unobot.player.Player;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /*
 * Berikut ini gw akan ngasih dokumentasi tentang Class ini
@@ -43,7 +43,7 @@ public class NormalState implements GameState {
     *
     * */
 
-    public void put(List<Card> cards) {
+    public void put(ArrayList<Card> cards) {
         if (!cards.isEmpty()){
 
             //debug
@@ -105,10 +105,8 @@ public class NormalState implements GameState {
     }
 
 
-    @Override
-    public void giveUp() {
 
-    }
+
     // gua tambahin
     /*Draw Cards*/
     @Override
@@ -137,20 +135,7 @@ public class NormalState implements GameState {
         return lastCard;
     }
 
-    @Override
-    public void plus(Card[] cards) {
 
-    }
-
-    @Override
-    public void setColor(Color color) {
-
-    }
-
-    @Override
-    public void wild(Card[] cards) {
-
-    }
     @Override
     public int getCurrPlayerIndex() {
         return Math.floorMod(currPlayerIndex, gameMaster.getNrOfPlayers());

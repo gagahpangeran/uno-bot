@@ -9,17 +9,13 @@ import java.util.List;
 
 public interface GameState {
 
-    public void plus(Card[] cards);
+   // gw nangkepnya kalau dia gaada kartu gitu loh jadi musti ngambil dari deck
 
-    public void wild(Card[] cards);
-
-    public void giveUp(); // gw nangkepnya kalau dia gaada kartu gitu loh jadi musti ngambil dari deck
-
-    public void setColor(Color color);
+   // public void setColor(Color color);
 
 //    public void put(Card[] cards);
 
-    public void put(List<Card> cards);
+    public void put(ArrayList<Card> cards);
 
 
     //tambahan dari gw
