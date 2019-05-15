@@ -50,7 +50,5 @@ public class OrdinaryCard implements Card {
     public void setColor(Color color) {
         this.color = color;
     }
-    public void setSymbol(String symbol){
-        this.symbol = symbol;
-    }
+
 }
