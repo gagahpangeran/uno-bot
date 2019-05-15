@@ -12,10 +12,7 @@ public class UnoBotApplicationTests {
 
     @Test
     public void main() {
-    }
-
-    @Test
-    public void contextLoads() {
+        UnoBotApplication.main(new String[] {});
     }
 
 }
