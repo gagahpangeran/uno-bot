@@ -42,16 +42,18 @@ public class HandlerTest {
 
     @Test
     public void testExecute() {
-        String result = handlerController.execute("test", "userId", "groupId");
+        final String USER = "userID";
+        final String GROUP = "groupID";
+        String result = handlerController.execute("test", USER, GROUP);
         Assert.assertEquals("test", result);
 
-        result = handlerController.execute("create", "userId", "groupId");
+        result = handlerController.execute("create", USER, GROUP);
         Assert.assertEquals("create", result);
 
-        result = handlerController.execute("join", "userId", "groupId");
+        result = handlerController.execute("join", USER, GROUP);
         Assert.assertEquals("join", result);
 
-        result = handlerController.execute("leave", "userId", "groupId");
+        result = handlerController.execute("leave", USER, GROUP);
         Assert.assertEquals("leave", result);
     }
 }

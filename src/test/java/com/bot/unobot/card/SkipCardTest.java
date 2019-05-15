@@ -1,9 +1,7 @@
 package com.bot.unobot.card;
 
-import com.bot.unobot.card.WildCard;
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,10 +12,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 public class SkipCardTest {
 
-    public SkipCard card;
-
     @Test
-    public void SkipCards_Test(){
+    public void skipCardsTest(){
         SkipCard testCard = new SkipCard(Color.GREEN);
         Assert.assertThat(testCard.getEffect(), CoreMatchers.is(Effect.STOP));
         Assert.assertEquals(Effect.STOP, testCard.getEffect());

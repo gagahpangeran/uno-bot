@@ -11,7 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class DirectionTest {
 
     @Test
-    public void Test(){
+    public void directionTest(){
         Direction direction = Direction.CW;
         Assert.assertEquals("clockwise", direction.toString());
         Assert.assertEquals(1,direction.getValue() );

@@ -4,9 +4,7 @@ import com.bot.unobot.card.*;
 import com.bot.unobot.gameengine.GameMaster;
 import com.bot.unobot.player.Player;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+
 import java.util.*;
 
 public class GameSimulator {
@@ -17,9 +15,6 @@ public class GameSimulator {
 
 
         GameMaster gameMaster = new GameMaster();
-
-      PlusTestCase(gameMaster);
-
 
         //------------------------------------------------------------------------------------------
 
@@ -110,19 +105,19 @@ public class GameSimulator {
                     System.out.println("yang nge-draw = "+tempss);
                     break;
                 case "put":
-                    ArrayList<String> arrayListOfCards = new ArrayList<>();
+                    List<String> arrayListOfCards = new ArrayList<>();
                     for (int i=1;i<commands.length-1;i++){
                         arrayListOfCards.add(commands[i]);
                     }
-                    ArrayList <Card> temps;
+                    List <Card> temps;
                     if (arrayListOfCards.contains("Wild;SPECIAL".toLowerCase())||arrayListOfCards.contains("+4;SPECIAL".toLowerCase())){
 
                         String colorSetByPlayer = commands[commands.length-1].split(";")[1];
-                        temps = gameMaster.converStringstoCards(arrayListOfCards,colorSetByPlayer);
+                        temps = gameMaster.convertStringtoCards(arrayListOfCards,colorSetByPlayer);
                         gameMaster.put(temps);
                     }else{
                         arrayListOfCards.add(commands[commands.length-1]);
-                        temps = gameMaster.converStringstoCards(arrayListOfCards);
+                        temps = gameMaster.convertStringtoCards(arrayListOfCards);
                         //debug
                         System.out.println(arrayListOfCards);
                         gameMaster.put(temps);
@@ -152,7 +147,7 @@ public class GameSimulator {
 
     }
 
-    public static void UNOTestCase(GameMaster gameMaster){
+    public static void unoTestCase(GameMaster gameMaster){
         gameMaster.addPlayer("a");
         gameMaster.addPlayer("b");
         gameMaster.addPlayer("c");
@@ -189,8 +184,7 @@ public class GameSimulator {
 
     }
 
-    public static void ReverseTestCase(GameMaster gameMaster){
-
+    public static void reverseTestCase(GameMaster gameMaster){
         gameMaster.addPlayer("a");
         gameMaster.addPlayer("b");
         gameMaster.addPlayer("c");
@@ -228,7 +222,7 @@ public class GameSimulator {
         }
     }
 
-    public static void SkipTestCase(GameMaster gameMaster){
+    public static void skipTestCase(GameMaster gameMaster){
         gameMaster.addPlayer("a");
         gameMaster.addPlayer("b");
         gameMaster.addPlayer("c");
@@ -267,7 +261,7 @@ public class GameSimulator {
 
     }
 
-    public static void PlusTestCase(GameMaster gameMaster){
+    public static void plusTestCase(GameMaster gameMaster){
         gameMaster.addPlayer("a");
         gameMaster.addPlayer("b");
         gameMaster.addPlayer("c");
@@ -307,7 +301,7 @@ public class GameSimulator {
 
     }
 
-    public void  WildCardTestCase(GameMaster gameMaster){
+    public void  wildCardTestCase(GameMaster gameMaster){
         gameMaster.addPlayer("a");
         gameMaster.addPlayer("b");
         gameMaster.addPlayer("c");
@@ -351,10 +345,10 @@ public class GameSimulator {
         GameMaster gameMaster =  new GameMaster();
         gameMaster.createNewCards();
         System.out.println(gameMaster.getNewCards().size());
-        int ordinary_red= 0;
-        int ordinary_blue = 0;
-        int ordinary_green =0;
-        int ordinary_yellow = 0;
+        int ordinaryRedCard = 0;
+        int ordinaryBlueCard = 0;
+        int ordinaryGreenCard =0;
+        int ordinaryYellowCard = 0;
         int plus  = 0;
         int ordinary = 0;
         int skip = 0;
@@ -372,16 +366,16 @@ public class GameSimulator {
                     ordinary+=1;
                     switch (gameMaster.getNewCards().peek().getColor()){
                         case RED:
-                            ordinary_red+=1;
+                            ordinaryRedCard+=1;
                             break;
                         case BLUE:
-                            ordinary_blue+=1;
+                            ordinaryBlueCard+=1;
                             break;
                         case GREEN:
-                            ordinary_green+=1;
+                            ordinaryGreenCard+=1;
                             break;
                         case YELLOW:
-                            ordinary_yellow+=1;
+                            ordinaryYellowCard+=1;
                             break;
                         default:
                             break;
@@ -398,7 +392,7 @@ public class GameSimulator {
             gameMaster.getNewCards().pop();
         }
 
-        System.out.println("ordinary red: "+ordinary_red+"\n"+"ordinary blue: "+ordinary_blue+"\n"+"ordinary green: "+ordinary_green+"\n"+"ordinary yellow: "+ordinary_yellow+"\n");
+        System.out.println("ordinary red: "+ordinaryRedCard+"\n"+"ordinary blue: "+ordinaryBlueCard+"\n"+"ordinary green: "+ordinaryGreenCard+"\n"+"ordinary yellow: "+ordinaryYellowCard+"\n");
         System.out.println("plus: "+ plus+"\n"+"ordinary: "+ordinary+"\n"+"skip: "+skip+"\n"+"reverse: "+reverse+"\n"+"wild: "+wild+"\n")   ;
 
 
