@@ -69,11 +69,17 @@ public class HandlerController {
             case "start":
                 this.start();
                 break;
+            case "info":
+                this.info();
+                break;
             case "put":
                 this.put();
                 break;
             case "draw":
                 this.draw();
+                break;
+            case "uno":
+                this.uno();
                 break;
             case "stop":
                 this.stop();
@@ -184,6 +190,11 @@ public class HandlerController {
         }
     }
 
+    public void info() {
+        GameMaster game = gameMasters.get(this.groupId);
+        this.replyMessage(game.getInfo());
+    }
+
     public void put() {
         String groupId = playerGroupGame.get(this.userId);
         GameMaster game = gameMasters.get(groupId);
@@ -224,6 +235,12 @@ public class HandlerController {
             this.replyMessage(result);
             this.pushMessage(groupId, game.getInfo());
         }
+    }
+
+    public void uno() {
+        GameMaster game = gameMasters.get(this.groupId);
+        game.getCurrentState().checkAndGetWinner(this.userId);
+        this.replyMessage(game.getMessageToGroup());
     }
 
     public void stop() {

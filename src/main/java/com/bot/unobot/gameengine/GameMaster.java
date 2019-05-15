@@ -128,7 +128,7 @@ public class GameMaster {
         Card currentCard = cards.get(0);
 
 
-        return ((prevCard.getColor() == currentCard.getColor()) || (prevCard.getSymbol().equals(currentCard.getSymbol())) || currentCard instanceof WildCard); }
+        return ((prevCard.getColor() == currentCard.getColor()) || (prevCard.getSymbol().equals(currentCard.getSymbol())) || currentCard instanceof WildCard || ((PlusCard) currentCard).getPlus() == 4 ); }
 
     /*
      * @param card = Jadi, karena player akan memberi inputan berupa string, input user perlu dikonversi menjadi sebuah object berupa ArrayList<Card>
@@ -227,8 +227,9 @@ public class GameMaster {
 
 
                 if (cardInStringIndentity[0].toLowerCase().equals(card1.getSymbol().toLowerCase())&&colorOfCardInString.equals(card1.getColor())){
+                    System.out.println("masuk sini");
                     if (card1.getColor().equals(Color.SPECIAL)){
-
+                        System.out.println("masuk sana");
                         switch (colorSetByPlayer.toUpperCase()){
                             case "RED":
                                 card1.setColor(Color.RED);
