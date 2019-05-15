@@ -90,17 +90,17 @@ public class NormalState implements GameState {
                         gameMaster.setMessageToGroup(gameMaster.putSucceed());
                         establishedWinner(gameMaster.getPlayers().get(getCurrPlayerIndex()), gameMaster.getPlayers().get(getCurrPlayerIndex()).getId());
                     }else{
-                        gameMaster.setMessageToGroup(gameMaster.putSucceed()+"ss");
+                        gameMaster.setMessageToPlayer(gameMaster.putSucceed());
                         nextTurn();
                     }
                 }
 
             }else{
-                this.gameMaster.setMessageToGroup(this.gameMaster.putFailed()+" as");
+                this.gameMaster.setMessageToPlayer(this.gameMaster.putFailed());
             }
 
         }else{
-            this.gameMaster.setMessageToGroup(this.gameMaster.putFailed()+" bs");
+            this.gameMaster.setMessageToPlayer(this.gameMaster.putFailed());
         }
     }
 

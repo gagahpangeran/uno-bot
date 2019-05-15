@@ -44,4 +44,39 @@ public class JoinCommandTest {
         String result = handlerController.handleTextMessageEvent(event);
         Assert.assertEquals("join", result);
     }
+
+    @Test
+    public void testJoinAfterStart() {
+        MessageEvent<TextMessageContent> event = this.eventTestUtility.createDummyTextMessage(".create", "123", "abc");
+        handlerController.handleTextMessageEvent(event);
+
+        event = this.eventTestUtility.createDummyTextMessage(".join", "123", "abc");
+        handlerController.handleTextMessageEvent(event);
+
+        event = this.eventTestUtility.createDummyTextMessage(".join", "777", "abc");
+        handlerController.handleTextMessageEvent(event);
+
+        event = this.eventTestUtility.createDummyTextMessage(".start", "123", "abc");
+        handlerController.handleTextMessageEvent(event);
+
+        event = this.eventTestUtility.createDummyTextMessage(".join", "456", "abc");
+        String result = handlerController.handleTextMessageEvent(event);
+        Assert.assertEquals("join", result);
+    }
+
+    @Test
+    public void testJoinAfterJoinInOtherGroup() {
+        MessageEvent<TextMessageContent> event = this.eventTestUtility.createDummyTextMessage(".create", "123", "abc");
+        handlerController.handleTextMessageEvent(event);
+
+        event = this.eventTestUtility.createDummyTextMessage(".join", "123", "abc");
+        handlerController.handleTextMessageEvent(event);
+
+        event = this.eventTestUtility.createDummyTextMessage(".create", "456", "bca");
+        handlerController.handleTextMessageEvent(event);
+
+        event = this.eventTestUtility.createDummyTextMessage(".join", "123", "bca");
+        String result = handlerController.handleTextMessageEvent(event);
+        Assert.assertEquals("join", result);
+    }
 }

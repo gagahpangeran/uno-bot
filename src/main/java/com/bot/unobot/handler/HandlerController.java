@@ -17,6 +17,7 @@ import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 @LineMessageHandler
@@ -28,6 +29,7 @@ public class HandlerController {
     private String token;
     private String userId;
     private String groupId;
+    private String content;
     private Source source;
     private HashMap<String, GameMaster> gameMasters = new HashMap<>();
     private HashMap<String, String> playerGroupGame = new HashMap<>();
@@ -43,7 +45,8 @@ public class HandlerController {
         String msg = event.getMessage().getText();
 
         if (msg.charAt(0) == '.') {
-            String command = msg.substring(1);
+            String command = msg.substring(1).split(" ")[0];
+            this.content = msg.substring(1+command.length());
             execute(command);
             return command;
         }
@@ -64,6 +67,9 @@ public class HandlerController {
                 break;
             case "start":
                 this.start();
+                break;
+            case "put":
+                this.put();
                 break;
             case "draw":
                 this.draw();
@@ -161,7 +167,7 @@ public class HandlerController {
         if (game != null) {
             if(game.isStart()) {
                 this.replyMessage("Game sudah pernah dimulai");
-            } else if (game.getPlayers().size() < 0) {
+            } else if (game.getPlayers().size() < 2) {
                 this.replyMessage("Minimal 2 pemain untuk memulai permainan");
             } else {
                 game.initGame();
@@ -177,11 +183,43 @@ public class HandlerController {
         }
     }
 
-    public void draw() {
+    public void put() {
         String groupId = playerGroupGame.get(this.userId);
         GameMaster game = gameMasters.get(groupId);
-        String result = game.getCurrentState().draw(this.userId);
-        this.replyMessage(result);
+
+        String[] cardString = this.content.substring(1).toLowerCase().split(" ");
+        ArrayList<String> cards = new ArrayList<>(Arrays.asList(cardString));
+
+        System.out.println(cards);
+
+        if (cards.contains("wild;special") || cards.contains("+4;special")) {
+            String colorSetByPlayer = cards.get(cards.size() - 1);
+            cards.remove(cards.size() - 1);
+            game.put(game.converStringstoCards(cards, colorSetByPlayer));
+        } else {
+            game.put(game.converStringstoCards(cards));
+        }
+        String result = game.getMessageToPlayer();
+
+        if (result.equals(game.putSucceed())) {
+            this.pushMessage(groupId, game.getInfo());
+            this.replyMessage(result);
+
+            String nextPlayer = game.getCurrentPlayerID();
+            this.pushMessage(nextPlayer, "Sekarang giliranmu\n\n" + game.getMessageForPlayer(nextPlayer));
+        } else {
+            this.replyMessage(result);
+        }
+    }
+
+    public void draw() {
+        String groupId = playerGroupGame.get(this.userId);
+
+        if (groupId != null) {
+            GameMaster game = gameMasters.get(groupId);
+            String result = game.getCurrentState().draw(this.userId);
+            this.replyMessage(result);
+        }
     }
 
     public void stop() {
