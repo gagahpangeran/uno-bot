@@ -41,4 +41,14 @@ public class CreateCommandTest {
         String result = handlerController.handleTextMessageEvent(event);
         Assert.assertEquals("create", result);
     }
+
+    @Test
+    public void testCreateCommandAfterCreate() {
+        MessageEvent<TextMessageContent> event = this.eventTestUtility.createDummyTextMessage(".create", "123", "abc");
+        handlerController.handleTextMessageEvent(event);
+
+        event = this.eventTestUtility.createDummyTextMessage(".create", "123", "abc");
+        String result = handlerController.handleTextMessageEvent(event);
+        Assert.assertEquals("create", result);
+    }
 }
