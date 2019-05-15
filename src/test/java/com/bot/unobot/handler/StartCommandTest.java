@@ -40,6 +40,9 @@ public class StartCommandTest {
         MessageEvent<TextMessageContent> event = this.eventTestUtility.createDummyTextMessage(".create", "123", "abc");
         handlerController.handleTextMessageEvent(event);
 
+        event = this.eventTestUtility.createDummyTextMessage(".join", "123", "abc");
+        handlerController.handleTextMessageEvent(event);
+
         event = this.eventTestUtility.createDummyTextMessage(".start", "123", "abc");
         String result = handlerController.handleTextMessageEvent(event);
         Assert.assertEquals("start", result);
