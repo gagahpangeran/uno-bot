@@ -92,18 +92,4 @@ Game akan secara otomatis meng-kick pemain X
 karena pemain x telat bilang uno... jadi otomatis dia dapet dua kartu deh
 better luck next time buddy!
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+GameSimulator -> https://gist.github.com/gagahpangeran/9f3ff05726f57bf4e9ef2eb59399d984
