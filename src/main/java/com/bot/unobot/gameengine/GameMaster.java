@@ -128,7 +128,9 @@ public class GameMaster {
         Card currentCard = cards.get(0);
 
 
-        return ((prevCard.getColor() == currentCard.getColor()) || (prevCard.getSymbol().equals(currentCard.getSymbol())) || currentCard instanceof WildCard || ((PlusCard) currentCard).getPlus() == 4 ); }
+        return ((prevCard.getColor() == currentCard.getColor()) || (prevCard.getSymbol().equals(currentCard.getSymbol()))
+                || currentCard instanceof WildCard || (currentCard instanceof PlusCard && ((PlusCard) currentCard).getPlus() == 4) );
+    }
 
     /*
      * @param card = Jadi, karena player akan memberi inputan berupa string, input user perlu dikonversi menjadi sebuah object berupa ArrayList<Card>
