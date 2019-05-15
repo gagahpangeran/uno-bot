@@ -117,12 +117,22 @@ public class NormalState implements GameState {
     // gua tambahin
     /*Draw Cards*/
     @Override
-    public void draw(){
-        if (this.gameMaster.getNewCards().size()<1){
-            this.gameMaster.recycleTrashCards();
+    public String draw(String playerId) {
+        System.out.println("Masuk sini");
+        Player currentPlayerWhoPlays = gameMaster.getPlayers().get(getCurrPlayerIndex());
+        if (currentPlayerWhoPlays.getId().equals(playerId)){
+            if (this.gameMaster.getNewCards().size()<1){
+                this.gameMaster.recycleTrashCards();
+            }
+
+            Card newCard = this.gameMaster.getNewCards().pop();
+
+            this.gameMaster.getPlayers().get(getCurrPlayerIndex()).getCardsCollection().add(newCard);
+            nextTurn();
+            return "Anda menarik kartu " + newCard.getSymbol() + " " + newCard.getColor();
+        } else{
+            return "Sekarang bukan giliran anda";
         }
-        this.gameMaster.getPlayers().get(getCurrPlayerIndex()).getCardsCollection().add(this.gameMaster.getNewCards().pop());
-        nextTurn();
     }
 
     @Override

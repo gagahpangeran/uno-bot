@@ -107,7 +107,7 @@ public class GameSimulator {
                     break;
                 case "draw":
                     String tempss = gameMaster.getPlayers().get(gameMaster.getCurrentState().getCurrPlayerIndex()).getId();
-                    gameMaster.getCurrentState().draw();
+                    gameMaster.getCurrentState().draw("1");
                     System.out.println("yang nge-draw = "+tempss);
                     break;
                 case "put":

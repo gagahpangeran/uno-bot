@@ -29,8 +29,8 @@ public class HandlerController {
     private String userId;
     private String groupId;
     private Source source;
-    private boolean isStart;
     private HashMap<String, GameMaster> gameMasters = new HashMap<>();
+    private HashMap<String, String> playerGroupGame = new HashMap<>();
 
 
     @EventMapping
@@ -64,6 +64,9 @@ public class HandlerController {
                 break;
             case "start":
                 this.start();
+                break;
+            case "draw":
+                this.draw();
                 break;
             case "stop":
                 this.stop();
@@ -100,7 +103,7 @@ public class HandlerController {
         try {
             name = lineMessagingClient.getProfile(userId).get().getDisplayName();
         } catch (Exception e) {
-                System.out.println(e);
+            System.out.println(e);
         }
         return name;
     }
@@ -130,15 +133,22 @@ public class HandlerController {
     }
 
     public void join() {
+        String group = playerGroupGame.get(this.userId);
         GameMaster game = gameMasters.get(this.groupId);
-        if (isStart) {
-            String name = this.getUserDisplayName(this.userId);
-            this.replyMessage(name + " tidak bisa ikut karena game sudah dimulai");
-        } else if (game != null) {
-            String name = this.getUserDisplayName(this.userId);
-            game.addPlayer(this.userId, name);
-            this.replyMessage("Pemain " + name + " berhasil bergabung");
-            this.pushMessage(this.userId, "Kamu bergabung ke permainan UNO");
+        String name = this.getUserDisplayName(this.userId);
+
+        if(game != null) {
+            if (game.isStart()) {
+                this.replyMessage(name + " tidak bisa ikut karena game sudah dimulai");
+            } else if (group != null) {
+                this.replyMessage("Anda sedang bermain di grup lain");
+            } else if (game != null) {
+                game.addPlayer(this.userId, name);
+                playerGroupGame.put(userId, this.groupId);
+
+                this.replyMessage("Pemain " + name + " berhasil bergabung");
+                this.pushMessage(this.userId, "Kamu bergabung ke permainan UNO");
+            }
         } else {
             this.replyMessage("Belum ada game dibuat di grup ini");
         }
@@ -147,14 +157,13 @@ public class HandlerController {
     public void start() {
         GameMaster game = gameMasters.get(this.groupId);
         if (game != null) {
-            if(isStart) {
+            if(game.isStart()) {
                 this.replyMessage("Game sudah pernah dimulai");
-            } else if (game.getPlayers().size() < 2) {
+            } else if (game.getPlayers().size() < 0) {
                 this.replyMessage("Minimal 2 pemain untuk memulai permainan");
             } else {
                 game.initGame();
-                this.isStart = true;
-                this.replyMessage(game.getMessageToGroup() + "\n" + game.getInfo());
+                this.replyMessage(game.getMessageToGroup() + "\n\n" + game.getInfo());
 
                 ArrayList<Player> players = game.getPlayers();
                 for (Player player : players) {
@@ -164,6 +173,13 @@ public class HandlerController {
         } else {
             this.replyMessage("Belum ada game dibuat di grup ini");
         }
+    }
+
+    public void draw() {
+        String groupId = playerGroupGame.get(this.userId);
+        GameMaster game = gameMasters.get(groupId);
+        String result = game.getCurrentState().draw(this.userId);
+        this.replyMessage(result);
     }
 
     public void stop() {
@@ -179,7 +195,6 @@ public class HandlerController {
     public void leave() {
         if (this.source instanceof GroupSource) {
             this.replyMessage("Sampai jumpa!");
-
             try {
                 lineMessagingClient.leaveGroup(groupId).get();
             } catch (Exception e) {

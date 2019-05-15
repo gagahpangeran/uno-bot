@@ -30,6 +30,7 @@ public class GameMaster {
     private int championPosition;// Posisi juara yang diperebutkan. Misalnya ketika belum ada yang menang, berarti yang diperebutkan juara 1, ketika juara 1 udah ada, yang diperebutkan juara 2 dst...
     private String ruleString;
     private ArrayList<Player> players; // ArrayList isinya pemain - pemain yang akan bergabung dalam permainan
+    private boolean start;
 
     /*
     * Class Constructor -- gak perlu dijelasin lagi lah ya :)
@@ -424,6 +425,7 @@ public class GameMaster {
 
         trashCards.push(newCards.pop());
         this.currentState.setLastCard(trashCards.peek());
+        this.start = true;
         setMessageToGroup("Game sudah dimulai!!!!");
 
     }
@@ -496,4 +498,8 @@ public class GameMaster {
 
 
     public String getRule() { return ruleString; }
+
+    public boolean isStart() {
+        return this.start;
+    }
 }

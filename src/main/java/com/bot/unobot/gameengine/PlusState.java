@@ -151,7 +151,7 @@ public class PlusState implements GameState {
     * */
 
     @Override
-    public void draw() {
+    public String draw(String playerId) {
         for ( int i = 0; i<numberOfCombos;i++){
             if (this.gameMaster.getNewCards().size()<1){
                 this.gameMaster.recycleTrashCards();
@@ -165,7 +165,7 @@ public class PlusState implements GameState {
 
         //nextTurn();
 
-
+        return "hehe";
     }
 
     public int getNumberOfCombos() {

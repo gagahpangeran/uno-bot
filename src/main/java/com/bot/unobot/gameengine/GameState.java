@@ -26,7 +26,7 @@ public interface GameState {
 
     public Card getLastCard();
 
-    public void draw();
+    public String draw(String playerId);
 
     public int getCurrPlayerIndex();
 
