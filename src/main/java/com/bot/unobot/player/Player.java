@@ -14,6 +14,7 @@ import java.util.List;
  */
 public class Player {
     String id;
+    String name;
     ArrayList<Card> cards;
     boolean isUNO;
 
@@ -21,8 +22,9 @@ public class Player {
      * Player Constructor
      * @param id
      */
-    public Player(String id){
+    public Player(String id, String name){
         this.id = id;
+        this.name = name;
         this.cards = new ArrayList<>();
         this.isUNO = false;
     }
@@ -59,6 +61,10 @@ public class Player {
     }
 
     //debug
+
+    public String getName() {
+        return this.name;
+    }
 
     public void setCards(ArrayList<Card> cards) {
         this.cards = cards;

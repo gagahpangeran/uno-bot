@@ -100,7 +100,7 @@ public class GameMasterTest {
     @Test
     public void addPlayerTest(){
         GameMaster gameMaster = new GameMaster();
-        gameMaster.addPlayer("1234");
+        gameMaster.addPlayer("1234", "1234");
         Assert.assertEquals(1, gameMaster.getPlayers().size());
 
 
@@ -109,7 +109,7 @@ public class GameMasterTest {
     @Test
     public void displayStringTest(){
         GameMaster gameMaster = new GameMaster();
-        gameMaster.addPlayer("1234");
+        gameMaster.addPlayer("1234", "1234");
         gameMaster.initGame();
         String temp = gameMaster.getInfo();
         Assert.assertEquals(temp, gameMaster.getInfo());
@@ -168,7 +168,7 @@ public class GameMasterTest {
     @Test
     public void  displayInfoTest(){
         GameMaster gameMaster =  new GameMaster();
-        gameMaster.addPlayer("1234");
+        gameMaster.addPlayer("1234", "1234");
         gameMaster.initGame();
         String string1 =  "4. Combo hanya berlaku jika dia sejenis. Jika tidak maka akan ditolak\n" +
                 "5. \n" ;
@@ -191,7 +191,7 @@ public class GameMasterTest {
     @Test
     public void restOfTheMethodsTest(){
         GameMaster gameMaster = new GameMaster();
-        gameMaster.addPlayer("123");
+        gameMaster.addPlayer("123", "123");
         gameMaster.initGame();
         gameMaster.addToTrash(gameMaster.getSpecificPlayer("123").getCardsCollection());
         Assert.assertEquals(8, gameMaster.getTrashCards().size());
@@ -205,7 +205,7 @@ public class GameMasterTest {
     @Test
     public void convertStringToCardsTest(){
         GameMaster gameMasters1 = new GameMaster();
-        gameMasters1.addPlayer("1");
+        gameMasters1.addPlayer("1", "1");
         gameMasters1.initGame();
         //debug
         gameMasters1.getTrashCards().peek().setColor(Color.RED);
@@ -239,7 +239,7 @@ public class GameMasterTest {
     @Test
     public void convertStringToCardsTest_1(){
         GameMaster gameMasters1 = new GameMaster();
-        gameMasters1.addPlayer("1");
+        gameMasters1.addPlayer("1", "1");
         gameMasters1.initGame();
         //debug
         gameMasters1.getTrashCards().peek().setColor(Color.BLUE);
@@ -275,7 +275,7 @@ public class GameMasterTest {
     @Test
     public void convertStringToCardsTest_2(){
         GameMaster gameMasters1 = new GameMaster();
-        gameMasters1.addPlayer("1");
+        gameMasters1.addPlayer("1", "1");
         gameMasters1.initGame();
         //debug
         gameMasters1.getTrashCards().peek().setColor(Color.YELLOW);
@@ -310,7 +310,7 @@ public class GameMasterTest {
     @Test
     public void convertStringToCardsTest_3(){
         GameMaster gameMasters1 = new GameMaster();
-        gameMasters1.addPlayer("1");
+        gameMasters1.addPlayer("1", "1");
         gameMasters1.initGame();
         //debug
         gameMasters1.getTrashCards().peek().setColor(Color.GREEN);
@@ -345,7 +345,7 @@ public class GameMasterTest {
     @Test
     public void convertStringToCardsTest2(){
         GameMaster gameMasters1 = new GameMaster();
-        gameMasters1.addPlayer("1");
+        gameMasters1.addPlayer("1", "1");
         gameMasters1.initGame();
         //debug
         Card tempCard = new OrdinaryCard("5",Color.YELLOW);
@@ -369,7 +369,7 @@ public class GameMasterTest {
     @Test
     public void convertStringToCardsTest3(){
         GameMaster gameMasters1 = new GameMaster();
-        gameMasters1.addPlayer("1");
+        gameMasters1.addPlayer("1", "1");
         gameMasters1.initGame();
         //debug
         Card tempCard = new OrdinaryCard("5",Color.BLUE);
@@ -393,7 +393,7 @@ public class GameMasterTest {
     @Test
     public void convertStringToCardsTest4(){
         GameMaster gameMasters1 = new GameMaster();
-        gameMasters1.addPlayer("1");
+        gameMasters1.addPlayer("1", "1");
         gameMasters1.initGame();
         //debug
         Card tempCard = new OrdinaryCard("5",Color.RED);
@@ -417,7 +417,7 @@ public class GameMasterTest {
     @Test
     public void convertStringToCardsTest5(){
         GameMaster gameMasters1 = new GameMaster();
-        gameMasters1.addPlayer("1");
+        gameMasters1.addPlayer("1", "1");
         gameMasters1.initGame();
         //debug
         Card tempCard = new OrdinaryCard("5",Color.GREEN);

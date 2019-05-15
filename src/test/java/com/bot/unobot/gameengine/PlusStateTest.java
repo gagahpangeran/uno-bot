@@ -19,9 +19,9 @@ public class PlusStateTest {
 
     public void setUP(){
         gameMaster.getPlayers().clear();
-        gameMaster.addPlayer("a");
-        gameMaster.addPlayer("b");
-        gameMaster.addPlayer("c");
+        gameMaster.addPlayer("a", "a");
+        gameMaster.addPlayer("b", "a");
+        gameMaster.addPlayer("c", "a");
         gameMaster.initGame();
         System.out.println(gameMaster.getMessageToGroup());
         for(Player player:gameMaster.getPlayers()){
@@ -89,7 +89,7 @@ public class PlusStateTest {
     public void drawTest(){
         setUP();
         int numOfCardsBefore = gameMaster.getPlayers().get(gameMaster.getCurrentState().getCurrPlayerIndex()).getCardsCollection().size();
-        gameMaster.getCurrentState().draw();
+        gameMaster.getCurrentState().draw("a");
         Assert.assertEquals(numOfCardsBefore+1, gameMaster.getSpecificPlayer("a").getCardsCollection().size());
 
     }

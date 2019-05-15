@@ -20,7 +20,7 @@ public class PlayerTest {
     public Player player;
 
     @Before
-    public void setUp(){player =  new Player("1234");}
+    public void setUp(){ player =  new Player("1234", "1234");}
 
     @Test
     public void playerTest(){
@@ -41,7 +41,7 @@ public class PlayerTest {
 
     @Test
     public void testSuccessShowsPlayersCards() {
-        Player player = new Player("1234");
+        Player player = new Player("1234", "1234");
         Card[] zz = {new WildCard(Color.RED)};
         player.setCards(new ArrayList<>(Arrays.asList(zz)));
         Assert.assertThat(player.getCardsCollection().size(), CoreMatchers.is(1));

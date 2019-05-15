@@ -28,6 +28,7 @@ public class GameMaster {
     private int championPosition;// Posisi juara yang diperebutkan. Misalnya ketika belum ada yang menang, berarti yang diperebutkan juara 1, ketika juara 1 udah ada, yang diperebutkan juara 2 dst...
     private String ruleString;
     private ArrayList<Player> players; // ArrayList isinya pemain - pemain yang akan bergabung dalam permainan
+    private boolean start;
 
     /*
      * Class Constructor -- gak perlu dijelasin lagi lah ya :)
@@ -422,17 +423,18 @@ public class GameMaster {
 
         trashCards.push(newCards.pop());
         this.currentState.setLastCard(trashCards.peek());
+        this.start = true;
         setMessageToGroup("Game sudah dimulai!!!!");
 
     }
 
 
     /*
-     * @param playerId = playerId
-     * Menambah pemain ke game
-     * */
-    public void addPlayer (String playerId){
-        players.add(new Player(playerId));
+    * @param playerId = playerId
+    * Menambah pemain ke game
+    * */
+    public void addPlayer (String playerId, String name){
+        players.add(new Player(playerId, name));
         //debug
         System.out.println(playerId+" "+"terdaftar!");
     }
@@ -446,7 +448,7 @@ public class GameMaster {
     public String getInfo(){
         String info = "Daftar pemain dan kartunya:\n\n";
         for (Player player: players){
-            info+=player.getId()+"\n"+"jumlah kartu = "+player.getCardsCollection().size()+"\n\n";
+            info+=player.getName()+"\n"+"jumlah kartu = "+player.getCardsCollection().size()+"\n\n";
         }
         if (this.currentState.getDirection() == Direction.CW){
             info+="Reverse:\nTrue\n\n\n";
@@ -457,7 +459,7 @@ public class GameMaster {
         if (currentState.getLastCard() == null && currentState instanceof PlusState) System.out.println("ngix");
 
         info+="Kartu yang terakhir dimainkan: "+currentState.getLastCard().getSymbol()+" "+currentState.getLastCard().getColor()+"\n";
-        info+="Giliran sekarang : "+players.get(currentState.getCurrPlayerIndex()).getId();
+        info+="Giliran sekarang : "+players.get(currentState.getCurrPlayerIndex()).getName();
 
         return info;
     }
@@ -494,4 +496,8 @@ public class GameMaster {
 
 
     public String getRule() { return ruleString; }
+
+    public boolean isStart() {
+        return this.start;
+    }
 }

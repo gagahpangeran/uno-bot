@@ -1,16 +1,15 @@
 package com.bot.unobot;
 
 import com.bot.unobot.handler.HandlerController;
+import com.bot.unobot.utils.EventTestUtility;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
-import com.linecorp.bot.model.event.source.UserSource;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.time.Instant;
 
 @SpringBootTest(properties = "line.bot.handler.enabled=false", classes = UnoBotApplication.class)
 public class HandlerTest {
@@ -24,6 +23,7 @@ public class HandlerTest {
 
     private final EventTestUtility eventTestUtility = new EventTestUtility();
 
+
     @Before
     public void setUp() {
         handlerController = new HandlerController();
@@ -31,40 +31,12 @@ public class HandlerTest {
 
     @Test
     public void testHandleTextMessageEvent() {
-        MessageEvent<TextMessageContent> event = this.eventTestUtility.createDummyTextMessage("Test");
+        MessageEvent<TextMessageContent> event = this.eventTestUtility.createDummyTextMessage("Test", "123");
         String result = handlerController.handleTextMessageEvent(event);
         Assert.assertEquals("Test", result);
 
-        event = this.eventTestUtility.createDummyTextMessage(".test");
+        event = this.eventTestUtility.createDummyTextMessage(".test", "123");
         result = handlerController.handleTextMessageEvent(event);
         Assert.assertEquals("test", result);
-    }
-
-    @Test
-    public void testExecute() {
-        final String USER = "userID";
-        final String GROUP = "groupID";
-        String result = handlerController.execute("test", USER, GROUP);
-        Assert.assertEquals("test", result);
-
-        result = handlerController.execute("create", USER, GROUP);
-        Assert.assertEquals("create", result);
-
-        result = handlerController.execute("join", USER, GROUP);
-        Assert.assertEquals("join", result);
-
-        result = handlerController.execute("leave", USER, GROUP);
-        Assert.assertEquals("leave", result);
-    }
-}
-
-class EventTestUtility {
-    public MessageEvent<TextMessageContent> createDummyTextMessage(String text) {
-        return new MessageEvent<>(
-                "replyToken",
-                new UserSource("userId"),
-                new TextMessageContent("id", text),
-                Instant.parse("2019-01-01T00:00:00.000Z")
-        );
     }
 }
