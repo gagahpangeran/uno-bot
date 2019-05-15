@@ -113,11 +113,11 @@ public class GameSimulator {
                     if (arrayListOfCards.contains("Wild;SPECIAL".toLowerCase())||arrayListOfCards.contains("+4;SPECIAL".toLowerCase())){
 
                         String colorSetByPlayer = commands[commands.length-1].split(";")[1];
-                        temps = gameMaster.convertStringstoCards(arrayListOfCards,colorSetByPlayer);
+                        temps = gameMaster.convertStringtoCards(arrayListOfCards,colorSetByPlayer);
                         gameMaster.put(temps);
                     }else{
                         arrayListOfCards.add(commands[commands.length-1]);
-                        temps = gameMaster.convertStringstoCards(arrayListOfCards);
+                        temps = gameMaster.convertStringtoCards(arrayListOfCards);
                         //debug
                         System.out.println(arrayListOfCards);
                         gameMaster.put(temps);

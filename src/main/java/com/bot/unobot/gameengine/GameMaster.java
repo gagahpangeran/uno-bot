@@ -31,7 +31,7 @@ public class GameMaster {
     private List<Player> players; // ArrayList isinya pemain - pemain yang akan bergabung dalam permainan
 
     /*
-     * Class Constructor -- gak perlu dijelasin lagi lah ya :)
+     * Class Constructor
      * */
     public GameMaster() {
         this.normalState = new NormalState(this);
@@ -44,11 +44,10 @@ public class GameMaster {
         this.messageToPlayer="";
         this.newCards = new Stack<>();
         this.trashCards  =  new Stack<>();
-        this.ruleString = "FINALRULE!!!\n" + "- Syarat kartu anda diterima:\n" + "1. kartu anda memiliki warna yang sama atau symbol yang sama dengan apa yang ditaruh pemain sebelumnya\n" + "2. kartu angka tidak bisa dicombo.\n" + "3. kartu yang bisa dicombo hanyalah plus,reverse,dan skip.\n" + "4. Combo hanya berlaku jika dia sejenis. Jika tidak maka akan ditolak\n" + "5. \n" + "- Jika Pemain terkena skip, namun dia punya skip, dia tetap gabisa main dan tetap di skip\n" + "- Jika pemain gak punya kartu, maka di harus draw. Setelah draw pemain tidak bisa jalan lagi. Harus tunggu gilirannya lagi.\n" + "- Pemain yang kartunya abis duluan, dialah pemenangnya\n" + "- Aturan Khusus WildCard:\n" + "\n" + "1. Jika anda mendapatkan WildCard atau Plus 4 maka cara menggunakannya adalah dengan mengetik set;[warna yang diinginkan] di akhir kalimat\n" + "\n" + "put Wildcard;special set;green\n" + "put Wildcard;special 7;blue set blue\n" + "put +2;green +2;yellow +4;special set;blue\n" + "\n" + "Untuk Wildcard selalu ketik di awal kalimat\n" + "Untuk +4 selalu ketik di akhir kalimat\n" + "\n" + "Misal kartu terakhir yang dikeluarkan : 7 Red\n" + "Kartu yang ada punya: 6 Yellow dan WildCard\n" + "Cara memakai : put Wildcard;special 6;yellow set;yellow\n";
+        this.ruleString = "FINAL RULE!!!\n" + "- Syarat kartu anda diterima:\n" + "1. kartu anda memiliki warna yang sama atau symbol yang sama dengan apa yang ditaruh pemain sebelumnya\n" + "2. kartu angka tidak bisa dicombo.\n" + "3. kartu yang bisa dicombo hanyalah plus,reverse,dan skip.\n" + "4. Combo hanya berlaku jika dia sejenis. Jika tidak maka akan ditolak\n" + "5. \n" + "- Jika Pemain terkena skip, namun dia punya skip, dia tetap gabisa main dan tetap di skip\n" + "- Jika pemain gak punya kartu, maka di harus draw. Setelah draw pemain tidak bisa jalan lagi. Harus tunggu gilirannya lagi.\n" + "- Pemain yang kartunya abis duluan, dialah pemenangnya\n" + "- Aturan Khusus WildCard:\n" + "\n" + "1. Jika anda mendapatkan WildCard atau Plus 4 maka cara menggunakannya adalah dengan mengetik set;[warna yang diinginkan] di akhir kalimat\n" + "\n" + "put Wildcard;special set;green\n" + "put Wildcard;special 7;blue set blue\n" + "put +2;green +2;yellow +4;special set;blue\n" + "\n" + "Untuk Wildcard selalu ketik di awal kalimat\n" + "Untuk +4 selalu ketik di akhir kalimat\n" + "\n" + "Misal kartu terakhir yang dikeluarkan : 7 Red\n" + "Kartu yang ada punya: 6 Yellow dan WildCard\n" + "Cara memakai : put Wildcard;special 6;yellow set;yellow\n";
     }
 
-    /*Beberapa setter and getter*/
-
+    /*Setter dan Getter*/
 
 //    public void setColor(Color color) {
 //        this.currentState.setColor(color);
@@ -82,8 +81,6 @@ public class GameMaster {
         return championPosition;
     }
 
-    /*beberapa getter*/
-
     public GameState getCurrentState() {
         return currentState;
     }
@@ -99,8 +96,6 @@ public class GameMaster {
     public GameState getPlusState() {
         return plusState;
     }
-
-
 
     public int getNrOfPlayers(){
         return players.size();
@@ -126,8 +121,6 @@ public class GameMaster {
 * */
     public boolean isPuttable(Card prevCard, List<Card> cards) {
         Card currentCard = cards.get(0);
-
-
         return ((prevCard.getColor() == currentCard.getColor()) || (prevCard.getSymbol().equals(currentCard.getSymbol())) || currentCard instanceof WildCard); }
 
     /*
@@ -146,14 +139,13 @@ public class GameMaster {
     * Jika tidak, maka ArrayList<Card> convertedCards akan dihapus, dan akan mereturn ArrayList<Card> kosong
     * */
 
-
-    public List<Card> convertStringstoCards(List<String> card) {
+    public List<Card> convertStringtoCards(List<String> card) {
 
         ArrayList<Card> convertedCards = new ArrayList<>();
         for (String cardInString : card){
             Color colorOfCardInString = null;
-            String[] cardInStringIndentity = cardInString.split(";");
-            switch (cardInStringIndentity[1].toUpperCase()){
+            String[] cardInStringIdentity = cardInString.split(";");
+            switch (cardInStringIdentity[1].toUpperCase()){
                 case "RED":
                     colorOfCardInString = Color.RED;
                     break;
@@ -174,7 +166,7 @@ public class GameMaster {
             }
             for (Card card1: getPlayers().get(this.currentState.getCurrPlayerIndex()).getCardsCollection()){
 
-                if (cardInStringIndentity[0].equalsIgnoreCase(card1.getSymbol())&&colorOfCardInString.equals(card1.getColor())){
+                if (cardInStringIdentity[0].equalsIgnoreCase(card1.getSymbol())&&colorOfCardInString.equals(card1.getColor())){
                     convertedCards.add(card1);
                 }
             }
@@ -201,7 +193,7 @@ public class GameMaster {
     *
     * */
 
-    public List<Card> convertStringstoCards(List<String> card, String colorSetByPlayer) {
+    public List<Card> convertStringtoCards(List<String> card, String colorSetByPlayer) {
         List<Card> convertedCards = new ArrayList<>();
         for (String cardInString : card){
             Color colorOfCardInString = null;
@@ -283,7 +275,6 @@ public class GameMaster {
                     return false;
                 }
             }
-
         }else{
             for (Card card: cards) {
                 if (!card.getSymbol().equals(comboSymbol)&&!(card instanceof WildCard)) {
@@ -294,12 +285,16 @@ public class GameMaster {
         return true;
     }
 
-    /*method ini digunakan untuk mengenerate kartu baru yang akan digunakan dalam game. Total ada 108 kartu. Jangan liat logicnya, memang masih berantkan
-    * But this is the least I can do :(
+    /* createNewCard()
+    * Method ini digunakan untuk mengenerate kartu baru yang akan digunakan dalam game. Total ada 108 kartu.
+    * Dari 108 kartu itu, terdapat 4 warna (Merah, Biru, Kuning, dan Hijau) yang masing-masing warna memiliki
+    * 18 kartu normal (Angka 1-9) dan 6 kartu action (2 reverse, 2 plus 2, dan 2 skip). Lalu, juga ada wildcard yang
+    * berjumlah 8 (4 plus 4 dan 4 wildcard)
     * */
 
     public void createNewCards(){
-        for (int i =1;i<5;i++) {
+        final int MAX_COLOR = 4;
+        for (int i =1;i<(MAX_COLOR+1);i++) {
             Color color = Color.RED; //to be used as initialization
             switch(i) {
                 case 1:
@@ -317,32 +312,32 @@ public class GameMaster {
                 default:
                     break;
             }
-            for (int j =1;j<=19;j++) {
+            final int MAX_NORMAL_CARDS = 18;
+            for (int j =1;j<=(MAX_NORMAL_CARDS + 1);j++) {
                 String cardName = Integer.toString(j%10);
                 OrdinaryCard ordinaryCard = new OrdinaryCard(cardName,color);
                 newCards.push(ordinaryCard);
             }
 
-            for ( int k =1; k<=6; k++) {
-                if (1<=k && k<=2) {
+            final int MAX_ACTION_CARD = 6;
+            for ( int k =1; k<=MAX_ACTION_CARD; k++) {
+                if (k<=2) {
                     PlusCard card = new PlusCard(color,2);
                     newCards.push(card);
-
-                }else if (3<=k && k<=4){
+                }else if (k<=4){
                     SkipCard card = new SkipCard(color);
                     newCards.push(card);
                 }else {
                     ReverseCard card = new ReverseCard(color);
                     newCards.push(card);
                 }
-
             }
-
         }
 
-        for (int l=1;l<9;l++){
+        final int MAX_WILDCARD = 8;
+        for (int l=1;l<(MAX_WILDCARD + 1);l++){
             if (l<5){
-                WildCard card =  new WildCard(Color.SPECIAL);
+                WildCard card = new WildCard(Color.SPECIAL);
                 newCards.push(card);
             }else{
                 PlusCard card =  new PlusCard(Color.SPECIAL,4);
@@ -351,7 +346,6 @@ public class GameMaster {
         }
         //debug
        Collections.shuffle(newCards);
-
     }
 
     /*
@@ -361,15 +355,11 @@ public class GameMaster {
     * */
 
     public void recycleTrashCards(){
-
         while (!trashCards.empty()){
             newCards.push(trashCards.pop());
         }
         Collections.shuffle(newCards);
     }
-
-
-
 
     public Player getSpecificPlayer(String playerId){
         for (Player player: players){
@@ -413,6 +403,7 @@ public class GameMaster {
                 player.getCardsCollection().add(newCards.pop());
             }
         }
+        //Jika kartu pertama bukan normal card, maka akan di-shuffle
         while (!newCards.peek().getEffect().equals(Effect.NOTHING)){
             Collections.shuffle(newCards);
         }
@@ -420,7 +411,6 @@ public class GameMaster {
         trashCards.push(newCards.pop());
         this.currentState.setLastCard(trashCards.peek());
         setMessageToGroup("Game sudah dimulai!!!!");
-
     }
 
 
@@ -434,7 +424,7 @@ public class GameMaster {
         System.out.println(playerId+" "+"terdaftar!");
     }
 
-    /*Beberapa Sting yang akan digenerate untuk ditampilkan
+    /*Beberapa String yang akan digenerate untuk ditampilkan
     * ----------------------------------------------------------------------------------------------------------------------------------------------------------------
     * */
 
@@ -476,22 +466,23 @@ public class GameMaster {
             }
         }
 
-       if(target == (null)) return "aaaaa ngebuggggg!!!!";
-        {
-            for (Card card : target.getCardsCollection()) {
-                message.append(card.getSymbol());
-                message.append(" ");
-                message.append(card.getColor());
-                message.append(" \n");
-            }
+        if(target == (null)) return "aaaaa ngebuggggg!!!!";
+
+        for (Card card : target.getCardsCollection()) {
+            message.append(card.getSymbol());
+            message.append(" ");
+            message.append(card.getColor());
+            message.append(" \n");
         }
+
         message.append("Kartu yang terakhir dimainkan: ");
         message.append(this.currentState.getLastCard().getSymbol());
         message.append(" ");
         message.append(currentState.getLastCard().getColor());
         message.append(" \n");
 
-        message.append("Jika ingin mengeluarkan ketik : put[spasi]namakartu1;warnakartu1[spasi]namakartu2;warnakartu2dst...\n" + "jika tidak punya kartu dan ingin ngedraw ketik : draw");
+        message.append("Jika ingin mengeluarkan ketik : put[spasi]namakartu1;warnakartu1[spasi]namakartu2;warnakartu2dst...\n");
+        message.append("Jika tidak punya kartu dan ingin ngedraw ketik : draw");
         return message.toString();
     }
 
