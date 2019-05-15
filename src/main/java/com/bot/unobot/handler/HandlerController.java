@@ -74,7 +74,7 @@ public class HandlerController {
         try {
             lineMessagingClient.replyMessage(new ReplyMessage(this.token, reply)).get();
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println("There's something wrong with reply message");
         }
         return message;
     }
