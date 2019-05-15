@@ -123,7 +123,7 @@ public class NormalStateTest {
         gameMaster.getTrashCards().push(new OrdinaryCard("7",Color.RED));
         gameMaster.getCurrentState().setLastCard(gameMaster.getTrashCards().peek());
         gameMaster.getCurrentState().put(gameMaster.getPlayers().get(gameMaster.getCurrentState().getCurrPlayerIndex()).getCardsCollection());
-        Assert.assertEquals(gameMaster.putSucceed()+"ss", gameMaster.getMessageToGroup());
+        Assert.assertEquals(gameMaster.putSucceed(), gameMaster.getMessageToPlayer());
         Assert.assertEquals(currentPlayerIndex+2, gameMaster.getCurrentState().getCurrPlayerIndex());
     }
 
@@ -135,7 +135,7 @@ public class NormalStateTest {
         gameMaster.getTrashCards().push(new OrdinaryCard("7",Color.RED));
         gameMaster.getCurrentState().setLastCard(gameMaster.getTrashCards().peek());
         gameMaster.getCurrentState().put(gameMaster.getPlayers().get(gameMaster.getCurrentState().getCurrPlayerIndex()).getCardsCollection());
-        Assert.assertEquals(gameMaster.putSucceed()+"ss", gameMaster.getMessageToGroup());
+        Assert.assertEquals(gameMaster.putSucceed(), gameMaster.getMessageToPlayer());
         Assert.assertEquals(Direction.CCW, gameMaster.getCurrentState().getDirection());
     }
 
