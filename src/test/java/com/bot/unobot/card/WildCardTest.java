@@ -17,7 +17,7 @@ public class WildCardTest {
     public WildCard card;
 
     @Test
-    public void WIldCards_Test(){
+    public void WildCards_Test(){
         WildCard testCard = new WildCard(Color.SPECIAL);
         Assert.assertThat(testCard.getEffect(), CoreMatchers.is(Effect.CHANGE_COLOR));
         Assert.assertEquals(Effect.CHANGE_COLOR, testCard.getEffect());

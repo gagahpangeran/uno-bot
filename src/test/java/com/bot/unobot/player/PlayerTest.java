@@ -28,9 +28,9 @@ public class PlayerTest {
         Assert.assertThat(player.getCardsCollection().size(), CoreMatchers.is(0));
         Card[] cards = {new OrdinaryCard("7", Color.YELLOW),
                 new WildCard(Color.SPECIAL),
-                new PlusCard(Color.SPECIAL,4),
-                new PlusCard(Color.BLUE,2),
-                new PlusCard(Color.RED,2)
+                new PlusCard(Color.SPECIAL, 4),
+                new PlusCard(Color.BLUE, 2),
+                new PlusCard(Color.RED, 2)
         };
         player.setCards(new ArrayList<>(Arrays.asList(cards)));
         Assert.assertEquals(5, player.getCardsCollection().size());
@@ -39,4 +39,11 @@ public class PlayerTest {
         Assert.assertEquals(true, player.isUNO());
     }
 
+    @Test
+    public void testSuccessShowsPlayersCards() {
+        Player player = new Player("1234");
+        Card[] zz = {new WildCard(Color.RED)};
+        player.setCards(new ArrayList<>(Arrays.asList(zz)));
+        Assert.assertThat(player.getCardsCollection().size(), CoreMatchers.is(1));
+    }
 }

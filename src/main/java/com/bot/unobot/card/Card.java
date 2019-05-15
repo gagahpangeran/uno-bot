@@ -1,14 +1,15 @@
 package com.bot.unobot.card;
 
 /**
- * Card Interface
+ * UNO Card's Interface
  */
 public interface Card {
 
+    // gua nampilin getter untuk Card
     Color getColor();
     Effect getEffect();
     String getSymbol();
-    // gua yang nambahin
+    // selain itu, gua juga nambahin setter untuk Card
     void setColor (Color color);
 
 }

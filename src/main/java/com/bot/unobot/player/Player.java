@@ -22,7 +22,7 @@ public class Player {
      * @param id
      */
     public Player(String id){
-        this.id =id;
+        this.id = id;
         this.cards = new ArrayList<>();
         this.isUNO = false;
     }

@@ -3,8 +3,8 @@ package com.bot.unobot.gameengine;
 import com.bot.unobot.card.*;
 import com.bot.unobot.player.Player;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Stack;
 
@@ -22,6 +22,7 @@ public class GameMaster {
     //private GameState wildState;   wildState gak akan gw pake. Mengapa? akan gw jelaskan nanti
     private GameState plusState; // Plus State adalah state dimana ketika kartu yang terakhir ditaruh kartu plus
     private GameState currentState;
+
     private Stack<Card> trashCards; // stack of cards yang merupakan kartu yang "dibuang" pemain ketika dia mengeluarkan kartu
     private Stack<Card> newCards; // stack of cards yang merupakan kartu yang belum pernah masuk ke tangan pemain
     private String messageToGroup; // string yang ditampilkan oleh bot ke grup
@@ -30,6 +31,10 @@ public class GameMaster {
     private String ruleString;
     private List<Player> players; // ArrayList isinya pemain - pemain yang akan bergabung dalam permainan
 
+    static final String YELLOW = "YELLOW";
+    static final String RED = "RED";
+    static final String GREEN = "GREEN";
+    static final String BLUE = "BLUE";
     /*
      * Class Constructor
      * */
@@ -221,16 +226,16 @@ public class GameMaster {
                 if (cardInStringIdentity[0].equalsIgnoreCase(card1.getSymbol())&& colorOfCardInString.equals(card1.getColor())){
                     if (card1.getColor().equals(Color.SPECIAL)){
                         switch (colorSetByPlayer.toUpperCase()){
-                            case "RED":
+                            case RED:
                                 card1.setColor(Color.RED);
                                 break;
-                            case "YELLOW":
+                            case YELLOW:
                                 card1.setColor(Color.YELLOW);
                                 break;
-                            case "GREEN":
+                            case GREEN:
                                 card1.setColor(Color.GREEN);
                                 break;
-                            case "BLUE":
+                            case BLUE:
                                 card1.setColor(Color.BLUE);
                                 break;
                             default:
@@ -421,7 +426,7 @@ public class GameMaster {
     public void addPlayer (String playerId){
         players.add(new Player(playerId));
         //debug
-        System.out.println(playerId+" "+"terdaftar!");
+        logger.log(playerId+" terdaftar!");
     }
 
     /*Beberapa String yang akan digenerate untuk ditampilkan
