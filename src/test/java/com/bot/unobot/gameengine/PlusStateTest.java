@@ -3,6 +3,7 @@ package com.bot.unobot.gameengine;
 import com.bot.unobot.card.*;
 import com.bot.unobot.player.Player;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,15 +14,15 @@ import java.util.Arrays;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-
 public class PlusStateTest {
     GameMaster gameMaster = new GameMaster();
 
-    public void setUP(){
+    @Before
+    public void setUp(){
         gameMaster.getPlayers().clear();
-        gameMaster.addPlayer("a", "a");
-        gameMaster.addPlayer("b", "a");
-        gameMaster.addPlayer("c", "a");
+        gameMaster.addPlayer("a","a");
+        gameMaster.addPlayer("b","a");
+        gameMaster.addPlayer("c","a");
         gameMaster.initGame();
         System.out.println(gameMaster.getMessageToGroup());
         for(Player player:gameMaster.getPlayers()){
@@ -49,58 +50,27 @@ public class PlusStateTest {
 
             }
         }
-    }
-
-
-
-    @Test
-    public void UNOTest(){
-        setUP();
-        gameMaster.setCurrentState(gameMaster.getCurrentState());
-        gameMaster.getCurrentState().checkAndGetWinner("a");
-        Assert.assertEquals("Selamat .... Player a aman. Anda tidak perlu ambil 2 kartu karena sudah bilang UNO", gameMaster.getMessageToGroup());
-        gameMaster.getCurrentState().checkAndGetWinner("b");
-        Assert.assertEquals("Belum ada yang UNO bang wkwkwk", gameMaster.getMessageToGroup());
-
+        gameMaster.getTrashCards().push(new PlusCard(Color.BLUE,2));
+        gameMaster.setCurrentState(gameMaster.getPlusState());
+        gameMaster.getCurrentState().setLastCard(gameMaster.getTrashCards().peek());
     }
 
     @Test
-    public void UNOTest1(){
-        setUP();
-        gameMaster.setCurrentState(gameMaster.getCurrentState());
-        gameMaster.getCurrentState().checkAndGetWinner("b");
-        Assert.assertEquals("karena pemain a telat bilang uno... jadi otomatis dia dapet dua kartu deh\n" +
-                "Makanya jangan telat bos! ngohahahahahaha", gameMaster.getMessageToGroup());
-
-    }
-
-    @Test
-    public void UNOTest2(){
-        setUP();
-        gameMaster.setCurrentState(gameMaster.getCurrentState());
-        gameMaster.getCurrentState().put(gameMaster.getSpecificPlayer("a").getCardsCollection());
-        gameMaster.getCurrentState().checkAndGetWinner("a");
-        Assert.assertEquals("Selamat... pemain a berhasil meraih peringkat - 1\n" +
-                "Game akan secara otomatis meng-kick pemain a", gameMaster.getMessageToGroup());
-
-    }
-
-    @Test
-    public void drawTest(){
-        setUP();
-        int numOfCardsBefore = gameMaster.getPlayers().get(gameMaster.getCurrentState().getCurrPlayerIndex()).getCardsCollection().size();
-        gameMaster.getCurrentState().draw("a");
-        Assert.assertEquals(numOfCardsBefore+1, gameMaster.getSpecificPlayer("a").getCardsCollection().size());
-
-    }
-    @Test
-    public void setAndGetPlayer(){
-        setUP();
-        gameMaster.getCurrentState().setCurrPlayerIndex(2);
-        Assert.assertEquals(2, gameMaster.getCurrentState().getCurrPlayerIndex());
+    public void setterAndGettertest(){
+        Assert.assertEquals(0,gameMaster.getCurrentState().getCurrPlayerIndex() );
         Assert.assertEquals(Direction.CW, gameMaster.getCurrentState().getDirection());
+        Assert.assertEquals(Color.BLUE, gameMaster.getCurrentState().getLastCard().getColor());
+        Assert.assertEquals("+2", gameMaster.getCurrentState().getLastCard().getSymbol());
+
     }
 
+    @Test
 
-
+    public void putTest1(){
+        Card[] cards = {new PlusCard(Color.BLUE,2),
+                new PlusCard(Color.RED,2)};
+        ArrayList<Card> tempCards = new ArrayList<>(Arrays.asList(cards));
+        gameMaster.getCurrentState().put(tempCards);
+        Assert.assertEquals(gameMaster.putSucceed(), gameMaster.getMessageToPlayer());
+    }
 }

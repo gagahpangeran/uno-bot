@@ -94,7 +94,7 @@ public class PlusState implements GameState {
     *
     * */
 
-    public boolean isPuttableForPlusCards(List<Card> cards){
+    public boolean isPuttableForPlusCards(ArrayList<Card> cards){
         for (Card card: cards){
             if (card.getEffect() != Effect.PLUS){
                 return false;
@@ -103,7 +103,7 @@ public class PlusState implements GameState {
         return true;
     }
 
-    public int countCombos(List<Card> cards){
+    public int countCombos(ArrayList<Card> cards){
         int noOfCombos = 0;
         for (Card card:cards){
             if (card instanceof PlusCard){
