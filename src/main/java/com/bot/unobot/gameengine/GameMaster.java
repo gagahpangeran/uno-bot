@@ -500,4 +500,8 @@ public class GameMaster {
     public boolean isStart() {
         return this.start;
     }
+
+    public String getCurrentPlayerID() {
+        return players.get(this.currentState.getCurrPlayerIndex()).getId();
+    }
 }
