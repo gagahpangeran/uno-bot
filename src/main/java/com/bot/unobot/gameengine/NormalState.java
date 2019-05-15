@@ -210,8 +210,6 @@ public class NormalState implements GameState {
     @Override
     public void establishedWinner(Player player, String playerIdWhoSupposedToWin){
         if (player == null){
-            //debug
-            System.out.println("zzzzzzz");
 
             for (int i=0;i<2;i++){
                 if (gameMaster.getNewCards().isEmpty()) gameMaster.recycleTrashCards();
