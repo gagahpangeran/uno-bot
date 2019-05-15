@@ -59,6 +59,9 @@ public class HandlerController {
             case "join":
                 this.join();
                 break;
+            case "start":
+                this.start();
+                break;
             case "stop":
                 this.stop();
                 break;
@@ -112,8 +115,12 @@ public class HandlerController {
 
     public void create() {
         if (this.source instanceof GroupSource || this.source instanceof RoomSource) {
-            gameMasters.put(this.groupId, new GameMaster());
-            this.replyMessage("Game berhasil dibuat");
+            if(gameMasters.get(this.groupId) == null) {
+                gameMasters.put(this.groupId, new GameMaster());
+                this.replyMessage("Game berhasil dibuat");
+            } else {
+                this.replyMessage("Sudah ada game dibuat di grup ini");
+            }
         } else {
             this.replyMessage("Tidak bisa membuat game selain di grup");
         }
@@ -126,6 +133,20 @@ public class HandlerController {
             String name = this.getUserDisplayName(this.userId);
             this.replyMessage("Pemain " + name + " berhasil bergabung");
             this.pushMessage(this.userId, "Kamu bergabung ke permainan UNO");
+        } else {
+            this.replyMessage("Belum ada game dibuat di grup ini");
+        }
+    }
+
+    public void start() {
+        GameMaster game = gameMasters.get(this.groupId);
+        if (game != null) {
+            if(game.getPlayers().size() < 2) {
+                this.replyMessage("Minimal 2 pemain untuk memulai permainan");
+            } else {
+                game.initGame();
+                this.replyMessage(game.getMessageToGroup());
+            }
         } else {
             this.replyMessage("Belum ada game dibuat di grup ini");
         }
