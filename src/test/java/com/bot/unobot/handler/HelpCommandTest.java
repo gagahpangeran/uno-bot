@@ -30,7 +30,7 @@ public class HelpCommandTest {
 
     @Test
     public void testHelpCommand() {
-        MessageEvent<TextMessageContent> event = this.eventTestUtility.createDummyUserTextMessage(".help");
+        MessageEvent<TextMessageContent> event = this.eventTestUtility.createDummyTextMessage(".help", "123");
         String result = handlerController.handleTextMessageEvent(event);
         Assert.assertEquals("help", result);
     }

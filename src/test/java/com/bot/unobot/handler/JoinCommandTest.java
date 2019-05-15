@@ -30,17 +30,17 @@ public class JoinCommandTest {
 
     @Test
     public void testJoinCommandBeforeCreate() {
-        MessageEvent<TextMessageContent> event = this.eventTestUtility.createDummyGroupTextMessage(".join");
+        MessageEvent<TextMessageContent> event = this.eventTestUtility.createDummyTextMessage(".join", "123", "abc");
         String result = handlerController.handleTextMessageEvent(event);
         Assert.assertEquals("join", result);
     }
 
     @Test
     public void testJoinCommandAfterCreate() {
-        MessageEvent<TextMessageContent> event = this.eventTestUtility.createDummyGroupTextMessage(".create");
+        MessageEvent<TextMessageContent> event = this.eventTestUtility.createDummyTextMessage(".create", "123", "abc");
         handlerController.handleTextMessageEvent(event);
 
-        event = this.eventTestUtility.createDummyGroupTextMessage(".join");
+        event = this.eventTestUtility.createDummyTextMessage(".join", "123", "abc");
         String result = handlerController.handleTextMessageEvent(event);
         Assert.assertEquals("join", result);
     }

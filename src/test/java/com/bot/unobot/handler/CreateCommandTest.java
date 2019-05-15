@@ -30,14 +30,14 @@ public class CreateCommandTest {
 
     @Test
     public void testCreateCommandFromUser() {
-        MessageEvent<TextMessageContent> event = this.eventTestUtility.createDummyUserTextMessage(".create");
+        MessageEvent<TextMessageContent> event = this.eventTestUtility.createDummyTextMessage(".create", "123");
         String result = handlerController.handleTextMessageEvent(event);
         Assert.assertEquals("create", result);
     }
 
     @Test
     public void testCreateCommandFromGroup() {
-        MessageEvent<TextMessageContent> event = this.eventTestUtility.createDummyGroupTextMessage(".create");
+        MessageEvent<TextMessageContent> event = this.eventTestUtility.createDummyTextMessage(".create", "123", "abc");
         String result = handlerController.handleTextMessageEvent(event);
         Assert.assertEquals("create", result);
     }

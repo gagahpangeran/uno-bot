@@ -31,11 +31,11 @@ public class HandlerTest {
 
     @Test
     public void testHandleTextMessageEvent() {
-        MessageEvent<TextMessageContent> event = this.eventTestUtility.createDummyUserTextMessage("Test");
+        MessageEvent<TextMessageContent> event = this.eventTestUtility.createDummyTextMessage("Test", "123");
         String result = handlerController.handleTextMessageEvent(event);
         Assert.assertEquals("Test", result);
 
-        event = this.eventTestUtility.createDummyUserTextMessage(".test");
+        event = this.eventTestUtility.createDummyTextMessage(".test", "123");
         result = handlerController.handleTextMessageEvent(event);
         Assert.assertEquals("test", result);
     }

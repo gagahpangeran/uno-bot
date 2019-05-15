@@ -30,14 +30,14 @@ public class LeaveCommandTest {
 
     @Test
     public void testLeaveCommandFromUser() {
-        MessageEvent<TextMessageContent> event = this.eventTestUtility.createDummyUserTextMessage(".leave");
+        MessageEvent<TextMessageContent> event = this.eventTestUtility.createDummyTextMessage(".leave", "123");
         String result = handlerController.handleTextMessageEvent(event);
         Assert.assertEquals("leave", result);
     }
 
     @Test
     public void testLeaveCommandFromGroup() {
-        MessageEvent<TextMessageContent> event = this.eventTestUtility.createDummyGroupTextMessage(".leave");
+        MessageEvent<TextMessageContent> event = this.eventTestUtility.createDummyTextMessage(".leave", "123", "abc");
         String result = handlerController.handleTextMessageEvent(event);
         Assert.assertEquals("leave", result);
     }

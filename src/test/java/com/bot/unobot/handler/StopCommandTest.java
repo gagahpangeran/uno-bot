@@ -30,17 +30,17 @@ public class StopCommandTest {
 
     @Test
     public void testStopCommandBeforeCreate() {
-        MessageEvent<TextMessageContent> event = this.eventTestUtility.createDummyGroupTextMessage(".stop");
+        MessageEvent<TextMessageContent> event = this.eventTestUtility.createDummyTextMessage(".stop", "123", "abc");
         String result = handlerController.handleTextMessageEvent(event);
         Assert.assertEquals("stop", result);
     }
 
     @Test
     public void testStopCommandAfterCreate() {
-        MessageEvent<TextMessageContent> event = this.eventTestUtility.createDummyGroupTextMessage(".create");
+        MessageEvent<TextMessageContent> event = this.eventTestUtility.createDummyTextMessage(".create", "123", "abc");
         handlerController.handleTextMessageEvent(event);
 
-        event = this.eventTestUtility.createDummyGroupTextMessage(".stop");
+        event = this.eventTestUtility.createDummyTextMessage(".stop", "123", "abc");
         String result = handlerController.handleTextMessageEvent(event);
         Assert.assertEquals("stop", result);
     }
