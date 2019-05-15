@@ -11,6 +11,10 @@ public class UnoBotApplicationTests {
 
 
     @Test
+    public void main() {
+    }
+
+    @Test
     public void contextLoads() {
     }
 

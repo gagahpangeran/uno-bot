@@ -3,9 +3,7 @@ package com.bot.unobot.gameengine;
 import com.bot.unobot.card.*;
 import com.bot.unobot.player.Player;
 
-import java.text.CollationElementIterator;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Stack;
 
@@ -15,9 +13,9 @@ import java.util.Stack;
  */
 
 /*
-* Disini gw bakal nulis dokumentasi + keterangan + logic untuk masing - masing method
-* Jika ada yang kurang jelas langsung kontak gw aja, telepon juga boleh wkwkwk
-* */
+ * Disini gw bakal nulis dokumentasi + keterangan + logic untuk masing - masing method
+ * Jika ada yang kurang jelas langsung kontak gw aja, telepon juga boleh wkwkwk
+ * */
 public class GameMaster {
     private GameState normalState; // Normal State adalah state dimana ketika kartu yang terakhir ditaruh kartu biasa (Bukan kartu plus)
     //private GameState wildState;   wildState gak akan gw pake. Mengapa? akan gw jelaskan nanti
@@ -33,8 +31,8 @@ public class GameMaster {
     private boolean start;
 
     /*
-    * Class Constructor -- gak perlu dijelasin lagi lah ya :)
-    * */
+     * Class Constructor -- gak perlu dijelasin lagi lah ya :)
+     * */
     public GameMaster() {
         this.normalState = new NormalState(this);
         //this.wildState = new WildState(this);
@@ -121,11 +119,11 @@ public class GameMaster {
     }
 
 
-/*
-* @param prevCard = Kartu terakhir yang ditaruh oleh player yang terakhir jalan
-* @param cards = Kartu yang dikeluarkan oleh player yang lagi jalan. Berbentuk arraylist karena kartu yang dikeluarkan player bisa lebih dari 1 (ingat kan ada kombo)
-* @return boolean = Kartu akan dianggap bisa ditaruh jika warna sama atau simbol sama atau dia merupakan wildcard
-* */
+    /*
+     * @param prevCard = Kartu terakhir yang ditaruh oleh player yang terakhir jalan
+     * @param cards = Kartu yang dikeluarkan oleh player yang lagi jalan. Berbentuk arraylist karena kartu yang dikeluarkan player bisa lebih dari 1 (ingat kan ada kombo)
+     * @return boolean = Kartu akan dianggap bisa ditaruh jika warna sama atau simbol sama atau dia merupakan wildcard
+     * */
     public boolean isPuttable(Card prevCard, ArrayList<Card> cards) {
         Card currentCard = cards.get(0);
 
@@ -133,20 +131,20 @@ public class GameMaster {
         return ((prevCard.getColor() == currentCard.getColor()) || (prevCard.getSymbol().equals(currentCard.getSymbol())) || currentCard instanceof WildCard); }
 
     /*
-    * @param card = Jadi, karena player akan memberi inputan berupa string, input user perlu dikonversi menjadi sebuah object berupa ArrayList<Card>
-    *  Tujuan dari method ini adalah mengkonversi ArrayList of string yang merupakan kartu - kartu yang dikeluarkan oleh player. Mengapa string? karena user inputnya kan berupa string(?)
-    *  Cara kerja:
-    *  ArrayList<String> card akan berisi string yang formatnya = [symbol_kartu];[warna_kartu]
-    *  String ini secara satu persatu akan di split, dan [symbol_kartu] dan [warna_kartu] akan dicocokkan dengan kartu kartu yang benar benar ada di tangan player
-    *
-    *  Jika cocok, maka kartu akan ditambahkan ke ArrayList<Card> convertedCards
-    *  jika tidak cocok, maka tidak akan ditambahkan ke ArrayList<Card> convertedCards
-    *
-    * Jika ArrayList<Card> convertedCards.size() == ArrayList<String> card.size() maka kartu yang diberikan player valid dan fungsi akan
-    * mereturn ArrayList<Card> convertedCards yang isinya kumpulan kartu yang hendak dikeluarkan oleh user
-    *
-    * Jika tidak, maka ArrayList<Card> convertedCards akan dihapus, dan akan mereturn ArrayList<Card> kosong
-    * */
+     * @param card = Jadi, karena player akan memberi inputan berupa string, input user perlu dikonversi menjadi sebuah object berupa ArrayList<Card>
+     *  Tujuan dari method ini adalah mengkonversi ArrayList of string yang merupakan kartu - kartu yang dikeluarkan oleh player. Mengapa string? karena user inputnya kan berupa string(?)
+     *  Cara kerja:
+     *  ArrayList<String> card akan berisi string yang formatnya = [symbol_kartu];[warna_kartu]
+     *  String ini secara satu persatu akan di split, dan [symbol_kartu] dan [warna_kartu] akan dicocokkan dengan kartu kartu yang benar benar ada di tangan player
+     *
+     *  Jika cocok, maka kartu akan ditambahkan ke ArrayList<Card> convertedCards
+     *  jika tidak cocok, maka tidak akan ditambahkan ke ArrayList<Card> convertedCards
+     *
+     * Jika ArrayList<Card> convertedCards.size() == ArrayList<String> card.size() maka kartu yang diberikan player valid dan fungsi akan
+     * mereturn ArrayList<Card> convertedCards yang isinya kumpulan kartu yang hendak dikeluarkan oleh user
+     *
+     * Jika tidak, maka ArrayList<Card> convertedCards akan dihapus, dan akan mereturn ArrayList<Card> kosong
+     * */
 
 
     public ArrayList<Card> converStringstoCards(ArrayList<String> card) {
@@ -187,19 +185,19 @@ public class GameMaster {
     }
 
     /*
-    * @param card = arraylist string yang isinya masing masing adalah string dengan format [symbol_kartu];[warna_kartu]
-    * @param colorSetByPlayer = warna yang di ingin di set oleh pemain yang mengeluarkan wildcard
-    *
-    * Jadi method ini merupakan method pengganti WildCard state
-    * Jadi ketika user mengeluarkan wildcard, maka yang dilakukan method ini adalah mengubah warna si wildcard menjadi warna yang dikehendaki user
-    * Jadi dengan begitu, warna yang diinginkan user akan tersimpan di wildcard
-    *
-    * Sisanya sama seperti method yang di atas
-    *
-    * @return convertedCards = inputan user yang sudah dikonversi ke ArraList<Card>
-    *
-    *
-    * */
+     * @param card = arraylist string yang isinya masing masing adalah string dengan format [symbol_kartu];[warna_kartu]
+     * @param colorSetByPlayer = warna yang di ingin di set oleh pemain yang mengeluarkan wildcard
+     *
+     * Jadi method ini merupakan method pengganti WildCard state
+     * Jadi ketika user mengeluarkan wildcard, maka yang dilakukan method ini adalah mengubah warna si wildcard menjadi warna yang dikehendaki user
+     * Jadi dengan begitu, warna yang diinginkan user akan tersimpan di wildcard
+     *
+     * Sisanya sama seperti method yang di atas
+     *
+     * @return convertedCards = inputan user yang sudah dikonversi ke ArraList<Card>
+     *
+     *
+     * */
 
     public ArrayList<Card> converStringstoCards(ArrayList<String> card, String colorSetByPlayer) {
         ArrayList<Card> convertedCards = new ArrayList<>();
@@ -222,7 +220,7 @@ public class GameMaster {
                 case "SPECIAL":
                     colorOfCardInString = Color.SPECIAL;
                     break;
-                    default:
+                default:
 
             }
             for (Card card1: getPlayers().get(this.currentState.getCurrPlayerIndex()).getCardsCollection()){
@@ -244,7 +242,7 @@ public class GameMaster {
                             case "BLUE":
                                 card1.setColor(Color.BLUE);
                                 break;
-                                default:
+                            default:
                         }
 
                     }
@@ -268,15 +266,15 @@ public class GameMaster {
 
 
     /*
-    * @param cards = ArrayList<Card> yang merupakan kartu kartu yang dikeluarkan player
-    * @return boolean = apakah koleksi kartu tersebut valid atau tidak
-    *
-    * Syarat kombinasi kartu yang bersangkutan valid:
-    * 1. Jika simbol semua kartu sama
-    * 2. Jika kartu merupakan wildcard
-    *
-    *
-    * */
+     * @param cards = ArrayList<Card> yang merupakan kartu kartu yang dikeluarkan player
+     * @return boolean = apakah koleksi kartu tersebut valid atau tidak
+     *
+     * Syarat kombinasi kartu yang bersangkutan valid:
+     * 1. Jika simbol semua kartu sama
+     * 2. Jika kartu merupakan wildcard
+     *
+     *
+     * */
 
 
     public boolean checkCombo(ArrayList<Card> cards) {
@@ -307,8 +305,8 @@ public class GameMaster {
     }
 
     /*method ini digunakan untuk mengenerate kartu baru yang akan digunakan dalam game. Total ada 108 kartu. Jangan liat logicnya, memang masih berantkan
-    * But this is the least I can do :(
-    * */
+     * But this is the least I can do :(
+     * */
 
     public void createNewCards(){
 
@@ -356,15 +354,15 @@ public class GameMaster {
             }
         }
         //debug
-       Collections.shuffle(newCards);
+        Collections.shuffle(newCards);
 
     }
 
     /*
-    * Ketika stack newCards, stack dimana user mengambik "kartu baru" habis, maka kartu dari stack trashCard
-    * akan di recycle ke menjadi stack newCards.
-    *
-    * */
+     * Ketika stack newCards, stack dimana user mengambik "kartu baru" habis, maka kartu dari stack trashCard
+     * akan di recycle ke menjadi stack newCards.
+     *
+     * */
 
     public void recycleTrashCards(){
 
@@ -385,9 +383,9 @@ public class GameMaster {
     }
 
     /*
-    * @param cards = ArrayList<Card> yang merupakan kartu kartu yang dikeluarkan player
-    * Memasukkan kartu kartu yang dikeluarkan player ke stack trashCards
-    * */
+     * @param cards = ArrayList<Card> yang merupakan kartu kartu yang dikeluarkan player
+     * Memasukkan kartu kartu yang dikeluarkan player ke stack trashCards
+     * */
 
     public void addToTrash(ArrayList<Card> cards){
         ArrayList<Card> temp = (ArrayList<Card>)cards.clone();
@@ -402,13 +400,13 @@ public class GameMaster {
 
 
     /*
-    *Method yang dieksekusi untuk memulai permainan
-    * Yang dilakukan ;
-    * 1. createNewCards() --> kalau gak tau baca dokumentasi methodnya lagi
-    * 2. Membagikan masing masing pemain 7 kartu secara acak
-    * 3. Mengeluarkan 1 kartu patokan yang menjadi kartu pertama permainan
-    *
-    * */
+     *Method yang dieksekusi untuk memulai permainan
+     * Yang dilakukan ;
+     * 1. createNewCards() --> kalau gak tau baca dokumentasi methodnya lagi
+     * 2. Membagikan masing masing pemain 7 kartu secara acak
+     * 3. Mengeluarkan 1 kartu patokan yang menjadi kartu pertama permainan
+     *
+     * */
 
     public void initGame(){
         createNewCards();
@@ -442,8 +440,8 @@ public class GameMaster {
     }
 
     /*Beberapa Sting yang akan digenerate untuk ditampilkan
-    * ----------------------------------------------------------------------------------------------------------------------------------------------------------------
-    * */
+     * ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+     * */
 
     /**/
 
@@ -476,7 +474,7 @@ public class GameMaster {
             }
         }
 
-       if(target == (null)) return "aaaaa ngebuggggg!!!!";
+        if(target == (null)) return "aaaaa ngebuggggg!!!!";
         for (Card card: target.getCardsCollection()){
             message+=card.getSymbol()+" "+card.getColor()+" \n";
         }

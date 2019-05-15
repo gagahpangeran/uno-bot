@@ -4,9 +4,7 @@ import com.bot.unobot.card.*;
 import com.bot.unobot.gameengine.GameMaster;
 import com.bot.unobot.player.Player;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+
 import java.util.*;
 
 public class GameSimulator {
@@ -17,9 +15,6 @@ public class GameSimulator {
 
 
         GameMaster gameMaster = new GameMaster();
-
-      PlusTestCase(gameMaster);
-
 
         //------------------------------------------------------------------------------------------
 
@@ -77,7 +72,6 @@ public class GameSimulator {
         String s = commands[0];
 
         while (temp){
-
             switch (s){
                 case "exit":
                     System.exit(0);
@@ -132,9 +126,11 @@ public class GameSimulator {
                     break;
                 case "rule":
                     System.out.println(gameMaster.getRule());
+                    break;
 
                     default:
                         System.out.println("command yang lu masukin salah! Coba Lagi!");
+                        break;
 
             }
             commands = tokenizer.nextLine().split(" ");
@@ -178,7 +174,8 @@ public class GameSimulator {
                             new OrdinaryCard("3",Color.RED)};
                     player.setCards(new ArrayList<>(Arrays.asList(zzzz)));
                     break;
-
+                default:
+                    break;
 
             }
         }
@@ -187,8 +184,8 @@ public class GameSimulator {
 
     }
 
-    public static void ReverseTestCase(GameMaster gameMaster){
 
+    public static void ReverseTestCase(GameMaster gameMaster){
         gameMaster.addPlayer("a", "a");
         gameMaster.addPlayer("b", "b");
         gameMaster.addPlayer("c", "b");
@@ -220,11 +217,10 @@ public class GameSimulator {
                             new OrdinaryCard("3",Color.RED)};
                     player.setCards(new ArrayList<>(Arrays.asList(zzzz)));
                     break;
-
-
+                default:
+                    break;
             }
         }
-
     }
 
     public static void SkipTestCase(GameMaster gameMaster){
@@ -259,8 +255,8 @@ public class GameSimulator {
                             new OrdinaryCard("3",Color.RED)};
                     player.setCards(new ArrayList<>(Arrays.asList(zzzz)));
                     break;
-
-
+                default:
+                    break;
             }
         }
 
@@ -299,8 +295,8 @@ public class GameSimulator {
                             new OrdinaryCard("3",Color.RED)};
                     player.setCards(new ArrayList<>(Arrays.asList(zzzz)));
                     break;
-
-
+                default:
+                    break;
             }
         }
 
@@ -340,8 +336,8 @@ public class GameSimulator {
                             new OrdinaryCard("3",Color.RED)};
                     player.setCards(new ArrayList<>(Arrays.asList(zzzz)));
                     break;
-
-
+                default:
+                    break;
             }
         }
     }
@@ -350,10 +346,10 @@ public class GameSimulator {
         GameMaster gameMaster =  new GameMaster();
         gameMaster.createNewCards();
         System.out.println(gameMaster.getNewCards().size());
-        int ordinary_red= 0;
-        int ordinary_blue = 0;
-        int ordinary_green =0;
-        int ordinary_yellow = 0;
+        int ordinaryRedCard = 0;
+        int ordinaryBlueCard = 0;
+        int ordinaryGreenCard =0;
+        int ordinaryYellowCard = 0;
         int plus  = 0;
         int ordinary = 0;
         int skip = 0;
@@ -371,17 +367,19 @@ public class GameSimulator {
                     ordinary+=1;
                     switch (gameMaster.getNewCards().peek().getColor()){
                         case RED:
-                            ordinary_red+=1;
+                            ordinaryRedCard+=1;
                             break;
                         case BLUE:
-                            ordinary_blue+=1;
+                            ordinaryBlueCard+=1;
                             break;
                         case GREEN:
-                            ordinary_green+=1;
+                            ordinaryGreenCard+=1;
                             break;
                         case YELLOW:
-                            ordinary_yellow+=1;
-
+                            ordinaryYellowCard+=1;
+                            break;
+                        default:
+                            break;
                     }
                     break;
                 case REVERSE:
@@ -395,7 +393,7 @@ public class GameSimulator {
             gameMaster.getNewCards().pop();
         }
 
-        System.out.println("ordinary red: "+ordinary_red+"\n"+"ordinary blue: "+ordinary_blue+"\n"+"ordinary green: "+ordinary_green+"\n"+"ordinary yellow: "+ordinary_yellow+"\n");
+        System.out.println("ordinary red: "+ordinaryRedCard+"\n"+"ordinary blue: "+ordinaryBlueCard+"\n"+"ordinary green: "+ordinaryGreenCard+"\n"+"ordinary yellow: "+ordinaryYellowCard+"\n");
         System.out.println("plus: "+ plus+"\n"+"ordinary: "+ordinary+"\n"+"skip: "+skip+"\n"+"reverse: "+reverse+"\n"+"wild: "+wild+"\n")   ;
 
 

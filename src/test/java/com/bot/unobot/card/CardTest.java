@@ -1,13 +1,8 @@
 package com.bot.unobot.card;
 
-import com.bot.unobot.gameengine.GameMaster;
-import com.bot.unobot.player.Player;
-import com.bot.unobot.card.Card;
-import com.bot.unobot.card.OrdinaryCard;
-import com.bot.unobot.card.PlusCard;
+
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,15 +13,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 public class CardTest {
 
-    public Card card;
-
     @Test
-    public void Cards_Test(){
-        card = new OrdinaryCard("1",Color.YELLOW);
+    public void cardsTest(){
+        Card card = new OrdinaryCard("1",Color.YELLOW);
         Assert.assertThat(card.getColor(), CoreMatchers.is(Color.YELLOW));
         Assert.assertThat(card.getSymbol(), CoreMatchers.is("1"));
 
-        PlusCard card =new PlusCard(Color.SPECIAL,4);
-        Assert.assertThat(card.getPlus(), CoreMatchers.is(4));
+        PlusCard plusCard = new PlusCard(Color.SPECIAL,4);
+        Assert.assertThat(plusCard.getPlus(), CoreMatchers.is(4));
     }
 }

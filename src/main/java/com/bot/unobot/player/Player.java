@@ -3,6 +3,7 @@ package com.bot.unobot.player;
 import com.bot.unobot.card.Card;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Player Class
@@ -12,7 +13,6 @@ import java.util.ArrayList;
  * Definisi lagi UNO = ketika pemain tersebut kartunya tinggal satu dan dia berhasil bilang UNO
  */
 public class Player {
-
     String id;
     String name;
     ArrayList<Card> cards;

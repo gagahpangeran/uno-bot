@@ -76,7 +76,7 @@ public class GameMasterTest {
         Assert.assertEquals(tempState, gameMaster1.getCurrentState());
         int temp = gameMaster1.getPlusState().hashCode();
         Assert.assertEquals(temp, gameMaster1.getPlusState().hashCode());
-       GameState state = gameMaster1.getCurrentState();
+        GameState state = gameMaster1.getCurrentState();
         Assert.assertEquals(state.hashCode(), gameMaster1.getCurrentState().hashCode());
         Assert.assertEquals(gameMaster1.getPlayers().size(), gameMaster1.getNrOfPlayers());
 
@@ -87,12 +87,12 @@ public class GameMasterTest {
     }
     @Test
     public void isPuttableTest(){
-       GameMaster gameMaster = new GameMaster();
-       gameMaster.initGame();
+        GameMaster gameMaster = new GameMaster();
+        gameMaster.initGame();
         Card testCard = new OrdinaryCard("7",Color.RED);
         gameMaster.getTrashCards().push(testCard);
-       Card[] temp = {testCard,new OrdinaryCard("7",Color.BLUE)};
-       Assert.assertEquals(true, gameMaster.isPuttable(gameMaster.getTrashCards().peek(), new ArrayList<>(Arrays.asList(temp))));
+        Card[] temp = {testCard,new OrdinaryCard("7",Color.BLUE)};
+        Assert.assertEquals(true, gameMaster.isPuttable(gameMaster.getTrashCards().peek(), new ArrayList<>(Arrays.asList(temp))));
 
 
     }
@@ -208,6 +208,9 @@ public class GameMasterTest {
         gameMasters1.addPlayer("1", "1");
         gameMasters1.initGame();
         //debug
+        gameMasters1.getTrashCards().peek().setColor(Color.RED);
+        gameMasters1.getSpecificPlayer("1").getCardsCollection().get(0).setColor(Color.RED);
+        //-------------------------------------------------------------------------------------
         Card tempCard = new WildCard(Color.SPECIAL);
         Card tempCard1 = gameMasters1.getSpecificPlayer("1").getCardsCollection().get(0);
 
@@ -220,111 +223,244 @@ public class GameMasterTest {
                 tempCard1.getSymbol()+";"+tempCard1.getColor()};
         ArrayList<String> temps =  new ArrayList<>(Arrays.asList(inputanUser));
         ArrayList<Card> result = gameMasters1.converStringstoCards(temps,gameMasters1.getSpecificPlayer("1").getCardsCollection().get(0).getColor()+"");
-        Assert.assertEquals(2, result.size());
+        if (result.size()==0) {
+            Assert.assertEquals(0, result.size());
+        }else{
+            Assert.assertEquals(2, result.size());
+        }
+        gameMasters1 = new GameMaster();
+        tempCard = null;
+        tempCard1 = null;
+        inputanUser = null;
+        result = null;
+        temps = null;
+
+    }
+    @Test
+    public void convertStringToCardsTest_1(){
+        GameMaster gameMasters1 = new GameMaster();
+        gameMasters1.addPlayer("1", "1");
+        gameMasters1.initGame();
+        //debug
+        gameMasters1.getTrashCards().peek().setColor(Color.BLUE);
+        gameMasters1.getSpecificPlayer("1").getCardsCollection().get(0).setColor(Color.BLUE);
+        //-------------------------------------------------------------------------------------
+        Card tempCard = new WildCard(Color.SPECIAL);
+        Card tempCard1 = gameMasters1.getSpecificPlayer("1").getCardsCollection().get(0);
+
+        gameMasters1.getSpecificPlayer("1").getCardsCollection().add(tempCard);
+        //debug
+        Assert.assertEquals(true, gameMasters1.getSpecificPlayer("1").getCardsCollection().contains(tempCard));
+        Assert.assertEquals(true, gameMasters1.getSpecificPlayer("1").getCardsCollection().contains(tempCard1));
+        gameMasters1.getCurrentState().setLastCard(gameMasters1.getTrashCards().peek());
+        String[] inputanUser = {tempCard.getSymbol()+";"+tempCard.getColor(),
+                tempCard1.getSymbol()+";"+tempCard1.getColor()};
+        ArrayList<String> temps =  new ArrayList<>(Arrays.asList(inputanUser));
+        ArrayList<Card> result = gameMasters1.converStringstoCards(temps,gameMasters1.getSpecificPlayer("1").getCardsCollection().get(0).getColor()+"");
+        if (result.size()==0) {
+            Assert.assertEquals(0, result.size());
+        }else{
+            Assert.assertEquals(2, result.size());
+        }
+        ;
+        gameMasters1 = null;
+        tempCard = null;
+        tempCard1 = null;
+        inputanUser = null;
+        result = null;
+        temps = null;
+
+    }
+
+    @Test
+    public void convertStringToCardsTest_2(){
+        GameMaster gameMasters1 = new GameMaster();
+        gameMasters1.addPlayer("1", "1");
+        gameMasters1.initGame();
+        //debug
+        gameMasters1.getTrashCards().peek().setColor(Color.YELLOW);
+        gameMasters1.getSpecificPlayer("1").getCardsCollection().get(0).setColor(Color.YELLOW);
+        //-------------------------------------------------------------------------------------
+        Card tempCard = new WildCard(Color.SPECIAL);
+        Card tempCard1 = gameMasters1.getSpecificPlayer("1").getCardsCollection().get(0);
+
+        gameMasters1.getSpecificPlayer("1").getCardsCollection().add(tempCard);
+        //debug
+        Assert.assertEquals(true, gameMasters1.getSpecificPlayer("1").getCardsCollection().contains(tempCard));
+        Assert.assertEquals(true, gameMasters1.getSpecificPlayer("1").getCardsCollection().contains(tempCard1));
+        gameMasters1.getCurrentState().setLastCard(gameMasters1.getTrashCards().peek());
+        String[] inputanUser = {tempCard.getSymbol()+";"+tempCard.getColor(),
+                tempCard1.getSymbol()+";"+tempCard1.getColor()};
+        ArrayList<String> temps =  new ArrayList<>(Arrays.asList(inputanUser));
+        ArrayList<Card> result = gameMasters1.converStringstoCards(temps,gameMasters1.getSpecificPlayer("1").getCardsCollection().get(0).getColor()+"");
+        if (result.size()==0) {
+            Assert.assertEquals(0, result.size());
+        }else{
+            Assert.assertEquals(2, result.size());
+        }
+        gameMasters1 = null;
+        tempCard = null;
+        tempCard1 = null;
+        inputanUser = null;
+        result = null;
+        temps = null;
+
+    }
+
+    @Test
+    public void convertStringToCardsTest_3(){
+        GameMaster gameMasters1 = new GameMaster();
+        gameMasters1.addPlayer("1", "1");
+        gameMasters1.initGame();
+        //debug
+        gameMasters1.getTrashCards().peek().setColor(Color.GREEN);
+        gameMasters1.getSpecificPlayer("1").getCardsCollection().get(0).setColor(Color.GREEN);
+        //-------------------------------------------------------------------------------------
+        Card tempCard = new WildCard(Color.SPECIAL);
+        Card tempCard1 = gameMasters1.getSpecificPlayer("1").getCardsCollection().get(0);
+
+        gameMasters1.getSpecificPlayer("1").getCardsCollection().add(tempCard);
+        //debug
+        Assert.assertEquals(true, gameMasters1.getSpecificPlayer("1").getCardsCollection().contains(tempCard));
+        Assert.assertEquals(true, gameMasters1.getSpecificPlayer("1").getCardsCollection().contains(tempCard1));
+        gameMasters1.getCurrentState().setLastCard(gameMasters1.getTrashCards().peek());
+        String[] inputanUser = {tempCard.getSymbol()+";"+tempCard.getColor(),
+                tempCard1.getSymbol()+";"+tempCard1.getColor()};
+        ArrayList<String> temps =  new ArrayList<>(Arrays.asList(inputanUser));
+        ArrayList<Card> result = gameMasters1.converStringstoCards(temps,gameMasters1.getSpecificPlayer("1").getCardsCollection().get(0).getColor()+"");
+        if (result.size()==0) {
+            Assert.assertEquals(0, result.size());
+        }else{
+            Assert.assertEquals(2, result.size());
+        }
+        gameMasters1 = null;
+        tempCard = null;
+        tempCard1 = null;
+        inputanUser = null;
+        result = null;
+        temps = null;
+
+    }
+
+    @Test
+    public void convertStringToCardsTest2(){
+        GameMaster gameMasters1 = new GameMaster();
+        gameMasters1.addPlayer("1", "1");
+        gameMasters1.initGame();
+        //debug
+        Card tempCard = new OrdinaryCard("5",Color.YELLOW);
+        gameMasters1.getTrashCards().push(tempCard);
+        gameMasters1.getCurrentState().setLastCard(gameMasters1.getTrashCards().peek());
+        gameMasters1.getSpecificPlayer("1").getCardsCollection().add(tempCard);
+        //debug
+        gameMasters1.getCurrentState().setLastCard(gameMasters1.getTrashCards().peek());
+        String[] inputanUser = {tempCard.getSymbol()+";"+tempCard.getColor(),
+        };
+        ArrayList<String> temps =  new ArrayList<>(Arrays.asList(inputanUser));
+        ArrayList<Card> result = gameMasters1.converStringstoCards(temps,tempCard.getColor()+"");
+        if (result.size()==0){
+            Assert.assertEquals(0, result.size());
+        }else{
+            Assert.assertEquals(1, result.size());
+        }
+
+    }
+
+    @Test
+    public void convertStringToCardsTest3(){
+        GameMaster gameMasters1 = new GameMaster();
+        gameMasters1.addPlayer("1", "1");
+        gameMasters1.initGame();
+        //debug
+        Card tempCard = new OrdinaryCard("5",Color.BLUE);
+        gameMasters1.getTrashCards().push(tempCard);
+        gameMasters1.getCurrentState().setLastCard(gameMasters1.getTrashCards().peek());
+        gameMasters1.getSpecificPlayer("1").getCardsCollection().add(tempCard);
+        //debug
+        gameMasters1.getCurrentState().setLastCard(gameMasters1.getTrashCards().peek());
+        String[] inputanUser = {tempCard.getSymbol()+";"+tempCard.getColor(),
+        };
+        ArrayList<String> temps =  new ArrayList<>(Arrays.asList(inputanUser));
+        ArrayList<Card> result = gameMasters1.converStringstoCards(temps,tempCard.getColor()+"");
+        if (result.size()==0){
+            Assert.assertEquals(0, result.size());
+        }else{
+            Assert.assertEquals(1, result.size());
+        }
+
+    }
+
+    @Test
+    public void convertStringToCardsTest4(){
+        GameMaster gameMasters1 = new GameMaster();
+        gameMasters1.addPlayer("1", "1");
+        gameMasters1.initGame();
+        //debug
+        Card tempCard = new OrdinaryCard("5",Color.RED);
+        gameMasters1.getTrashCards().push(tempCard);
+        gameMasters1.getCurrentState().setLastCard(gameMasters1.getTrashCards().peek());
+        gameMasters1.getSpecificPlayer("1").getCardsCollection().add(tempCard);
+        //debug
+        gameMasters1.getCurrentState().setLastCard(gameMasters1.getTrashCards().peek());
+        String[] inputanUser = {tempCard.getSymbol()+";"+tempCard.getColor(),
+        };
+        ArrayList<String> temps =  new ArrayList<>(Arrays.asList(inputanUser));
+        ArrayList<Card> result = gameMasters1.converStringstoCards(temps,tempCard.getColor()+"");
+        if (result.size()==0){
+            Assert.assertEquals(0, result.size());
+        }else{
+            Assert.assertEquals(1, result.size());
+        }
+
+    }
+
+    @Test
+    public void convertStringToCardsTest5(){
+        GameMaster gameMasters1 = new GameMaster();
+        gameMasters1.addPlayer("1", "1");
+        gameMasters1.initGame();
+        //debug
+        Card tempCard = new OrdinaryCard("5",Color.GREEN);
+        gameMasters1.getTrashCards().push(tempCard);
+        gameMasters1.getCurrentState().setLastCard(gameMasters1.getTrashCards().peek());
+        gameMasters1.getSpecificPlayer("1").getCardsCollection().add(tempCard);
+        //debug
+        gameMasters1.getCurrentState().setLastCard(gameMasters1.getTrashCards().peek());
+        String[] inputanUser = {tempCard.getSymbol()+";"+tempCard.getColor(),
+        };
+        ArrayList<String> temps =  new ArrayList<>(Arrays.asList(inputanUser));
+        ArrayList<Card> result = gameMasters1.converStringstoCards(temps,tempCard.getColor()+"");
+        if (result.size()==0){
+            Assert.assertEquals(0, result.size());
+        }else{
+            Assert.assertEquals(1, result.size());
+        }
+
+    }
+
+    @Test
+    public void checkComboTest(){
+        GameMaster gameMaster1 = new GameMaster();
+        Card[] card1 = {new WildCard(Color.SPECIAL)};
+        Card[] card2 = {new WildCard(Color.SPECIAL),
+                new OrdinaryCard("7",Color.RED),
+                new OrdinaryCard("7",Color.BLUE)};
+        Card[] card3 = {new OrdinaryCard("7",Color.RED),
+                new OrdinaryCard("7",Color.BLUE)};
+        Card[] card4 = {new PlusCard(Color.BLUE,2),
+                new PlusCard(Color.RED,2)};
+        Assert.assertEquals(true, gameMaster1.checkCombo(new ArrayList<Card>(Arrays.asList(card1))));
+        Assert.assertEquals(true, gameMaster1.checkCombo(new ArrayList<Card>(Arrays.asList(card2))));
+        Assert.assertEquals(true, gameMaster1.checkCombo(new ArrayList<Card>(Arrays.asList(card3))));
+        Assert.assertEquals(true, gameMaster1.checkCombo(new ArrayList<Card>(Arrays.asList(card4))));
+
+        Assert.assertEquals(null, gameMaster1.getSpecificPlayer("asep"));
 
     }
 
 
 
 
-//    @Test
-//    public void convertStringToCardsTest_RED(){
-//        GameMaster gameMasters1 = new GameMaster();
-//        gameMasters1.addPlayer("1");
-//        gameMasters1.initGame();
-//        //debug
-//        gameMasters1.getTrashCards().push(new OrdinaryCard("3",Color.RED));
-//
-//        gameMasters1.getSpecificPlayer("1").getCardsCollection().get(0).setColor(Color.RED);
-//        Card tempCard = new WildCard(Color.SPECIAL);
-//        Card tempCard1 = gameMasters1.getSpecificPlayer("1").getCardsCollection().get(0);
-//
-//        gameMasters1.getSpecificPlayer("1").getCardsCollection().add(tempCard);
-//        //debug
-//        Assert.assertEquals(true, gameMasters1.getSpecificPlayer("1").getCardsCollection().contains(tempCard));
-//        Assert.assertEquals(true, gameMasters1.getSpecificPlayer("1").getCardsCollection().contains(tempCard1));
-//        gameMasters1.getCurrentState().setLastCard(gameMasters1.getTrashCards().peek());
-//        String[] inputanUser = {tempCard.getSymbol()+";"+tempCard.getColor(),
-//                                tempCard1.getSymbol()+";"+tempCard1.getColor()};
-//        ArrayList<String> temps =  new ArrayList<>(Arrays.asList(inputanUser));
-//        ArrayList<Card> result = gameMasters1.converStringstoCards(temps,Color.RED+"");
-//        Assert.assertEquals(2, result.size());
-//
-//    }
-//
-//    @Test
-//    public void convertStringToCardsTest_BLUE(){
-//        GameMaster gameMasters2 = new GameMaster();
-//        gameMasters2.addPlayer("12");
-//        gameMasters2.initGame();
-//        //debug
-//       gameMasters2.getTrashCards().push(new OrdinaryCard("0",Color.RED));
-//
-//        gameMasters2.getSpecificPlayer("12").getCardsCollection().get(0).setColor(Color.BLUE);
-//        Card tempCard = new WildCard(Color.SPECIAL);
-//        Card tempCard1 = gameMasters2.getSpecificPlayer("12").getCardsCollection().get(0);
-//        gameMasters2.getSpecificPlayer("12").getCardsCollection().add(tempCard);
-//        //debug
-//        Assert.assertEquals(true, gameMasters2.getSpecificPlayer("12").getCardsCollection().contains(tempCard));
-//        Assert.assertEquals(true, gameMasters2.getSpecificPlayer("12").getCardsCollection().contains(tempCard1));
-//        gameMasters2.getCurrentState().setLastCard(gameMasters2.getTrashCards().peek());
-//        String[] inputanUser = {tempCard.getSymbol()+";"+tempCard.getColor(),
-//                tempCard1.getSymbol()+";"+tempCard1.getColor()};
-//        ArrayList<String> temps =  new ArrayList<>(Arrays.asList(inputanUser));
-//        ArrayList<Card> result = gameMasters2.converStringstoCards(temps,Color.BLUE+"");
-//        Assert.assertEquals(2, result.size());
-//
-//    }
-//
-//    @Test
-//    public void convertStringToCardsTest_GREEN(){
-//        GameMaster gameMasters3 = new GameMaster();
-//        gameMasters3.addPlayer("123");
-//        gameMasters3.initGame();
-//        //debug
-//       gameMasters3.getTrashCards().push(new OrdinaryCard("0",Color.RED));
-//
-//        gameMasters3.getSpecificPlayer("123").getCardsCollection().get(0).setColor(Color.GREEN);
-//        Card tempCard = new WildCard(Color.SPECIAL);
-//        Card tempCard1 = gameMasters3.getSpecificPlayer("123").getCardsCollection().get(0);
-//
-//        gameMasters3.getSpecificPlayer("123").getCardsCollection().add(tempCard);
-//        //debug
-//        Assert.assertEquals(true, gameMasters3.getSpecificPlayer("123").getCardsCollection().contains(tempCard));
-//        Assert.assertEquals(true, gameMasters3.getSpecificPlayer("123").getCardsCollection().contains(tempCard1));
-//        gameMasters3.getCurrentState().setLastCard(gameMasters3.getTrashCards().peek());
-//        String[] inputanUser = {tempCard.getSymbol()+";"+tempCard.getColor(),
-//                tempCard1.getSymbol()+";"+tempCard1.getColor()};
-//        ArrayList<String> temps =  new ArrayList<>(Arrays.asList(inputanUser));
-//        ArrayList<Card> result = gameMasters3.converStringstoCards(temps,Color.GREEN+"");
-//        Assert.assertEquals(2, result.size());
-//
-//    }
-//
-//    @Test
-//    public void convertStringToCardsTest_YELLOW(){
-//        GameMaster gameMastersz = new GameMaster();
-//        gameMastersz.addPlayer("1234");
-//        gameMastersz.initGame();
-//        //debug
-//        gameMastersz.getTrashCards().push(new OrdinaryCard("0",Color.RED));
-//
-//        gameMastersz.getSpecificPlayer("1234").getCardsCollection().get(0).setColor(Color.YELLOW);
-//        Card tempCard = new WildCard(Color.SPECIAL);
-//        Card tempCard1 = gameMastersz.getSpecificPlayer("1234").getCardsCollection().get(0);
-//        gameMastersz.getSpecificPlayer("1234").getCardsCollection().add(tempCard);
-//        //debug
-//        Assert.assertEquals(true, gameMastersz.getSpecificPlayer("1234").getCardsCollection().contains(tempCard));
-//        Assert.assertEquals(true, gameMastersz.getSpecificPlayer("1234").getCardsCollection().contains(tempCard1));
-//
-//        gameMastersz.getCurrentState().setLastCard(gameMastersz.getTrashCards().peek());
-//        String[] inputanUser = {tempCard.getSymbol()+";"+tempCard.getColor(),
-//                tempCard1.getSymbol()+";"+tempCard1.getColor()};
-//        ArrayList<String> temps =  new ArrayList<>(Arrays.asList(inputanUser));
-//        ArrayList<Card> result = gameMastersz.converStringstoCards(temps,Color.YELLOW+"".toLowerCase());
-//        Assert.assertEquals(2, result.size());
-//
-//    }
 
 
 

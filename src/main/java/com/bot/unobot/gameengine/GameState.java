@@ -5,16 +5,13 @@ import com.bot.unobot.card.Color;
 import com.bot.unobot.player.Player;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface GameState {
 
-    public void plus(Card[] cards);
+   // gw nangkepnya kalau dia gaada kartu gitu loh jadi musti ngambil dari deck
 
-    public void wild(Card[] cards);
-
-    public void giveUp(); // gw nangkepnya kalau dia gaada kartu gitu loh jadi musti ngambil dari deck
-
-    public void setColor(Color color);
+   // public void setColor(Color color);
 
 //    public void put(Card[] cards);
 
@@ -42,5 +39,5 @@ public interface GameState {
 
 
 
-    //public ArrayList<Card> converStringstoCards(String[] cards);
+    //public ArrayList<Card> convertStringtoCards(String[] cards);
 }

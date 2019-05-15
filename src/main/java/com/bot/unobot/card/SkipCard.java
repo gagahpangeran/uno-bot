@@ -7,9 +7,8 @@ public class SkipCard implements Card {
     Effect effect;
     String symbol;
 
-    public SkipCard( Color color){
-
-        this.color=color;
+    public SkipCard(Color color){
+        this.color = color;
         this.effect = Effect.STOP;
         this.symbol = "Skip";
 

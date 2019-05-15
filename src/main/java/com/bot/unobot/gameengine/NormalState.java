@@ -4,11 +4,9 @@ package com.bot.unobot.gameengine;
 import com.bot.unobot.card.Card;
 import com.bot.unobot.card.Color;
 import com.bot.unobot.card.Effect;
-import com.bot.unobot.card.PlusCard;
 import com.bot.unobot.player.Player;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /*
 * Berikut ini gw akan ngasih dokumentasi tentang Class ini
@@ -53,8 +51,7 @@ public class NormalState implements GameState {
             System.out.println("checkcombo: "+this.gameMaster.checkCombo(cards));
 
 
-            if (this.gameMaster.isPuttable(lastCard, cards) &&
-                    this.gameMaster.checkCombo(cards)) {
+            if (this.gameMaster.isPuttable(lastCard, cards) && this.gameMaster.checkCombo(cards)) {
                 this.lastCard = cards.get(cards.size()-1);
                 this.gameMaster.addToTrash(cards);
 
@@ -73,8 +70,8 @@ public class NormalState implements GameState {
                                 numberOfSkip+=1;
                             }
                         }
-
                         currPlayerIndex+=(1*numberOfSkip);
+
                     }else if (this.gameMaster.getTrashCards().peek().getEffect() == Effect.REVERSE){
                         int numberOfReverse = 0; // mengapa pakai ini? Karena bisa jadi dia mengeluarkan Reverse card dengan wildcard, jadi kita akan hitung ulang jumlah stop yang dikeluarkan sehingga wildcard tidak dianggap sebagai reverse
                         for (Card card:cards){
@@ -89,15 +86,13 @@ public class NormalState implements GameState {
                     }
                     //debug
                     System.out.println(gameMaster.getPlayers().get(getCurrPlayerIndex()).getCardsCollection().size());
-                    if (gameMaster.getPlayers().get(getCurrPlayerIndex()).getCardsCollection().size()<1 && gameMaster.getPlayers().get(getCurrPlayerIndex()).isUNO()){
+                    if (gameMaster.getPlayers().get(getCurrPlayerIndex()).getCardsCollection().isEmpty() && gameMaster.getPlayers().get(getCurrPlayerIndex()).isUNO()){
                         gameMaster.setMessageToGroup(gameMaster.putSucceed());
                         establishedWinner(gameMaster.getPlayers().get(getCurrPlayerIndex()), gameMaster.getPlayers().get(getCurrPlayerIndex()).getId());
                     }else{
                         gameMaster.setMessageToGroup(gameMaster.putSucceed()+"ss");
                         nextTurn();
                     }
-
-
                 }
 
             }else{
@@ -110,10 +105,8 @@ public class NormalState implements GameState {
     }
 
 
-    @Override
-    public void giveUp() {
 
-    }
+
     // gua tambahin
     /*Draw Cards*/
     @Override
@@ -152,20 +145,7 @@ public class NormalState implements GameState {
         return lastCard;
     }
 
-    @Override
-    public void plus(Card[] cards) {
 
-    }
-
-    @Override
-    public void setColor(Color color) {
-
-    }
-
-    @Override
-    public void wild(Card[] cards) {
-
-    }
     @Override
     public int getCurrPlayerIndex() {
         return Math.floorMod(currPlayerIndex, gameMaster.getNrOfPlayers());
@@ -224,7 +204,7 @@ public class NormalState implements GameState {
             System.out.println("zzzzzzz");
 
             for (int i=0;i<2;i++){
-                if (gameMaster.getNewCards().size()<1) gameMaster.recycleTrashCards();
+                if (gameMaster.getNewCards().isEmpty()) gameMaster.recycleTrashCards();
                 this.gameMaster.getSpecificPlayer(playerIdWhoSupposedToWin).getCardsCollection().add(gameMaster.getNewCards().pop());
             }
 
@@ -233,7 +213,7 @@ public class NormalState implements GameState {
             this.gameMaster.getSpecificPlayer(playerIdWhoSupposedToWin).setUNO(false);
             this.gameMaster.setMessageToGroup(this.gameMaster.failedToWin(playerIdWhoSupposedToWin));
         }else{
-            if (player.getCardsCollection().size()<1){
+            if (player.getCardsCollection().isEmpty()){
                 this.gameMaster.setMessageToGroup(this.gameMaster.winnerString(player.getId()));
                 this.gameMaster.getPlayers().remove(player);
                 this.gameMaster.setChampionPosition(this.gameMaster.getChampionPosition()+1);

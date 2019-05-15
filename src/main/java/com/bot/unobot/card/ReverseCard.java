@@ -6,12 +6,10 @@ public class ReverseCard implements Card {
     Effect effect;
     String symbol;
 
-    public ReverseCard( Color color){
-
-        this.color=color;
+    public ReverseCard(Color color){
+        this.color = color;
         this.effect = Effect.REVERSE;
         this.symbol = "Reverse";
-
     }
 
     @Override

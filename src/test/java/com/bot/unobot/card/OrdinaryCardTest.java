@@ -24,3 +24,4 @@ public class OrdinaryCardTest {
         Assert.assertThat(testCard.getColor(), CoreMatchers.is(Color.BLUE));
     }
 }
+

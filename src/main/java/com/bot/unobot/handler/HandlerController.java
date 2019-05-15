@@ -74,6 +74,8 @@ public class HandlerController {
             case "leave":
                 this.leave();
                 break;
+             default:
+                 break;
         }
         return command;
     }
