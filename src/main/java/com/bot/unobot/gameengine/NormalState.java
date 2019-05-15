@@ -47,8 +47,8 @@ public class NormalState implements GameState {
         if (!cards.isEmpty()){
 
 //            //debug
-//            System.out.println("is-puttable: "+this.gameMaster.isPuttable(lastCard, cards));
-//            System.out.println("checkcombo: "+this.gameMaster.checkCombo(cards));
+            System.out.println("is-puttable: "+this.gameMaster.isPuttable(lastCard, cards));
+            System.out.println("checkcombo: "+this.gameMaster.checkCombo(cards));
 
 
             if (this.gameMaster.isPuttable(lastCard, cards) && this.gameMaster.checkCombo(cards)) {
@@ -106,11 +106,11 @@ public class NormalState implements GameState {
                 }
 
             }else{
-                this.gameMaster.setMessageToPlayer(this.gameMaster.putFailed());
+                this.gameMaster.setMessageToPlayer(this.gameMaster.putFailed() + "\na");
             }
 
         }else{
-            this.gameMaster.setMessageToPlayer(this.gameMaster.putFailed());
+            this.gameMaster.setMessageToPlayer(this.gameMaster.putFailed() + "\nb");
         }
     }
 

@@ -151,7 +151,7 @@ public class PlusState implements GameState {
         this.gameMaster.getCurrentState().setLastCard(this.gameMaster.getTrashCards().peek());
 
         //nextTurn();
-        return "hehe";
+        return gameMaster.getMessageForPlayer(playerId);
     }
 
     public int getNumberOfCombos() {
