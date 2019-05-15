@@ -167,7 +167,7 @@ public class HandlerController {
         if (game != null) {
             if(game.isStart()) {
                 this.replyMessage("Game sudah pernah dimulai");
-            } else if (game.getPlayers().size() < 0) {
+            } else if (game.getPlayers().size() < 2) {
                 this.replyMessage("Minimal 2 pemain untuk memulai permainan");
             } else {
                 game.initGame();

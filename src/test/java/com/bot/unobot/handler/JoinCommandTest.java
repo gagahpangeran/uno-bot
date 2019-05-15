@@ -53,6 +53,9 @@ public class JoinCommandTest {
         event = this.eventTestUtility.createDummyTextMessage(".join", "123", "abc");
         handlerController.handleTextMessageEvent(event);
 
+        event = this.eventTestUtility.createDummyTextMessage(".join", "777", "abc");
+        handlerController.handleTextMessageEvent(event);
+
         event = this.eventTestUtility.createDummyTextMessage(".start", "123", "abc");
         handlerController.handleTextMessageEvent(event);
 
