@@ -12,7 +12,6 @@ public class UnoBotApplicationTests {
 
     @Test
     public void main() {
-        UnoBotApplication.main(new String[] {});
     }
 
     @Test

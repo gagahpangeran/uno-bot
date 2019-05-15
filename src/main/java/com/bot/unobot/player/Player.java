@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class Player {
     String id;
-    List<Card> cards;
+    ArrayList<Card> cards;
     boolean isUNO;
 
     /**
@@ -54,13 +54,13 @@ public class Player {
      * Return player's card collection
      * @return card collection ArrayList
      */
-    public List<Card> getCardsCollection(){
+    public ArrayList<Card> getCardsCollection(){
         return cards;
     }
 
     //debug
 
-    public void setCards(List<Card> cards) {
+    public void setCards(ArrayList<Card> cards) {
         this.cards = cards;
     }
 

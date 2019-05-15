@@ -39,24 +39,13 @@ public class PlusState implements GameState {
         this.currPlayerIndex = currPlayerIndex;
     }
 
-    @Override
-    public void wild(Card[] cards) {
-
-    }
-
-    @Override
-    public void setColor(Color color) {
-
-    }
 
     @Override
     public int getCurrPlayerIndex() {
         return Math.floorMod(currPlayerIndex, gameMaster.getNrOfPlayers());
     }
 
-    @Override
-    public void plus(Card[] cards) {
-    }
+
 
     @Override
     public Card getLastCard() {
@@ -74,7 +63,7 @@ public class PlusState implements GameState {
      * */
 
 
-    public void put(List<Card> cards) {
+    public void put(ArrayList<Card> cards) {
         if (!cards.isEmpty()){
 
 //            //debug
@@ -131,10 +120,7 @@ public class PlusState implements GameState {
 
     }
 
-    @Override
-    public void giveUp() {
 
-    }
 
     @Override
     public void nextTurn() {
