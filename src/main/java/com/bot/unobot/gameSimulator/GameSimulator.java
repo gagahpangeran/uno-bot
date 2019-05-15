@@ -95,7 +95,7 @@ public class GameSimulator {
                     System.out.println(target.getId());
                     break;
                 case "daftar":
-                    gameMaster.addPlayer(commands[1]);
+                    gameMaster.addPlayer(commands[1], "a");
 
                     break;
                 case "kartu":
@@ -152,9 +152,9 @@ public class GameSimulator {
     }
 
     public static void UNOTestCase(GameMaster gameMaster){
-        gameMaster.addPlayer("a");
-        gameMaster.addPlayer("b");
-        gameMaster.addPlayer("c");
+        gameMaster.addPlayer("a", "a");
+        gameMaster.addPlayer("b", "a");
+        gameMaster.addPlayer("c", "a");
         gameMaster.initGame();
         System.out.println(gameMaster.getMessageToGroup());
         for(Player player:gameMaster.getPlayers()){
@@ -189,9 +189,9 @@ public class GameSimulator {
 
     public static void ReverseTestCase(GameMaster gameMaster){
 
-        gameMaster.addPlayer("a");
-        gameMaster.addPlayer("b");
-        gameMaster.addPlayer("c");
+        gameMaster.addPlayer("a", "a");
+        gameMaster.addPlayer("b", "b");
+        gameMaster.addPlayer("c", "b");
         gameMaster.initGame();
         System.out.println(gameMaster.getMessageToGroup());
         for(Player player:gameMaster.getPlayers()){
@@ -228,9 +228,9 @@ public class GameSimulator {
     }
 
     public static void SkipTestCase(GameMaster gameMaster){
-        gameMaster.addPlayer("a");
-        gameMaster.addPlayer("b");
-        gameMaster.addPlayer("c");
+        gameMaster.addPlayer("a", "a");
+        gameMaster.addPlayer("b", "a");
+        gameMaster.addPlayer("c", "a");
         gameMaster.initGame();
         System.out.println(gameMaster.getMessageToGroup());
         for(Player player:gameMaster.getPlayers()){
@@ -267,9 +267,9 @@ public class GameSimulator {
     }
 
     public static void PlusTestCase(GameMaster gameMaster){
-        gameMaster.addPlayer("a");
-        gameMaster.addPlayer("b");
-        gameMaster.addPlayer("c");
+        gameMaster.addPlayer("a", "a");
+        gameMaster.addPlayer("b", "a");
+        gameMaster.addPlayer("c", "a");
         gameMaster.initGame();
         System.out.println(gameMaster.getMessageToGroup());
         for(Player player:gameMaster.getPlayers()){
@@ -307,9 +307,9 @@ public class GameSimulator {
     }
 
     public void  WildCardTestCase(GameMaster gameMaster){
-        gameMaster.addPlayer("a");
-        gameMaster.addPlayer("b");
-        gameMaster.addPlayer("c");
+        gameMaster.addPlayer("a", "a");
+        gameMaster.addPlayer("b", "a");
+        gameMaster.addPlayer("c", "a");
         gameMaster.initGame();
         System.out.println(gameMaster.getMessageToGroup());
         for(Player player:gameMaster.getPlayers()){

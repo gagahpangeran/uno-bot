@@ -2,7 +2,6 @@ package com.bot.unobot.gameengine;
 
 import com.bot.unobot.card.*;
 import com.bot.unobot.player.Player;
-import org.yaml.snakeyaml.util.ArrayUtils;
 
 import java.text.CollationElementIterator;
 import java.util.ArrayList;
@@ -434,8 +433,8 @@ public class GameMaster {
     * @param playerId = playerId
     * Menambah pemain ke game
     * */
-    public void addPlayer (String playerId){
-        players.add(new Player(playerId));
+    public void addPlayer (String playerId, String name){
+        players.add(new Player(playerId, name));
         //debug
         System.out.println(playerId+" "+"terdaftar!");
     }
@@ -449,7 +448,7 @@ public class GameMaster {
     public String getInfo(){
         String info = "Daftar pemain dan kartunya:\n\n";
         for (Player player: players){
-            info+=player.getId()+"\n"+"jumlah kartu = "+player.getCardsCollection().size()+"\n\n";
+            info+=player.getName()+"\n"+"jumlah kartu = "+player.getCardsCollection().size()+"\n\n";
         }
         if (this.currentState.getDirection() == Direction.CW){
             info+="Reverse:\nTrue\n\n\n";
@@ -460,7 +459,7 @@ public class GameMaster {
         if (currentState.getLastCard() == null && currentState instanceof PlusState) System.out.println("ngix");
 
         info+="Kartu yang terakhir dimainkan: "+currentState.getLastCard().getSymbol()+" "+currentState.getLastCard().getColor()+"\n";
-        info+="Giliran sekarang : "+players.get(currentState.getCurrPlayerIndex()).getId();
+        info+="Giliran sekarang : "+players.get(currentState.getCurrPlayerIndex()).getName();
 
         return info;
     }
