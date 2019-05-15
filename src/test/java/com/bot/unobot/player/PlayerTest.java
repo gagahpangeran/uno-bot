@@ -22,7 +22,7 @@ public class PlayerTest {
     public Player player;
 
     @Before
-    public void setUp(){ player =  new Player("1234");}
+    public void setUp(){ player =  new Player("1234", "1234");}
 
     @Test
     public void Player_Test(){
