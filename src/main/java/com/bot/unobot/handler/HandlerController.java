@@ -1,5 +1,6 @@
 package com.bot.unobot.handler;
 
+import com.bot.unobot.card.Card;
 import com.bot.unobot.gameengine.GameMaster;
 
 import com.bot.unobot.player.Player;
@@ -193,9 +194,11 @@ public class HandlerController {
         System.out.println(cards);
 
         if (cards.contains("wild;special") || cards.contains("+4;special")) {
-            String colorSetByPlayer = cards.get(cards.size() - 1);
+            String colorSetByPlayer = cards.get(cards.size() - 1).split(";")[1];
             cards.remove(cards.size() - 1);
-            game.put(game.converStringstoCards(cards, colorSetByPlayer));
+            ArrayList<Card> tesss = game.converStringstoCards(cards, colorSetByPlayer);
+//            System.out.println(tesss.get(0).getColor());
+            game.put(tesss);
         } else {
             game.put(game.converStringstoCards(cards));
         }
@@ -219,6 +222,7 @@ public class HandlerController {
             GameMaster game = gameMasters.get(groupId);
             String result = game.getCurrentState().draw(this.userId);
             this.replyMessage(result);
+            this.pushMessage(groupId, game.getInfo());
         }
     }
 
@@ -226,6 +230,7 @@ public class HandlerController {
         GameMaster game = gameMasters.get(this.groupId);
         if (game != null) {
             gameMasters.remove(this.groupId);
+            playerGroupGame.remove(this.userId);
             this.replyMessage("Game dihentikan");
         } else {
             this.replyMessage("Belum ada game dibuat di grup ini");
@@ -243,5 +248,9 @@ public class HandlerController {
         } else {
             this.replyMessage("Tidak bisa keluar selain di grup.");
         }
+    }
+
+    public void hardcode() {
+
     }
 }
