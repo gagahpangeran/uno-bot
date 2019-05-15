@@ -46,6 +46,11 @@ public class PlusState implements GameState {
     }
 
 
+    @Override
+    public Direction getDirection() {
+        return direction;
+    }
+
 
     @Override
     public Card getLastCard() {
@@ -76,23 +81,23 @@ public class PlusState implements GameState {
                 this.numberOfCombos+=countCombos(cards);
                 //debug
                 System.out.println("last card: "+lastCard.getSymbol()+" "+lastCard.getColor());
-                this.gameMaster.setMessageToGroup(this.gameMaster.putSucceed());
+                this.gameMaster.setMessageToPlayer(this.gameMaster.putSucceed());
                 nextTurn();
             }else{
-                this.gameMaster.setMessageToGroup(this.gameMaster.putFailed());
+                this.gameMaster.setMessageToPlayer(this.gameMaster.putFailed());
             }
 
 
         }else{
-            this.gameMaster.setMessageToGroup(this.gameMaster.putFailed());
+            this.gameMaster.setMessageToPlayer(this.gameMaster.putFailed());
         }
 
     }
 
     /*
-    * IsPuttablenya puat plus state agak beda, karena hanya kartu plus saja yang diterima, selain itu ya dia gak terima
-    *
-    * */
+     * IsPuttablenya puat plus state agak beda, karena hanya kartu plus saja yang diterima, selain itu ya dia gak terima
+     *
+     * */
 
     public boolean isPuttableForPlusCards(ArrayList<Card> cards){
         for (Card card: cards){
@@ -114,11 +119,7 @@ public class PlusState implements GameState {
         return noOfCombos;
     }
 
-    public void drawCardsForVictim(){
 
-
-
-    }
 
 
 
@@ -132,9 +133,9 @@ public class PlusState implements GameState {
     }
 
     /*
-    * Draw kartu bagi korban :X
-    *
-    * */
+     * Draw kartu bagi korban :X
+     *
+     * */
 
     @Override
     public String draw(String playerId) {
@@ -211,10 +212,6 @@ public class PlusState implements GameState {
         }
     }
 
-    @Override
-    public Direction getDirection() {
-        return direction;
-    }
 
 
 }
