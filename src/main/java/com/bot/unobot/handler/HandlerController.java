@@ -161,7 +161,7 @@ public class HandlerController {
         if (game != null) {
             if(game.isStart()) {
                 this.replyMessage("Game sudah pernah dimulai");
-            } else if (game.getPlayers().size() < 0) {
+            } else if (game.getPlayers().size() < 2) {
                 this.replyMessage("Minimal 2 pemain untuk memulai permainan");
             } else {
                 game.initGame();
@@ -179,9 +179,12 @@ public class HandlerController {
 
     public void draw() {
         String groupId = playerGroupGame.get(this.userId);
-        GameMaster game = gameMasters.get(groupId);
-        String result = game.getCurrentState().draw(this.userId);
-        this.replyMessage(result);
+
+        if (groupId != null) {
+            GameMaster game = gameMasters.get(groupId);
+            String result = game.getCurrentState().draw(this.userId);
+            this.replyMessage(result);
+        }
     }
 
     public void stop() {
